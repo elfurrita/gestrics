@@ -158,6 +158,44 @@ footer {
   color: var(--light);
 }
 
+.download-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 24px;
+  margin: 24px 0;
+  text-align: center;
+}
+
+.download-cta {
+  display: inline-block;
+  background: var(--teal);
+  color: #fff;
+  font-weight: 700;
+  font-size: 16px;
+  padding: 14px 32px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.download-cta:hover { opacity: 0.9; }
+
+.download-meta {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--light);
+  margin-top: 10px;
+}
+
+.download-note {
+  font-size: 13px;
+  color: var(--mid);
+  text-align: left;
+  margin: 18px 0 0;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
 .home-links {
   display: grid;
   gap: 14px;
