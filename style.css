@@ -187,6 +187,13 @@ footer {
   margin-top: 10px;
 }
 
+.download-meta a {
+  color: var(--teal);
+  text-decoration: none;
+}
+
+.download-meta a:hover { text-decoration: underline; }
+
 .download-note {
   font-size: 13px;
   color: var(--mid);
