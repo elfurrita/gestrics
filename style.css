@@ -203,6 +203,36 @@ footer {
   border-top: 1px solid var(--border);
 }
 
+.license-note {
+  font-size: 13px;
+  color: var(--mid);
+  text-align: left;
+  margin: 18px 0 14px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+.buy-cta {
+  display: inline-block;
+  background: none;
+  border: 2px solid var(--teal);
+  color: var(--teal);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 12px 28px;
+  border-radius: 8px;
+  text-decoration: none;
+}
+
+.buy-cta:hover { background: var(--teal); color: #fff; }
+
+.buy-meta {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--light);
+  margin-top: 10px;
+}
+
 .home-links {
   display: grid;
   gap: 14px;
