@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gestrics — Desktop CRM for Freelance Translators</title>
-<meta name="description" content="Gestrics is desktop software for freelance translators to manage outreach prospecting, projects, invoicing and payment collection, installed and run entirely on the user's own computer.">
+<meta name="description" content="Gestrics is desktop software for freelance translators: outreach, projects, CAT analysis, invoicing with per-country tax rules, payment collection and metrics. Installed and run entirely on your own computer.">
 <link rel="icon" href="icon.png">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -18,52 +18,290 @@
   <a href="terms.html">Terms of Use</a>
   <a href="privacy.html">Privacy Policy</a>
 </nav>
-<main>
+
+<div class="langbar">
   <div class="lang-toggle">
     <button data-lang="en" class="active">EN</button>
     <button data-lang="es">ES</button>
   </div>
-  <article>
-    <div lang="en">
-      <h1>Gestrics</h1>
-      <p>Gestrics is desktop software built for freelance translators and small translation practices. It helps manage outreach prospecting to new clients, project tracking, invoicing and payment collection — all installed and run entirely on the user's own computer, with no central server.</p>
-      <p>Emails are always sent through the user's own email account via SMTP and an app password.</p>
+</div>
 
-      <div class="download-box">
+<div class="page">
+<!-- ══════════════════════════ ENGLISH ══════════════════════════ -->
+<div lang="en">
+
+  <section class="hero">
+    <div class="wrap">
+      <h1>From the first cold email to the invoice being paid</h1>
+      <p class="lede">Gestrics is the desktop program where a freelance translator keeps their clients, their jobs, their invoices and their payments. It installs on your computer and stays there — no central server, no cloud account, no subscription.</p>
+      <div class="cta-row">
         <a class="download-cta" href="https://github.com/elfurrita/gestrics/releases/latest/download/Gestrics.Setup.1.1.0.exe">Download for Windows</a>
-        <div class="download-meta">v1.1.0 · Windows 10/11 · Free install · <a href="https://github.com/elfurrita/gestrics/releases/latest">Release notes</a> · <a href="https://github.com/elfurrita/gestrics/blob/main/CHANGELOG.en.md">Changelog</a></div>
-        <p class="download-note">Windows may show a "Windows protected your PC" warning during installation. This happens because the installer isn't digitally signed yet — it doesn't mean the app is unsafe. Click <strong>More info</strong>, then <strong>Run anyway</strong> to continue.</p>
-        <p class="license-note">Downloading and installing Gestrics is free — using it requires a paid license, activated inside the app.</p>
-        <a class="buy-cta" href="https://buy.stripe.com/7sYeVc0y5dXXebLf342go06" target="_blank" rel="noopener noreferrer">Buy a license</a>
-        <div class="buy-meta">150 € · One-time payment · Up to 2 devices</div>
+        <a class="buy-cta" href="https://buy.stripe.com/7sYeVc0y5dXXebLf342go06" target="_blank" rel="noopener noreferrer">Buy a license — €150</a>
+      </div>
+      <div class="cta-meta">v1.1.0 · Windows 10/11 · Free to install · <a href="https://github.com/elfurrita/gestrics/releases/latest">Release notes</a> · <a href="CHANGELOG.en.md">Changelog</a></div>
+      <figure class="shot shot-hero">
+        <img src="shots/en/overview.png" alt="The Gestrics project view, with a project's assignment, invoice and notes.">
+      </figure>
+    </div>
+  </section>
+
+  <section class="flow">
+    <div class="wrap">
+      <h2>What a job looks like, start to finish</h2>
+
+      <div class="step">
+        <div class="step-text">
+          <div class="step-n">01 · Outreach</div>
+          <h3>Chase clients without losing the thread</h3>
+          <ul>
+            <li>Contacts with a status, a full history and follow-up reminders.</li>
+            <li>Email templates with variables, edited and previewed on one screen.</li>
+            <li>Batch sending with your own daily cap, so you don't burn your mailbox.</li>
+            <li>Mail leaves <strong>your</strong> account over SMTP — the client sees your address, not a middleman's.</li>
+          </ul>
+        </div>
+        <figure class="shot">
+          <img src="shots/en/outreach.png" alt="The outreach tab: contact list, statuses and the email composer.">
+        </figure>
       </div>
 
+      <div class="step">
+        <div class="step-text">
+          <div class="step-n">02 · The job</div>
+          <h3>The assignment, with everything it carries</h3>
+          <ul>
+            <li>Language pair, source word count and rate — or hours, for work billed by time.</li>
+            <li>Import the analysis from <strong>Trados, memoQ or Wordfast</strong> and price each match band.</li>
+            <li>Deliverables attached to the job, sent from the job itself.</li>
+            <li>A glossary per client, shared across every project you do for them.</li>
+          </ul>
+        </div>
+        <figure class="shot">
+          <img src="shots/en/project.png" alt="A project card showing the assignment, CAT breakdown and glossary.">
+        </figure>
+      </div>
+
+      <div class="step">
+        <div class="step-text">
+          <div class="step-n">03 · The invoice</div>
+          <h3>An invoice that holds up where you live</h3>
+          <ul>
+            <li>VAT and withholding under the name they actually have where you invoice — IRPF in Spain, ISR in Mexico.</li>
+            <li><strong>75 countries</strong> with their own tax profile, each with its own identifier and wording.</li>
+            <li>In Spain, a hash-chained ledger in line with Veri*Factu, and corrective invoices on their own series.</li>
+            <li>Its own PDF, ready to send by email from the same screen.</li>
+          </ul>
+        </div>
+        <figure class="shot">
+          <img src="shots/en/invoice.png" alt="The invoice card with its PDF, VAT and withholding lines.">
+        </figure>
+      </div>
+
+      <div class="step">
+        <div class="step-text">
+          <div class="step-n">04 · Getting paid</div>
+          <h3>Get paid, and know how it is going</h3>
+          <ul>
+            <li>A Stripe payment link inside the invoice itself.</li>
+            <li>Staged reminders that follow how late the payment is.</li>
+            <li>Recurring billing for retainer clients — always confirmed by you, never issued behind your back.</li>
+            <li>Metrics: collected per month and per client, average rate, average days to payment.</li>
+          </ul>
+        </div>
+        <figure class="shot">
+          <img src="shots/en/metrics.png" alt="The metrics tab with the collected-per-month and per-client charts.">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="wrap">
+      <h2>What comes in the box</h2>
+      <ul class="grid">
+        <li><strong>75 tax profiles</strong>Each country's own identifier, VAT and withholding names.</li>
+        <li><strong>Veri*Factu</strong>Hash-chained invoice ledger for Spain, with corrective invoices.</li>
+        <li><strong>CAT analysis</strong>Import from Trados, memoQ and Wordfast; price per match band.</li>
+        <li><strong>Client glossary</strong>Terms shared across every project for that client.</li>
+        <li><strong>Recurring billing</strong>Monthly retainers, generated only on your confirmation.</li>
+        <li><strong>Stripe payment links</strong>Generated from the invoice, sent with it.</li>
+        <li><strong>Time tracking</strong>A running timer, or hours entered by hand.</li>
+        <li><strong>Full backups</strong>One file with everything, restored from the app.</li>
+        <li><strong>Contacts in and out</strong>CSV, TSV, Excel and ODS.</li>
+        <li><strong>Two languages</strong>The whole interface in English and Spanish.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="local">
+    <div class="wrap">
+      <h2>Your data never leaves your computer</h2>
+      <p>There is no central server, no account to create, and no cloud copy that depends on me still being around. Your contacts, projects and invoices sit in a file on your own disk. Backups are yours, to a file you choose and keep.</p>
+      <p>Email goes out through your own account over SMTP with an app password. Gestrics does not send anything on your behalf from anywhere else.</p>
+    </div>
+  </section>
+
+  <section class="pricing">
+    <div class="wrap">
+      <div class="price-box">
+        <div class="price">€150</div>
+        <div class="price-meta">One-time payment · Up to 2 devices</div>
+        <a class="buy-cta big" href="https://buy.stripe.com/7sYeVc0y5dXXebLf342go06" target="_blank" rel="noopener noreferrer">Buy a license</a>
+        <p class="fine">Downloading and installing Gestrics is free. Using it requires a license, activated inside the app. It is a one-time payment, not a subscription.</p>
+        <p class="fine">Windows may show a "Windows protected your PC" warning during installation, because the installer isn't digitally signed yet. It doesn't mean the app is unsafe: click <strong>More info</strong>, then <strong>Run anyway</strong>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="legal">
+    <div class="wrap">
       <div class="home-links">
         <a href="terms.html">Terms of Use<span>The rules for using the Application.</span></a>
         <a href="privacy.html">Privacy Policy<span>What data is stored, where, and who is responsible for it.</span></a>
       </div>
     </div>
-    <div lang="es">
-      <h1>Gestrics</h1>
-      <p>Gestrics es un software de escritorio para traductores autónomos y pequeños estudios de traducción. Ayuda a gestionar la prospección de nuevos clientes, el seguimiento de proyectos, la facturación y el cobro — todo instalado y ejecutado íntegramente en el ordenador del usuario, sin ningún servidor central.</p>
-      <p>Los correos siempre se envían a través de la propia cuenta de correo del usuario, mediante SMTP y una contraseña de aplicación.</p>
+  </section>
 
-      <div class="download-box">
+</div>
+
+<!-- ══════════════════════════ ESPAÑOL ══════════════════════════ -->
+<div lang="es">
+
+  <section class="hero">
+    <div class="wrap">
+      <h1>Del primer correo en frío a la factura cobrada</h1>
+      <p class="lede">Gestrics es el programa de escritorio donde un traductor autónomo lleva sus clientes, sus encargos, sus facturas y sus cobros. Se instala en tu ordenador y ahí se queda: sin servidor central, sin cuenta en la nube, sin suscripción.</p>
+      <div class="cta-row">
         <a class="download-cta" href="https://github.com/elfurrita/gestrics/releases/latest/download/Gestrics.Setup.1.1.0.exe">Descargar para Windows</a>
-        <div class="download-meta">v1.1.0 · Windows 10/11 · Instalación gratuita · <a href="https://github.com/elfurrita/gestrics/releases/latest">Notas de la versión</a> · <a href="https://github.com/elfurrita/gestrics/blob/main/CHANGELOG.md">Historial de cambios</a></div>
-        <p class="download-note">Es posible que Windows muestre un aviso de "Windows protegió tu PC" durante la instalación. Esto ocurre porque el instalador todavía no tiene firma digital — no significa que la app sea insegura. Haz clic en <strong>Más información</strong> y luego en <strong>Ejecutar de todas formas</strong> para continuar.</p>
-        <p class="license-note">Descargar e instalar Gestrics es gratis — usarlo requiere una licencia de pago, que se activa dentro de la propia app.</p>
-        <a class="buy-cta" href="https://buy.stripe.com/7sYeVc0y5dXXebLf342go06" target="_blank" rel="noopener noreferrer">Comprar licencia</a>
-        <div class="buy-meta">150 € · Pago único · Hasta 2 equipos</div>
+        <a class="buy-cta" href="https://buy.stripe.com/7sYeVc0y5dXXebLf342go06" target="_blank" rel="noopener noreferrer">Comprar licencia — 150 €</a>
+      </div>
+      <div class="cta-meta">v1.1.0 · Windows 10/11 · Instalación gratuita · <a href="https://github.com/elfurrita/gestrics/releases/latest">Notas de la versión</a> · <a href="CHANGELOG.md">Historial de cambios</a></div>
+      <figure class="shot shot-hero">
+        <img src="shots/es/overview.png" alt="La pestaña de proyectos de Gestrics, con el encargo, la factura y las notas de un proyecto.">
+      </figure>
+    </div>
+  </section>
+
+  <section class="flow">
+    <div class="wrap">
+      <h2>Cómo se ve un encargo, de principio a fin</h2>
+
+      <div class="step">
+        <div class="step-text">
+          <div class="step-n">01 · Prospección</div>
+          <h3>Buscar clientes sin perder el hilo</h3>
+          <ul>
+            <li>Contactos con estado, historial completo y avisos de seguimiento.</li>
+            <li>Plantillas de correo con variables, que se editan y se ven en una sola pantalla.</li>
+            <li>Envío por lotes con tu propio límite diario, para no quemar el buzón.</li>
+            <li>El correo sale de <strong>tu</strong> cuenta por SMTP: el cliente ve tu dirección, no la de un intermediario.</li>
+          </ul>
+        </div>
+        <figure class="shot">
+          <img src="shots/es/prospeccion.png" alt="La pestaña de prospección: lista de contactos, estados y el redactor de correo.">
+        </figure>
       </div>
 
+      <div class="step">
+        <div class="step-text">
+          <div class="step-n">02 · El encargo</div>
+          <h3>El proyecto, con todo lo que lleva dentro</h3>
+          <ul>
+            <li>Par de idiomas, palabras origen y tarifa — u horas, para lo que se cobra por tiempo.</li>
+            <li>Importa el análisis de <strong>Trados, memoQ o Wordfast</strong> y pon precio a cada tramo de coincidencia.</li>
+            <li>Entregables colgados del encargo, que se envían desde el propio encargo.</li>
+            <li>Un glosario por cliente, compartido por todos los proyectos que le hagas.</li>
+          </ul>
+        </div>
+        <figure class="shot">
+          <img src="shots/es/proyecto.png" alt="La ficha de un proyecto con el encargo, el desglose CAT y el glosario.">
+        </figure>
+      </div>
+
+      <div class="step">
+        <div class="step-text">
+          <div class="step-n">03 · La factura</div>
+          <h3>Una factura que vale donde vives</h3>
+          <ul>
+            <li>IVA y retención con el nombre que tienen de verdad allí donde facturas: IRPF en España, ISR en México.</li>
+            <li><strong>75 países</strong> con perfil fiscal propio, cada uno con su identificador y su terminología.</li>
+            <li>En España, libro de asientos encadenado conforme a Veri*Factu, y rectificativas con serie propia.</li>
+            <li>Su PDF propio, listo para enviar por correo desde la misma pantalla.</li>
+          </ul>
+        </div>
+        <figure class="shot">
+          <img src="shots/es/factura.png" alt="La tarjeta de la factura con su PDF y las líneas de IVA y retención.">
+        </figure>
+      </div>
+
+      <div class="step">
+        <div class="step-text">
+          <div class="step-n">04 · El cobro</div>
+          <h3>Que te paguen, y saber cómo va</h3>
+          <ul>
+            <li>Un enlace de pago de Stripe dentro de la propia factura.</li>
+            <li>Recordatorios por etapas, según los días que lleve de retraso.</li>
+            <li>Facturación recurrente para clientes de iguala — siempre con tu confirmación, nunca a tus espaldas.</li>
+            <li>Métricas: cobrado por mes y por cliente, tarifa media y tiempo medio de cobro.</li>
+          </ul>
+        </div>
+        <figure class="shot">
+          <img src="shots/es/metricas.png" alt="La pestaña de métricas con los gráficos de cobrado por mes y por cliente.">
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div class="wrap">
+      <h2>Lo que viene dentro</h2>
+      <ul class="grid">
+        <li><strong>75 perfiles fiscales</strong>El identificador y los nombres de IVA y retención de cada país.</li>
+        <li><strong>Veri*Factu</strong>Libro de facturas encadenado para España, con rectificativas.</li>
+        <li><strong>Análisis CAT</strong>Importación de Trados, memoQ y Wordfast; precio por tramo.</li>
+        <li><strong>Glosario de cliente</strong>Términos compartidos por todos sus proyectos.</li>
+        <li><strong>Facturación recurrente</strong>Igualas mensuales, generadas solo si tú lo confirmas.</li>
+        <li><strong>Enlaces de pago Stripe</strong>Se generan desde la factura y viajan con ella.</li>
+        <li><strong>Control de horas</strong>Un cronómetro en marcha, o las horas a mano.</li>
+        <li><strong>Copias de seguridad</strong>Un archivo con todo, restaurable desde la app.</li>
+        <li><strong>Contactos, dentro y fuera</strong>CSV, TSV, Excel y ODS.</li>
+        <li><strong>Dos idiomas</strong>Toda la interfaz en español y en inglés.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="local">
+    <div class="wrap">
+      <h2>Tus datos no salen de tu ordenador</h2>
+      <p>No hay servidor central, ni cuenta que crear, ni copia en la nube que dependa de que yo siga aquí. Tus contactos, proyectos y facturas están en un archivo de tu propio disco. Las copias de seguridad son tuyas, a un archivo que eliges y guardas tú.</p>
+      <p>El correo sale por tu propia cuenta mediante SMTP y una contraseña de aplicación. Gestrics no envía nada en tu nombre desde ningún otro sitio.</p>
+    </div>
+  </section>
+
+  <section class="pricing">
+    <div class="wrap">
+      <div class="price-box">
+        <div class="price">150 €</div>
+        <div class="price-meta">Pago único · Hasta 2 equipos</div>
+        <a class="buy-cta big" href="https://buy.stripe.com/7sYeVc0y5dXXebLf342go06" target="_blank" rel="noopener noreferrer">Comprar licencia</a>
+        <p class="fine">Descargar e instalar Gestrics es gratis. Usarlo requiere una licencia, que se activa dentro de la propia app. Es un pago único, no una suscripción.</p>
+        <p class="fine">Es posible que Windows muestre un aviso de "Windows protegió tu PC" durante la instalación, porque el instalador todavía no tiene firma digital. No significa que la app sea insegura: haz clic en <strong>Más información</strong> y luego en <strong>Ejecutar de todas formas</strong>.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="legal">
+    <div class="wrap">
       <div class="home-links">
         <a href="terms.html">Términos de Uso<span>Las reglas de uso de la Aplicación.</span></a>
         <a href="privacy.html">Política de Privacidad<span>Qué datos se guardan, dónde, y quién es responsable de ellos.</span></a>
       </div>
     </div>
-  </article>
-</main>
+  </section>
+
+</div>
+</div>
+
 <footer>Gestrics</footer>
 <script src="lang-toggle.js"></script>
 </body>

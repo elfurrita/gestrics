@@ -148,6 +148,7 @@ article code {
   font-size: 13px;
 }
 
+.page > [lang="es"],
 article [lang="es"] { display: none; }
 
 footer {
@@ -259,3 +260,236 @@ footer {
 }
 
 .home-links a:hover { border-color: var(--teal); }
+
+
+/* ───────────────────────── Portada ─────────────────────────
+   Las páginas legales siguen siendo una tarjeta de 780px. La portada no:
+   una página de venta necesita secciones a todo lo ancho y sitio para
+   capturas, así que tiene su propio envoltorio (.page) y su propia
+   medida (.wrap), y no reutiliza <article>. */
+
+.langbar {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 20px 24px 0;
+}
+
+.page .wrap {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.page section { padding: 56px 0; }
+.page section + section { border-top: 1px solid var(--border); }
+
+.page h2 {
+  font-size: 24px;
+  margin: 0 0 34px;
+  letter-spacing: -0.01em;
+}
+
+/* ── Portada: cabecera ── */
+
+.hero { padding-top: 34px; }
+
+.hero h1 {
+  font-size: 38px;
+  line-height: 1.18;
+  letter-spacing: -0.02em;
+  margin: 0 0 18px;
+  max-width: 17em;
+}
+
+.hero .lede {
+  font-size: 17px;
+  color: var(--mid);
+  max-width: 40em;
+  margin: 0 0 28px;
+}
+
+.cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+}
+
+.cta-meta {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--light);
+  margin-top: 14px;
+}
+
+.cta-meta a { color: var(--teal); text-decoration: none; }
+.cta-meta a:hover { text-decoration: underline; }
+
+/* ── Capturas ──
+   Fondo y borde propios: una captura de una interfaz clara sobre un fondo
+   claro se deshilacha por los bordes si no se le pone marco. */
+
+.shot {
+  margin: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 8px;
+  overflow: hidden;
+}
+
+.shot img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+}
+
+.shot-hero { margin-top: 38px; }
+
+/* ── El recorrido ── */
+
+.step {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: 40px;
+  align-items: center;
+}
+
+.step + .step {
+  margin-top: 48px;
+  padding-top: 48px;
+  border-top: 1px solid var(--border);
+}
+
+/* Alterna el lado de la captura para que cuatro pasos seguidos no se lean
+   como cuatro veces la misma fila. */
+.step:nth-child(odd) .step-text { order: 2; }
+
+.step-n {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--teal);
+  margin-bottom: 10px;
+}
+
+.step h3 {
+  font-size: 20px;
+  margin: 0 0 14px;
+  letter-spacing: -0.01em;
+}
+
+.step ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.step li {
+  font-size: 14.5px;
+  color: var(--mid);
+  padding: 7px 0 7px 20px;
+  position: relative;
+}
+
+.step li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 15px;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--peach);
+}
+
+/* ── Rejilla de funciones ── */
+
+.features .grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(232px, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.features .grid li {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 20px;
+  font-size: 13.5px;
+  color: var(--mid);
+}
+
+.features .grid strong {
+  display: block;
+  color: var(--dark);
+  font-size: 14.5px;
+  margin-bottom: 5px;
+}
+
+/* ── Tus datos ── */
+
+.local p {
+  font-size: 15.5px;
+  color: var(--mid);
+  max-width: 46em;
+}
+
+/* ── Precio ── */
+
+.price-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 38px 32px;
+  text-align: center;
+  max-width: 560px;
+  margin: 0 auto;
+}
+
+.price {
+  font-family: var(--mono);
+  font-size: 44px;
+  font-weight: 700;
+  color: var(--dark);
+  line-height: 1;
+}
+
+.price-meta {
+  font-family: var(--mono);
+  font-size: 12.5px;
+  color: var(--light);
+  margin: 10px 0 24px;
+}
+
+.buy-cta.big { font-size: 16px; padding: 14px 34px; }
+
+.price-box .fine {
+  font-size: 13px;
+  color: var(--mid);
+  text-align: left;
+  margin: 22px 0 0;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+}
+
+.legal { padding-top: 40px; }
+.legal .home-links { margin-top: 0; }
+
+/* ── Pantallas estrechas ──
+   El recorrido pasa a una columna, y la captura debajo del texto SIEMPRE:
+   sin esto, order:2 dejaba la imagen encima en los pasos impares y el
+   número de paso aparecía después de su propia captura. */
+
+@media (max-width: 800px) {
+  .hero h1 { font-size: 30px; }
+  .page section { padding: 44px 0; }
+  .step { grid-template-columns: 1fr; gap: 24px; }
+  .step:nth-child(odd) .step-text { order: 0; }
+}

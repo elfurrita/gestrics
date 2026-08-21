@@ -3,7 +3,12 @@
     // "article [lang]", no solo "[lang]" — <html lang="en"> también tiene
     // el atributo, así que el selector sin acotar ocultaba la página
     // entera (display:none en la raíz) en vez de solo el bloque de texto.
-    document.querySelectorAll("article [lang]").forEach(function (el) {
+    // ".page > [lang]" además de "article [lang]": la portada dejó de ser
+    // un <article> al convertirse en página de venta, y con el selector
+    // antiguo el botón de idioma no encontraba nada que conmutar allí.
+    // Sigue acotado —nunca "[lang]" a secas— porque <html lang="en">
+    // también lleva el atributo y ocultaría la página entera.
+    document.querySelectorAll("article [lang], .page > [lang]").forEach(function (el) {
       // "block" explícito, no "" — el CSS ya oculta [lang="es"] por defecto
       // (red de seguridad si este script no llega a cargar), y borrar el
       // estilo inline con "" no gana esa regla: hay que fijar el valor
