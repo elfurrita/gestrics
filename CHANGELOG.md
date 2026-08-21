@@ -38,6 +38,14 @@ publicación anunciaba.
   español, más un "Otro" que obligaba a un rodeo en cada proyecto.
 - **Teléfono, dirección y CIF** en la exportación e importación de contactos.
   Se perdían en cada exportación.
+- **Gráficos en Métricas**: cobrado por mes, los últimos doce, y cobrado por
+  cliente ordenado de mayor a menor. La pestaña era hasta ahora solo cifras y
+  tablas: se leía cuánto se había cobrado en total, pero no si el mes va mejor
+  que el anterior ni de qué clientes viene el dinero.
+- **Moneda principal elegible** en los ajustes del traductor. En ella se
+  resumen los totales de la cabecera y de Métricas. Se propone la que más se
+  factura, pero la elección es del traductor: suele ser la divisa en la que
+  piensa y paga impuestos, que no tiene por qué ser en la que más ingresa.
 
 ### Cambiado
 
@@ -53,6 +61,31 @@ publicación anunciaba.
   descargarla o enviarla, así que siempre refleja los datos actuales. Antes
   circulaba una copia congelada al crear la factura, y quien generaba un enlace
   de pago después podía enviarle al cliente una factura **sin ese enlace**.
+- **Las divisas se nombran con su sigla ISO** —EUR, USD, GBP— en Métricas y en
+  la cabecera, en vez de con el símbolo. En español solo el euro y el dólar
+  tienen símbolo, así que una misma lista mezclaba "€" y "US$" con "GBP" y
+  "CHF".
+- **La cabecera muestra un único total abreviado** en la moneda principal
+  —"201k EUR"— en lugar de una lista de importes por divisa que no cabía en la
+  celda. El importe completo aparece al pasar el ratón, y un beneficio negativo
+  se pinta en rojo.
+- **Métricas recién instalada ya no recibe con una rejilla de guiones.** Cuatro
+  tarjetas con "—" y tres tablas repitiendo "Datos insuficientes" eran la
+  primera impresión de quien acababa de instalar la aplicación.
+- **El identificador fiscal del cliente deja de llamarse "CIF / NIF"** en
+  español: un traductor mexicano veía terminología española encima del RFC de
+  su cliente. Con la etiqueta caen cuatro marcadores con formato de NIF español
+  que salían bajo campos que dicen RFC, SIRET o GST según el país.
+- **El contador "Presupuestos" explica qué cuenta** al pasar el ratón: los ya
+  enviados al cliente. Marcaba 0 con el primer proyecto en estado
+  "Presupuestado", y sin explicarlo parecía una avería justo en el momento más
+  frágil.
+- **Los ejemplos del formulario de proyecto llevan "Ej." delante**, para que no
+  se lean como datos ya introducidos. Los botones de nuevo contacto y nuevo
+  proyecto pierden el "+".
+- **La tarifa escribe el decimal según el idioma**: "0,11 EUR/pal" en español,
+  donde antes ponía "0.11" justo debajo de importes con coma. El presupuesto
+  que recibe el cliente sigue en inglés, con punto.
 
 ### Corregido
 
@@ -70,6 +103,12 @@ publicación anunciaba.
 - El estado manual del proyecto ya no permite marcarlo como facturado sin que
   exista factura.
 - Los importes del desglose CAT respetan los decimales de cada divisa.
+- Un mes de facturación recurrente saltado se perdía para siempre: si la
+  aplicación no se abría durante un mes, al volver solo se generaba el
+  corriente y el plan quedaba marcado como al día, sin aviso ni forma de
+  recuperar el mes perdido desde ninguna pantalla.
+- Restaurar una copia de seguridad podía emitir dos veces la factura del mismo
+  mes, cada una con su número y su asiento en el libro.
 
 **Datos y copias de seguridad**
 
@@ -78,6 +117,17 @@ publicación anunciaba.
 - Restaurar tampoco pierde ya las fechas de creación y modificación.
 - Avanzar de estado borraba todos los entregables, incluidos los que aún no se
   habían enviado a nadie. Ahora solo se borran los que ya llegaron al cliente.
+
+**Métricas**
+
+- La cabecera se derramaba al haber varias divisas: el importe se salía de su
+  celda y pisaba la etiqueta de al lado.
+- La tarjeta "Beneficio neto" se estiraba a todo el ancho al bajar de fila, y
+  dejaba de parecer una tarjeta más.
+- La tabla de tarifa media enseñaba filas que parecían repetidas —dos
+  "Técnico", dos "EN-ES"—. No lo eran: se agrupa por etiqueta, divisa y unidad,
+  porque promediar 0,15 € con 0,18 $ no significaría nada. Ahora cada fila dice
+  qué la distingue de sus hermanas.
 
 **Prospección**
 

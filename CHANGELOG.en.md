@@ -37,6 +37,14 @@ announced.
   Spanish, plus an "Other" that forced a detour on every project.
 - **Phone, address and tax ID** in contact export and import. They were dropped
   on every export.
+- **Charts in Metrics**: collected per month over the last twelve, and collected
+  per client, largest first. Until now the tab was only figures and tables: you
+  could read how much had been collected in total, but not whether this month is
+  going better than the last, nor which clients the money comes from.
+- **A configurable main currency** in the translator settings. Totals in the
+  header and in Metrics are summarised in it. The most-billed one is suggested,
+  but the choice is the translator's: it is usually the currency they think and
+  pay taxes in, which need not be the one they earn most in.
 
 ### Changed
 
@@ -51,6 +59,31 @@ announced.
   you download or send it, so it always reflects the current data. Previously a
   copy frozen at invoice-creation time was kept, which meant anyone generating a
   payment link afterwards could send the client an invoice **without that link**.
+- **Currencies are named by their ISO code** — EUR, USD, GBP — in Metrics and in
+  the header, instead of by symbol. Only the euro and the dollar have a symbol
+  in Spanish, so a single list mixed "€" and "US$" with "GBP" and "CHF".
+- **The header shows a single abbreviated total** in the main currency — "EUR
+  201k" — instead of a list of per-currency amounts that did not fit the cell.
+  The full amount appears on hover, and a negative profit is shown in red.
+- **A freshly installed Metrics tab no longer greets you with a grid of
+  dashes.** Four cards reading "—" and three tables repeating "Not enough data"
+  were the first impression for someone who had just installed the app.
+- **Tax-number placeholders no longer show a Spanish format.** "00000000X"
+  appeared under fields labelled RFC, SIRET or GST depending on the country. In
+  the Spanish interface the client's field was also labelled "CIF / NIF", so a
+  Mexican translator saw Spanish wording above their client's RFC; it now uses
+  the same neutral wording the English interface always had.
+- **The "Quoted" counter explains what it counts** on hover: quotes already sent
+  to the client. It read 0 while the first project sat in the "Quoted" state,
+  and without an explanation that looked like a fault at the most fragile moment
+  of all.
+- **The project form's examples are prefixed with "E.g."** so they do not read
+  as data already entered. The new-contact and new-project buttons lose their
+  "+".
+- **The rate writes its decimal separator according to the language**: "0,11
+  EUR/word" in Spanish, where it previously read "0.11" right below amounts
+  written with a comma. The quote the client receives stays in English, with a
+  point.
 
 ### Fixed
 
@@ -69,6 +102,12 @@ announced.
 - The manual project status can no longer mark a project as invoiced when no
   invoice exists.
 - CAT breakdown amounts respect each currency's decimal places.
+- A skipped month of recurring billing was lost for good: if the app was not
+  opened for a month, on returning only the current one was generated and the
+  plan was marked as up to date, with no warning and no way to recover the
+  missed month from any screen.
+- Restoring a backup could issue the same month's invoice twice, each with its
+  own number and its own ledger entry.
 
 **Data and backups**
 
@@ -78,6 +117,17 @@ announced.
 - Advancing a project's status deleted every deliverable, including files that
   had never been sent to anyone. Only files that actually reached the client are
   removed now.
+
+**Metrics**
+
+- The header overflowed when several currencies were involved: the amount spilled
+  out of its cell and over the label next to it.
+- The "Net profit" card stretched across the full width when it wrapped onto a
+  second row, and stopped looking like one card among others.
+- The average-rate table showed rows that looked repeated — two "Technical", two
+  "EN-ES". They were not: rows are grouped by label, currency and unit, because
+  averaging 0.15 € with 0.18 $ would mean nothing. Each row now states what
+  tells it apart from its siblings.
 
 **Outreach**
 

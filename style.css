@@ -338,6 +338,8 @@ footer {
   overflow: hidden;
 }
 
+.shot a { display: block; cursor: zoom-in; }
+
 .shot img {
   display: block;
   width: 100%;
@@ -363,7 +365,11 @@ footer {
 }
 
 /* Alterna el lado de la captura para que cuatro pasos seguidos no se lean
-   como cuatro veces la misma fila. */
+   como cuatro veces la misma fila. Al invertir el orden hay que invertir
+   TAMBIÉN las medidas de las columnas: si no, la imagen cae en la pista
+   estrecha en los pasos alternos y las capturas salen de dos anchos
+   distintos (492px y 425px), que se lee como un descuido. */
+.step:nth-child(odd) { grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); }
 .step:nth-child(odd) .step-text { order: 2; }
 
 .step-n {
