@@ -518,6 +518,19 @@ footer {
   border-top: 1px solid var(--border);
 }
 
+/* Los enlaces de correo salían con el azul subrayado por defecto del
+   navegador, que es el único color de toda la página que no es del sitio.
+   El enlace a la portada del pie legal lleva color:inherit en línea y gana a
+   esto, que es lo que se quiere: ahí no debe destacar. */
+.price-box .fine a,
+footer a {
+  color: var(--teal);
+  text-decoration: none;
+}
+
+.price-box .fine a:hover,
+footer a:hover { text-decoration: underline; }
+
 .legal { padding-top: 40px; }
 .legal .home-links { margin-top: 0; }
 
