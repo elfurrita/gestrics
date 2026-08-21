@@ -148,8 +148,12 @@ article code {
   font-size: 13px;
 }
 
+/* Red de seguridad por si el script no llega a cargar: se ve el inglés,
+   nunca los dos idiomas encimados. */
 .page > [lang="es"],
-article [lang="es"] { display: none; }
+article [lang="es"],
+header [lang="es"],
+nav [lang="es"] { display: none; }
 
 footer {
   max-width: 780px;
@@ -518,6 +522,23 @@ footer {
 @media (max-width: 800px) {
   .hero h1 { font-size: 30px; }
   .page section { padding: 44px 0; }
-  .step { grid-template-columns: 1fr; gap: 24px; }
+  .hero { padding-top: 8px; }
+  .langbar { padding-top: 14px; }
+  .lang-toggle { margin-bottom: 14px; }
+
+  /* Las dos reglas de nth-child hay que deshacerlas AQUÍ una por una: son
+     más específicas que ".step" a secas, así que un ".step { 1fr }" no las
+     pisa. Sin esto, los pasos alternos se quedaban en dos columnas en un
+     móvil y su texto salía en una columna de la mitad de ancho. */
+  .step,
+  .step:nth-child(odd) { grid-template-columns: 1fr; gap: 24px; }
   .step:nth-child(odd) .step-text { order: 0; }
+}
+
+/* La navegación lleva tres etiquetas y en español son largas ("Política de
+   Privacidad"): a partir de aquí se aprieta para que quepan sin partirse en
+   dos líneas cada una. */
+@media (max-width: 460px) {
+  nav { gap: 12px; font-size: 11px; }
+  .hero h1 { font-size: 27px; }
 }
