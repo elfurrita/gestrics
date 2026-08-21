@@ -159,7 +159,8 @@ article code {
 .page > [lang="es"],
 article [lang="es"],
 header [lang="es"],
-nav [lang="es"] { display: none; }
+nav [lang="es"],
+footer [lang="es"] { display: none; }
 
 footer {
   max-width: 1040px;

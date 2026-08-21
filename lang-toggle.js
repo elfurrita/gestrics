@@ -10,7 +10,7 @@
     // bajo la página en español, en las tres páginas del sitio.
     // Sigue acotado —nunca "[lang]" a secas— porque <html lang="en">
     // también lleva el atributo y ocultaría la página entera.
-    document.querySelectorAll("article [lang], .page > [lang], header [lang], nav [lang]").forEach(function (el) {
+    document.querySelectorAll("article [lang], .page > [lang], header [lang], nav [lang], footer [lang]").forEach(function (el) {
       // "block" explícito, no "" — el CSS ya oculta [lang="es"] por defecto
       // (red de seguridad si este script no llega a cargar), y borrar el
       // estilo inline con "" no gana esa regla: hay que fijar el valor
