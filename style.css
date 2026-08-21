@@ -36,6 +36,7 @@ header img {
 }
 
 header .title {
+  min-width: 0;
   color: #fff;
   font-size: 19px;
   font-weight: 700;
@@ -84,28 +85,62 @@ main {
   padding: 24px 24px 80px;
 }
 
+/* El conmutador vive dentro del banner oscuro, empujado al extremo derecho.
+   Antes ocupaba una barra propia bajo la navegación y era lo único que se
+   interponía entre el banner y el contenido de cada página. */
 .lang-toggle {
   display: inline-flex;
-  border: 1px solid var(--border);
-  border-radius: 7px;
-  overflow: hidden;
-  margin-bottom: 24px;
-  font-family: var(--mono);
-  font-size: 12px;
-  font-weight: 700;
+  margin-left: auto;
+  gap: 6px;
+  flex-shrink: 0;
 }
 
 .lang-toggle button {
-  border: none;
-  background: var(--surface);
-  color: var(--mid);
-  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  padding: 5px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: none;
   cursor: pointer;
+  line-height: 0;
+  /* Sin seleccionar, la bandera baja de saturación y se apaga, para que la
+     activa se distinga sin leer nada. Pero no tanto como para dejar de
+     parecer una bandera: con 0.45 de opacidad y 0.35 de saturación, la
+     española quedaba en una barra parduzca irreconocible sobre el banner
+     oscuro, y hay que reconocerla para querer pulsarla. */
+  opacity: 0.62;
+  filter: saturate(0.65);
+  transition: opacity 0.15s ease, filter 0.15s ease, border-color 0.15s ease;
+}
+
+.lang-toggle button:hover {
+  opacity: 0.9;
+  filter: saturate(0.9);
 }
 
 .lang-toggle button.active {
-  background: var(--dark);
-  color: #fff;
+  opacity: 1;
+  filter: none;
+  border-color: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Foco visible: el botón ya no tiene texto, así que sin esto no habría
+   ninguna pista de dónde está el cursor al navegar con teclado. */
+.lang-toggle button:focus-visible {
+  outline: 2px solid var(--peach);
+  outline-offset: 1px;
+}
+
+.bandera {
+  width: 22px;
+  height: 14px;
+  display: block;
+  border-radius: 2px;
+  /* Un borde tenue despega del banner oscuro la franja azul de la británica
+     y el rojo de la española, que si no se funden con el fondo. */
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.25);
 }
 
 article {
@@ -278,12 +313,6 @@ footer {
    una página de venta necesita secciones a todo lo ancho y sitio para
    capturas, así que tiene su propio envoltorio (.page) y su propia
    medida (.wrap), y no reutiliza <article>. */
-
-.langbar {
-  max-width: 1040px;
-  margin: 0 auto;
-  padding: 20px 24px 0;
-}
 
 .page .wrap {
   max-width: 1040px;
@@ -543,8 +572,6 @@ footer a:hover { text-decoration: underline; }
   .hero h1 { font-size: 30px; }
   .page section { padding: 44px 0; }
   .hero { padding-top: 8px; }
-  .langbar { padding-top: 14px; }
-  .lang-toggle { margin-bottom: 14px; }
 
   /* Las dos reglas de nth-child hay que deshacerlas AQUÍ una por una: son
      más específicas que ".step" a secas, así que un ".step { 1fr }" no las
