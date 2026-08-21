@@ -8,6 +8,19 @@
 <link rel="icon" href="icon.png">
 <link rel="stylesheet" href="style.css">
 </head>
+<!-- ═══════════════════════ NO PUBLICAR TODAVÍA ═══════════════════════
+     Esta página anuncia UN PERIODO DE PRUEBA DE 14 DÍAS que la aplicación
+     TODAVÍA NO TIENE. Se escribió por adelantado, a propósito, para tenerla
+     lista cuando la prueba exista (decisión de Eduardo, 2026-08-21).
+
+     Publicarla antes sería prometer al comprador algo que no va a
+     encontrar: hoy la aplicación pide licencia desde el primer arranque.
+
+     Antes de subir esto hay que: (1) implementar la prueba en la app,
+     (2) confirmar que son 14 días, todas las funciones y sin tarjeta —los
+     números de aquí son una propuesta, no una decisión—, y (3) revisar que
+     el texto coincide con lo que la aplicación hace de verdad.
+     ═══════════════════════════════════════════════════════════════════ -->
 <body>
 <header>
   <img src="icon.png" alt="Gestrics">
@@ -35,10 +48,10 @@
       <h1>From the first cold email to the invoice being paid</h1>
       <p class="lede">Gestrics is the desktop program where a freelance translator keeps their clients, their jobs, their invoices and their payments. It installs on your computer and stays there — no central server, no cloud account, no subscription.</p>
       <div class="cta-row">
-        <a class="download-cta" href="https://github.com/elfurrita/gestrics/releases/latest/download/Gestrics.Setup.1.1.0.exe">Download for Windows</a>
+        <a class="download-cta" href="https://github.com/elfurrita/gestrics/releases/latest/download/Gestrics.Setup.1.1.0.exe">Try it free for 14 days</a>
         <a class="buy-cta" href="https://buy.stripe.com/7sYeVc0y5dXXebLf342go06" target="_blank" rel="noopener noreferrer">Buy a license — €150</a>
       </div>
-      <div class="cta-meta">v1.1.0 · Windows 10/11 · Free to install · <a href="https://github.com/elfurrita/gestrics/releases/latest">Release notes</a> · <a href="CHANGELOG.en.md">Changelog</a></div>
+      <div class="cta-meta">v1.1.0 · Windows 10/11 · 14-day free trial · <a href="https://github.com/elfurrita/gestrics/releases/latest">Release notes</a> · <a href="CHANGELOG.en.md">Changelog</a></div>
       <figure class="shot shot-hero">
         <a href="shots/en/overview.png" target="_blank" rel="noopener noreferrer"><img src="shots/en/overview.png" width="2352" height="1500" loading="lazy" decoding="async" alt="The Gestrics project view, with a project's assignment, invoice and notes."></a>
       </figure>
@@ -144,10 +157,14 @@
   <section class="pricing">
     <div class="wrap">
       <div class="price-box">
+        <div class="trial-badge">14 days free · no card</div>
         <div class="price">€150</div>
-        <div class="price-meta">One-time payment · Up to 2 devices</div>
-        <a class="buy-cta big" href="https://buy.stripe.com/7sYeVc0y5dXXebLf342go06" target="_blank" rel="noopener noreferrer">Buy a license</a>
-        <p class="fine">Downloading and installing Gestrics is free. Using it requires a license, activated inside the app. It is a one-time payment, not a subscription.</p>
+        <div class="price-meta">After the trial · One-time payment · Up to 2 devices</div>
+        <div class="price-ctas">
+          <a class="download-cta" href="https://github.com/elfurrita/gestrics/releases/latest/download/Gestrics.Setup.1.1.0.exe">Download for Windows</a>
+          <a class="buy-cta" href="https://buy.stripe.com/7sYeVc0y5dXXebLf342go06" target="_blank" rel="noopener noreferrer">Buy a license</a>
+        </div>
+        <p class="fine">The trial runs for 14 days with every feature unlocked, and asks for no card. After that, using Gestrics requires a license, activated inside the app. It is a one-time payment, not a subscription: no renewal, nothing to cancel.</p>
         <p class="fine">Windows may show a "Windows protected your PC" warning during installation, because the installer isn't digitally signed yet. It doesn't mean the app is unsafe: click <strong>More info</strong>, then <strong>Run anyway</strong>.</p>
       </div>
     </div>
@@ -172,10 +189,10 @@
       <h1>Del primer correo en frío a la factura cobrada</h1>
       <p class="lede">Gestrics es el programa de escritorio donde un traductor autónomo lleva sus clientes, sus encargos, sus facturas y sus cobros. Se instala en tu ordenador y ahí se queda: sin servidor central, sin cuenta en la nube, sin suscripción.</p>
       <div class="cta-row">
-        <a class="download-cta" href="https://github.com/elfurrita/gestrics/releases/latest/download/Gestrics.Setup.1.1.0.exe">Descargar para Windows</a>
+        <a class="download-cta" href="https://github.com/elfurrita/gestrics/releases/latest/download/Gestrics.Setup.1.1.0.exe">Pruébalo 14 días gratis</a>
         <a class="buy-cta" href="https://buy.stripe.com/7sYeVc0y5dXXebLf342go06" target="_blank" rel="noopener noreferrer">Comprar licencia — 150 €</a>
       </div>
-      <div class="cta-meta">v1.1.0 · Windows 10/11 · Instalación gratuita · <a href="https://github.com/elfurrita/gestrics/releases/latest">Notas de la versión</a> · <a href="CHANGELOG.md">Historial de cambios</a></div>
+      <div class="cta-meta">v1.1.0 · Windows 10/11 · 14 días de prueba · <a href="https://github.com/elfurrita/gestrics/releases/latest">Notas de la versión</a> · <a href="CHANGELOG.md">Historial de cambios</a></div>
       <figure class="shot shot-hero">
         <a href="shots/es/overview.png" target="_blank" rel="noopener noreferrer"><img src="shots/es/overview.png" width="2352" height="1500" loading="lazy" decoding="async" alt="La pestaña de proyectos de Gestrics, con el encargo, la factura y las notas de un proyecto."></a>
       </figure>
@@ -281,10 +298,14 @@
   <section class="pricing">
     <div class="wrap">
       <div class="price-box">
+        <div class="trial-badge">14 días gratis · sin tarjeta</div>
         <div class="price">150 €</div>
-        <div class="price-meta">Pago único · Hasta 2 equipos</div>
-        <a class="buy-cta big" href="https://buy.stripe.com/7sYeVc0y5dXXebLf342go06" target="_blank" rel="noopener noreferrer">Comprar licencia</a>
-        <p class="fine">Descargar e instalar Gestrics es gratis. Usarlo requiere una licencia, que se activa dentro de la propia app. Es un pago único, no una suscripción.</p>
+        <div class="price-meta">Después de la prueba · Pago único · Hasta 2 equipos</div>
+        <div class="price-ctas">
+          <a class="download-cta" href="https://github.com/elfurrita/gestrics/releases/latest/download/Gestrics.Setup.1.1.0.exe">Descargar para Windows</a>
+          <a class="buy-cta" href="https://buy.stripe.com/7sYeVc0y5dXXebLf342go06" target="_blank" rel="noopener noreferrer">Comprar licencia</a>
+        </div>
+        <p class="fine">La prueba dura 14 días con todas las funciones abiertas, y no pide tarjeta. Después, usar Gestrics requiere una licencia, que se activa dentro de la propia app. Es un pago único, no una suscripción: sin renovación y sin nada que cancelar.</p>
         <p class="fine">Es posible que Windows muestre un aviso de "Windows protegió tu PC" durante la instalación, porque el instalador todavía no tiene firma digital. No significa que la app sea insegura: haz clic en <strong>Más información</strong> y luego en <strong>Ejecutar de todas formas</strong>.</p>
       </div>
     </div>
