@@ -10,29 +10,6 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [Unreleased]
-
-### Added
-
-- **14-day free trial.** The whole application can be used, with no key and no
-  card, for fourteen days from the first time it is opened. A strip under the
-  header shows how many are left, turning from amber to red for the last three;
-  from there you can buy a license or enter one you already have. Once the time
-  is up, the application asks for a license to get back in and says so in those
-  words, instead of pointing you to a purchase email that never existed. Your
-  data stays where it was.
-
-### Changed
-
-- **The Terms of Use now cover the trial period.** Section 3 becomes "Trial
-  period, license to use and activation" and describes the fourteen days:
-  every feature, no key and no means of payment, counted on the device
-  itself. It previously said only that use was subject to payment and a
-  license key. Because this is a substantive change, the application asks
-  for the terms to be accepted again the next time it opens.
-
----
-
 ## [1.1.0] — 2026-08-30
 
 The first release that actually ships. It replaces the installer uploaded on
@@ -99,6 +76,13 @@ announced.
   name of each tax, the rates offered, the tax ID label and whether the invoice
   carries Veri*Factu. It was the only one of the two places where you pick it
   that said nothing — and it is the first one you go through.
+- **14-day free trial.** The whole application can be used, with no key and no
+  card, for fourteen days from the first time it is opened. A strip under the
+  header shows how many are left, turning from amber to red for the last three;
+  from there you can buy a license or enter one you already have. Once the time
+  is up, the application asks for a license to get back in and says so in those
+  words, instead of pointing you to a purchase email that never existed. Your
+  data stays where it was.
 
 ### Changed
 
@@ -158,6 +142,12 @@ announced.
   profile's twenty-seven fields. It is now "Name and tax country" and says where
   the rest —tax ID, address, IBAN— gets filled in, instead of implying an
   invoicing setup that stops halfway.
+- **The Terms of Use now cover the trial period.** Section 3 becomes "Trial
+  period, license to use and activation" and describes the fourteen days:
+  every feature, no key and no means of payment, counted on the device
+  itself. It previously said only that use was subject to payment and a
+  license key. Because this is a substantive change, the application asks
+  for the terms to be accepted again the next time it opens.
 
 ### Fixed
 

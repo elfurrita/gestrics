@@ -11,29 +11,6 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [Sin publicar]
-
-### Añadido
-
-- **Periodo de prueba de 14 días.** La aplicación se puede usar entera, sin
-  clave y sin tarjeta, durante catorce días desde la primera vez que se abre.
-  Una franja bajo la cabecera dice cuántos quedan, y en los tres últimos pasa
-  de ámbar a rojo; desde ahí se puede comprar la licencia o introducir una que
-  ya se tenga. Cumplido el plazo, la aplicación pide licencia para volver a
-  entrar y lo dice con esas palabras, en vez de mandar a buscar una clave de
-  compra que nunca hubo. Los datos siguen donde estaban.
-
-### Cambiado
-
-- **Los Términos de Uso recogen el periodo de prueba.** El punto 3 pasa a
-  llamarse "Periodo de prueba, licencia de uso y activación" y describe los
-  catorce días: todas las funciones, sin clave y sin medio de pago, contados
-  en el propio equipo. Antes decía solo que el uso estaba sujeto al pago y a
-  una clave de licencia. Al ser un cambio sustancial, la aplicación vuelve a
-  pedir que se acepten los términos la próxima vez que se abre.
-
----
-
 ## [1.1.0] — 2026-08-30
 
 Primera versión que se lanza de verdad. Sustituye al instalador que se subió el
@@ -102,6 +79,13 @@ publicación anunciaba.
   impuesto, los porcentajes que se ofrecen, la etiqueta del identificador
   fiscal y si la factura lleva Veri*Factu. Era el único de los dos sitios donde
   se elige que no lo contaba, y encima es el primero por el que se pasa.
+- **Periodo de prueba de 14 días.** La aplicación se puede usar entera, sin
+  clave y sin tarjeta, durante catorce días desde la primera vez que se abre.
+  Una franja bajo la cabecera dice cuántos quedan, y en los tres últimos pasa
+  de ámbar a rojo; desde ahí se puede comprar la licencia o introducir una que
+  ya se tenga. Cumplido el plazo, la aplicación pide licencia para volver a
+  entrar y lo dice con esas palabras, en vez de mandar a buscar una clave de
+  compra que nunca hubo. Los datos siguen donde estaban.
 
 ### Cambiado
 
@@ -163,6 +147,12 @@ publicación anunciaba.
   campos de los veintisiete del perfil. Ahora se llama «Nombre y país fiscal» y
   dice dónde se rellena el resto —identificador fiscal, dirección, IBAN—, en
   vez de dar por cerrada una facturación que se queda a medias.
+- **Los Términos de Uso recogen el periodo de prueba.** El punto 3 pasa a
+  llamarse "Periodo de prueba, licencia de uso y activación" y describe los
+  catorce días: todas las funciones, sin clave y sin medio de pago, contados
+  en el propio equipo. Antes decía solo que el uso estaba sujeto al pago y a
+  una clave de licencia. Al ser un cambio sustancial, la aplicación vuelve a
+  pedir que se acepten los términos la próxima vez que se abre.
 
 ### Corregido
 
