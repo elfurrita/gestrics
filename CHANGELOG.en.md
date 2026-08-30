@@ -10,7 +10,30 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [1.1.0]
+## [Unreleased]
+
+### Added
+
+- **14-day free trial.** The whole application can be used, with no key and no
+  card, for fourteen days from the first time it is opened. A strip under the
+  header shows how many are left, turning from amber to red for the last three;
+  from there you can buy a license or enter one you already have. Once the time
+  is up, the application asks for a license to get back in and says so in those
+  words, instead of pointing you to a purchase email that never existed. Your
+  data stays where it was.
+
+### Changed
+
+- **The Terms of Use now cover the trial period.** Section 3 becomes "Trial
+  period, license to use and activation" and describes the fourteen days:
+  every feature, no key and no means of payment, counted on the device
+  itself. It previously said only that use was subject to payment and a
+  license key. Because this is a substantive change, the application asks
+  for the terms to be accepted again the next time it opens.
+
+---
+
+## [1.1.0] — 2026-08-30
 
 The first release that actually ships. It replaces the installer uploaded on
 10 August under this same number: that build was produced before the licensing
@@ -45,6 +68,37 @@ announced.
   header and in Metrics are summarised in it. The most-billed one is suggested,
   but the choice is the translator's: it is usually the currency they think and
   pay taxes in, which need not be the one they earn most in.
+- **A support address inside the application**: in the translator profile, next
+  to the technical log download button, on the server-unavailable screen and on
+  the recovery screen after an error. It lived only on the website, so anyone
+  who got stuck inside the program had no one to write to without leaving to
+  look for it.
+- The license activation screen now says who to write to. The messages for a
+  suspended or blocked license, or one activated on too many devices, all ask
+  you to contact support, and that screen —the very first one, with the whole
+  app behind it— gave no address at all: the only one in the app lives in the
+  translator profile, on the far side of the door that won't open.
+- The setup guide can always be reopened, from Settings. It used to be a header
+  icon that only appeared if you had skipped the profile step, so anyone who
+  filled in their name —most people— lost the wizard and the tour for good. It
+  now sits next to Diagnostics, where the rest of the housekeeping lives, and
+  takes up no room in a header that has none to spare.
+- The empty contact list now says where to start. On a fresh install it was the
+  first thing you looked at —an icon, "No contacts" and nothing else— with both
+  doors in plain sight but neither announcing itself as the first step. It now
+  names both: the "New contact" tab above and the "Import contacts" button
+  below. It only shows while the list is genuinely empty, never when it is the
+  search box or the status filter that found nothing.
+- The new-project form now says where clients come from when there are none.
+  Anyone who buys the app for the invoicing goes straight to Projects and finds
+  the client dropdown with a single option, "pick one": clients are your
+  Outreach contacts, which is a different tab, under a different name, with
+  nothing tying the two together. The hint only shows while the list is empty.
+- The onboarding wizard now explains what the tax country decides, with the
+  same sentence the translator profile already used: that choice drives the
+  name of each tax, the rates offered, the tax ID label and whether the invoice
+  carries Veri*Factu. It was the only one of the two places where you pick it
+  that said nothing — and it is the first one you go through.
 
 ### Changed
 
@@ -84,8 +138,50 @@ announced.
   EUR/word" in Spanish, where it previously read "0.11" right below amounts
   written with a comma. The quote the client receives stays in English, with a
   point.
+- **The "server unavailable" screen no longer asks for a terminal command.** It
+  showed `cd server && npm start` to someone with no terminal —the local server
+  is started by the application itself— and no folder by that name even exists.
+  It now states the only thing a user can actually do: close Gestrics and open
+  it again, which relaunches the process.
+- Connecting your email is no longer required to get in. The onboarding
+  wizard's "Connect your email" step could not be skipped, does not close on
+  Escape or on an outside click, and covers the rest of the app — so anyone
+  without an app password to hand was locked out of what they had just
+  installed, even though projects, quotes and invoices work without email. It
+  can now be left for later: while it is still pending, the Settings gear
+  carries an amber dot that explains itself on hover, and any attempt to send
+  says so in the interface language instead of failing against the server.
+- The wizard's email step now says which account is connected, not just that one
+  is. A green tick with no address asks you to take its word for it, and that is
+  exactly the doubt that leads to retyping an app password that was fine.
+- The wizard's second step was called "Billing details" and collected two of the
+  profile's twenty-seven fields. It is now "Name and tax country" and says where
+  the rest —tax ID, address, IBAN— gets filled in, instead of implying an
+  invoicing setup that stops halfway.
 
 ### Fixed
+
+**Onboarding**
+
+- Switching email provider in the wizard left the previous provider's error on
+  screen: picking "Custom" after failing with Gmail still showed the notice
+  about the Gmail app password, below a form that was now asking for something
+  else.
+- With a "Custom" email provider, the "Use SSL/TLS" checkbox came ticked while
+  the suggested port was 587 — precisely the combination that cannot work, since
+  465 is TLS from the first byte and 587 is STARTTLS. Anyone who typed their own
+  server and left the suggested port failed on the first attempt without having
+  got anything wrong. The checkbox now starts unticked, matching 587, and
+  follows the port on the two values where the answer is not open to debate; on
+  any other (2525, 25, one of the provider's own) whatever you ticked by hand is
+  respected. This covers both forms, the wizard's and Settings'.
+- Connecting your email from the onboarding wizard left the Settings screen
+  looking as if no account existed —provider "Gmail", every field empty— with
+  the email already working. The wizard only wrote where the server reads to
+  send, and that screen is painted from somewhere else that nothing was
+  updating; for the same reason, reopening the wizard asked again for the
+  password of an account that was already connected. The password is still not
+  stored there.
 
 **Invoicing and tax**
 
@@ -108,6 +204,23 @@ announced.
   missed month from any screen.
 - Restoring a backup could issue the same month's invoice twice, each with its
   own number and its own ledger entry.
+- The label on the profile's tax-note field was hardcoded to "VAT / Tax note":
+  one country's tax names on the same line, whoever was looking. It now comes
+  from the fiscal profile like the rest of the app — "GST note" on an Indian
+  profile, and the translated generic when the country has no term of its own.
+- The IBAN placeholder suggested a Spanish-shaped number (`ES00 0000…`)
+  whatever the fiscal profile said. It is now neutral (`XX00 0000…`): it keeps
+  the hint about how an IBAN is grouped without assuming the country, and it
+  matches the BIC placeholder beside it.
+- The accounting CSV export hardcoded both tax column headers in Spanish
+  ("% IVA", "% IRPF"), ignoring the fiscal profile: a translator with a Mexican
+  profile got an "IRPF" column for what their country calls ISR, contradicting
+  the PDF of that same invoice. With the interface in English, the whole header
+  row, each row's status and the file name still came out in Spanish.
+- The "Correction history" for an invoice named the withholding tax generically
+  instead of by the name it has in the translator's country: with a Mexican
+  fiscal profile it read "Withholding" where the rest of the app already said
+  "ISR". The VAT on that same line was already correct.
 
 **Data and backups**
 
@@ -144,6 +257,10 @@ announced.
 - Email addresses with leading or trailing spaces are trimmed on save.
 - Deleting a contact could be blocked with no way out by glossary terms or
   recurring plans that no screen let you manage.
+- The notice that trims a batch send on reaching the daily limit left a literal
+  `{{remaining}}` on screen in its second sentence ("Sending to {{remaining}} of
+  8 contacts"), in both Spanish and English: the placeholder occurs twice in the
+  string and only the first one was being filled in.
 
 **Other**
 
@@ -152,6 +269,42 @@ announced.
   include the formats used in translation work.
 - Form examples no longer show addresses or numbers that looked like real data
   already filled in.
+- With Windows in dark mode, the application shell appeared flanked by two
+  almost-black bands. A dark-mode block inherited from the scaffolding template
+  had survived, redefining the background, text and border of an interface that
+  deliberately uses a light palette.
+- The email templates no longer carry the original installation translator's
+  identity anywhere in the installed application. A migration remained with
+  their name, their degree and their professional profiles written in plain
+  text, inside a file that is installed uncompressed.
+- An internal server crash now leaves a record in `send.log`. This is a
+  separate path from the error screen, which recorded its own failures before
+  and still does: this is about the process that stores your data. That it had
+  died was recorded nowhere at all, and the reason came down to a race: the log
+  is written through a stream that process shutdown does not wait for, so that
+  last line — the one explaining the crash — arrived or not with nothing to
+  guarantee it, and never arrived at all while the file had yet to be created.
+  It is now written straight to the file before exiting, and the application
+  also records that the internal server has terminated, which until now only
+  went to a console the installed version does not have.
+- An unexpected server failure no longer takes the last thing you did down with
+  it. The database saves lazily — changes pile up in memory and reach disk a
+  second later — and closing the application properly forces that save before
+  exiting. Crashing did not: there were two uncaught-exception handlers, and the
+  first killed the process before the second, the only one that saved, ever ran.
+  Any uncaught exception, or any unhandled promise rejection, threw away
+  whatever was pending: the contact you had just edited, the hours you had just
+  logged. All four exit paths now save.
+- Unexpected interface crashes left no trace in `send.log`. There were two
+  nested safety nets, and the inner one —the one that actually caught every
+  failure, being the closer of the two— only wrote to the browser console: the
+  very file the error screen asks you to attach carried not a line about that
+  crash. Only the outer net remains, and it does record the stack trace.
+- That error screen now appears in the active language. It carried all of its
+  text in Spanish and English at once, one below the other, and was the only
+  screen in the app that did not go through the translation system. On top of
+  that, while no language had been chosen it always fell back to Spanish, even
+  when the system was in English.
 
 ---
 

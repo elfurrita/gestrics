@@ -11,7 +11,30 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [1.1.0]
+## [Sin publicar]
+
+### Añadido
+
+- **Periodo de prueba de 14 días.** La aplicación se puede usar entera, sin
+  clave y sin tarjeta, durante catorce días desde la primera vez que se abre.
+  Una franja bajo la cabecera dice cuántos quedan, y en los tres últimos pasa
+  de ámbar a rojo; desde ahí se puede comprar la licencia o introducir una que
+  ya se tenga. Cumplido el plazo, la aplicación pide licencia para volver a
+  entrar y lo dice con esas palabras, en vez de mandar a buscar una clave de
+  compra que nunca hubo. Los datos siguen donde estaban.
+
+### Cambiado
+
+- **Los Términos de Uso recogen el periodo de prueba.** El punto 3 pasa a
+  llamarse "Periodo de prueba, licencia de uso y activación" y describe los
+  catorce días: todas las funciones, sin clave y sin medio de pago, contados
+  en el propio equipo. Antes decía solo que el uso estaba sujeto al pago y a
+  una clave de licencia. Al ser un cambio sustancial, la aplicación vuelve a
+  pedir que se acepten los términos la próxima vez que se abre.
+
+---
+
+## [1.1.0] — 2026-08-30
 
 Primera versión que se lanza de verdad. Sustituye al instalador que se subió el
 10 de agosto bajo este mismo número: aquel se generó antes de que existiera el
@@ -46,6 +69,39 @@ publicación anunciaba.
   resumen los totales de la cabecera y de Métricas. Se propone la que más se
   factura, pero la elección es del traductor: suele ser la divisa en la que
   piensa y paga impuestos, que no tiene por qué ser en la que más ingresa.
+- **Dirección de soporte dentro de la aplicación**: en el perfil del traductor,
+  junto al botón de descargar el registro técnico, en la pantalla de servidor no
+  disponible y en la de recuperación tras un error. Estaba solo en la web, así
+  que quien se atascaba dentro del programa no tenía a quién escribir sin salir
+  a buscarlo.
+- La pantalla de activación de licencia ya dice a quién escribir. Los mensajes
+  de licencia suspendida, bloqueada o activada en el máximo de equipos piden
+  contactar con soporte, y esa pantalla —la primera de todas, con la aplicación
+  entera detrás— no daba ninguna dirección: la única que hay vive en el perfil
+  del traductor, o sea al otro lado de la puerta que no se abre.
+- La guía de inicio se puede volver a abrir siempre, desde Configuración.
+  Estaba en un icono de la cabecera que solo aparecía si se había omitido el
+  paso del perfil, así que quien rellenó su nombre —lo más probable— perdía el
+  asistente y el recorrido para siempre. Ahora vive junto al Diagnóstico, que
+  es donde está el resto del mantenimiento, y no ocupa sitio en una cabecera
+  que no da más de sí.
+- La lista de contactos vacía dice por dónde se empieza. Recién instalada era lo
+  primero que se miraba —un icono, «Sin contactos» y nada más—, con las dos
+  puertas a la vista pero sin que ninguna se anunciara como el primer paso.
+  Ahora nombra las dos: la pestaña «Nuevo contacto» de arriba y el botón
+  «Importar contactos» de abajo. Solo aparece con la lista de verdad vacía,
+  nunca cuando es el buscador o el filtro de estado el que no encuentra nada.
+- El formulario de un proyecto nuevo dice de dónde salen los clientes cuando no
+  hay ninguno. Quien compra la aplicación por la facturación va derecho a
+  Proyectos y se encuentra el desplegable de cliente con una sola opción, la de
+  «elige uno»: los clientes son los contactos de Prospección, que es otra
+  pestaña, con otro nombre y sin nada que las relacione. La pista solo aparece
+  con la lista vacía.
+- El asistente de bienvenida ya explica qué decide el país fiscal, con la misma
+  frase que el perfil del traductor: de esa elección salen el nombre de cada
+  impuesto, los porcentajes que se ofrecen, la etiqueta del identificador
+  fiscal y si la factura lleva Veri*Factu. Era el único de los dos sitios donde
+  se elige que no lo contaba, y encima es el primero por el que se pasa.
 
 ### Cambiado
 
@@ -86,8 +142,52 @@ publicación anunciaba.
 - **La tarifa escribe el decimal según el idioma**: "0,11 EUR/pal" en español,
   donde antes ponía "0.11" justo debajo de importes con coma. El presupuesto
   que recibe el cliente sigue en inglés, con punto.
+- **La pantalla de "servidor no disponible" deja de pedir una orden de
+  terminal.** Enseñaba `cd server && npm start` a quien no tiene terminal —el
+  servidor local lo arranca la propia aplicación—, y encima esa carpeta no
+  existe con ese nombre. Ahora dice lo único que el usuario puede hacer de
+  verdad: cerrar Gestrics y volver a abrirlo, que relanza el proceso.
+- Conectar el correo deja de ser obligatorio para entrar. El paso «Conecta tu
+  correo» del asistente de bienvenida no se podía omitir, no se cierra con
+  Escape ni con un clic fuera y tapa el resto de la aplicación, así que quien no
+  tuviera a mano una contraseña de aplicación se quedaba fuera de lo que acababa
+  de instalar — aunque proyectos, presupuestos y facturas funcionan sin correo.
+  Ahora se puede dejar para luego: mientras siga pendiente, el engranaje de
+  Configuración lleva un punto ámbar que lo explica al pasar el ratón, y
+  cualquier intento de envío lo dice en el idioma de la interfaz en vez de
+  fallar contra el servidor.
+- El paso del correo del asistente dice qué cuenta hay conectada, no solo que
+  la hay. Un tick verde sin dirección obliga a fiarse, y es justo la duda que
+  lleva a reescribir una contraseña de aplicación que estaba bien.
+- El segundo paso del asistente se llamaba «Datos de facturación» y recogía dos
+  campos de los veintisiete del perfil. Ahora se llama «Nombre y país fiscal» y
+  dice dónde se rellena el resto —identificador fiscal, dirección, IBAN—, en
+  vez de dar por cerrada una facturación que se queda a medias.
 
 ### Corregido
+
+**Alta**
+
+- Cambiar de proveedor de correo en el asistente dejaba en pantalla el error
+  del proveedor anterior: elegir «Personalizado» después de fallar con Gmail
+  seguía enseñando el aviso sobre la contraseña de aplicación de Gmail, debajo
+  de un formulario que ya pedía otra cosa.
+- Con un proveedor de correo «Personalizado», la casilla «Usar SSL/TLS» venía
+  marcada mientras el puerto sugerido era el 587 — justo la combinación que no
+  funciona, porque 465 es TLS desde el primer byte y 587 es STARTTLS. Quien
+  escribiera su servidor y dejara el puerto sugerido fallaba en el primer
+  intento sin haberse equivocado en nada. Ahora la casilla arranca desmarcada,
+  a juego con el 587, y sigue al puerto en los dos valores donde la respuesta
+  no admite discusión; en cualquier otro (2525, 25, uno propio del proveedor)
+  se respeta lo que se haya marcado a mano. Vale para los dos formularios, el
+  del asistente y el de Configuración.
+- Conectar el correo desde el asistente de bienvenida dejaba la pantalla de
+  Configuración como si no hubiera ninguna cuenta —proveedor «Gmail» y los
+  campos vacíos— con el correo ya funcionando. El asistente solo guardaba donde
+  lee el servidor para enviar, y esa pantalla se pinta de otro sitio que nadie
+  actualizaba; por lo mismo, volver a abrir el asistente pedía otra vez la
+  contraseña de una cuenta que ya estaba conectada. La contraseña sigue sin
+  guardarse ahí.
 
 **Facturación y fiscalidad**
 
@@ -109,6 +209,25 @@ publicación anunciaba.
   recuperar el mes perdido desde ninguna pantalla.
 - Restaurar una copia de seguridad podía emitir dos veces la factura del mismo
   mes, cada una con su número y su asiento en el libro.
+- La etiqueta del campo de nota fiscal del perfil decía «Nota de IVA / TVA» a
+  fuego: dos nombres de impuesto de dos países concretos en el mismo renglón,
+  mirara quien mirara. Ahora sale del perfil fiscal como el resto de la
+  aplicación — «Nota de GST» con perfil de India, y el genérico traducido
+  cuando el país no tiene término propio.
+- El marcador de posición del IBAN proponía un número con forma española
+  (`ES00 0000…`) tuviera el perfil fiscal que tuviera. Ahora es neutro
+  (`XX00 0000…`): conserva la pista de cómo se agrupa un IBAN sin dar por
+  hecho el país, y hace juego con el del BIC de al lado.
+- La exportación contable a CSV escribía a fuego y en español las cabeceras de
+  los dos impuestos («% IVA», «% IRPF»), sin mirar el perfil fiscal: un
+  traductor con perfil de México recibía una columna «IRPF» de lo que en su
+  país es el ISR, contradiciendo al PDF de esa misma factura. Con la interfaz
+  en inglés salían igualmente en español la cabecera entera, el estado de cada
+  fila y el nombre del archivo.
+- El «Historial de rectificaciones» de una factura llamaba a la retención por su
+  nombre genérico en vez de por el que tiene en el país del traductor: con perfil
+  fiscal de México ponía «IRPF» donde el resto de la aplicación ya decía «ISR».
+  El IVA de esa misma línea sí salía bien.
 
 **Datos y copias de seguridad**
 
@@ -145,6 +264,10 @@ publicación anunciaba.
   guardar.
 - Borrar un contacto podía quedar bloqueado sin salida por términos de glosario
   o planes recurrentes que no había forma de gestionar desde ninguna pantalla.
+- El aviso que recorta un envío en lote al llegar al límite diario dejaba un
+  `{{remaining}}` literal a la vista en su segunda frase («Se enviará a
+  {{remaining}} de 8 contactos»), en español y en inglés: el hueco aparece dos
+  veces en la cadena y solo se rellenaba la primera.
 
 **Otros**
 
@@ -154,6 +277,44 @@ publicación anunciaba.
   puntos de la aplicación, e incluyen los propios de la traducción.
 - Los ejemplos de los formularios ya no muestran direcciones ni números que
   parecieran datos reales ya introducidos.
+- Con Windows en modo oscuro, el armazón de la aplicación aparecía flanqueado
+  por dos bandas casi negras. Sobrevivía un bloque de modo oscuro heredado de la
+  plantilla del andamiaje que redefinía el fondo, el texto y el borde de una
+  interfaz que usa una paleta clara a propósito.
+- Las plantillas de correo ya no llevan la identidad del traductor de la
+  instalación original en ninguna parte de la aplicación instalada. Quedaba una
+  migración con su nombre, su titulación y sus perfiles profesionales escritos
+  en claro, dentro de un archivo que se instala sin comprimir.
+- Una caída del servidor interno ya deja constancia en `send.log`. Es un camino
+  distinto del de la pantalla de error, que registraba y sigue registrando lo
+  suyo: aquí se trata del proceso que guarda los datos. Que se hubiera muerto
+  no quedaba anotado en ningún sitio, y el motivo dependía de una carrera: el
+  registro se escribe por un flujo que el cierre del proceso no espera, así que
+  ese último renglón —el que explica la caída— llegaba o no sin que nada lo
+  garantizara, y con el archivo aún sin estrenar no llegaba nunca. Ahora se
+  escribe directamente antes de salir, y la aplicación anota además que el
+  servidor interno ha terminado, cosa que hasta ahora solo iba a una consola
+  que la versión instalada no tiene.
+- Un fallo inesperado del servidor ya no se lleva por delante lo último que
+  hayas hecho. La base de datos se guarda en diferido —los cambios se acumulan
+  en memoria y bajan a disco un segundo después—, y cerrar la aplicación por
+  las buenas fuerza ese guardado antes de salir. Estrellarse, en cambio, no lo
+  hacía: había dos manejadores de excepciones no controladas y el primero
+  mataba el proceso antes de que el segundo, el único que guardaba, llegara a
+  ejecutarse. Cualquier excepción no capturada, o cualquier promesa rechazada
+  sin capturar, tiraba lo que estuviera pendiente: el contacto recién editado,
+  las horas recién anotadas. Ahora los cuatro caminos de salida guardan.
+- Los cierres inesperados de la interfaz no dejaban rastro en `send.log`.
+  Había dos redes de seguridad anidadas, y la interior —que era la que
+  atrapaba todos los fallos, por estar más cerca— solo escribía en la consola
+  del navegador: el archivo que la propia pantalla de error pide adjuntar
+  llegaba sin una línea sobre ese fallo. Queda solo la red exterior, que sí
+  registra la traza.
+- Esa pantalla de error aparece ya en el idioma activo. Llevaba todo su texto
+  en español y en inglés a la vez, uno debajo del otro, y era la única de la
+  aplicación que no pasaba por el sistema de traducción. Además, mientras no
+  se hubiera elegido idioma caía siempre en español, aunque el sistema
+  estuviera en inglés.
 
 ---
 
