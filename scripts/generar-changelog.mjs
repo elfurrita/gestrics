@@ -114,7 +114,7 @@ const pagina = `<!doctype html>
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header>
+<header id="arriba">
   <img src="icon.png" alt="Gestrics">
   <div class="title">Gestrics<span lang="en">Changelog</span><span lang="es">Historial de cambios</span></div>
   <div class="lang-toggle">
@@ -138,6 +138,8 @@ ${bloques}
 <footer>
   <span lang="en">Gestrics — <a href="index.html" style="color:inherit">outreachstudio</a> · Support: <a href="mailto:soporte@outreachstudio.app">soporte@outreachstudio.app</a> · <a href="changelog.html">Changelog</a></span>
   <span lang="es">Gestrics — <a href="index.html" style="color:inherit">outreachstudio</a> · Soporte: <a href="mailto:soporte@outreachstudio.app">soporte@outreachstudio.app</a> · <a href="changelog.html">Historial de cambios</a></span>
+  <a class="arriba" href="#arriba" lang="en" title="Back to top" aria-label="Back to top">↑</a>
+  <a class="arriba" href="#arriba" lang="es" title="Volver arriba" aria-label="Volver arriba">↑</a>
 </footer>
 <script src="lang-toggle.js"></script>
 </body>

@@ -235,6 +235,47 @@ article.changelog li {
   margin-bottom: 10px;
 }
 
+/* Volver arriba, solo en el historial: es la única página que pasa de seis mil
+   píxeles. Es un enlace de ancla, no un widget — el navegador ya sabe hacer
+   esto, y así funciona aunque el JavaScript no cargue.
+
+   Vive dentro del <footer> a propósito: el conmutador de idioma ya recorre
+   "footer [lang]", así que sale traducido sin tocar lang-toggle.js. Al ir
+   posicionado fijo, dónde esté en el documento no afecta a dónde se ve.
+
+   display:block en la base, no inline: el conmutador escribe display block o
+   none en el estilo en línea, pero sin JavaScript un <a> sería inline y no
+   admitiría ni el ancho ni el alto. El español lo tapa mientras tanto la red
+   de seguridad de footer [lang="es"], que gana por especificidad. */
+a.arriba {
+  position: fixed;
+  right: 24px;
+  bottom: 24px;
+  display: block;
+  width: 42px;
+  height: 42px;
+  line-height: 40px; /* 42 menos el borde de arriba y el de abajo */
+  text-align: center;
+  font-size: 18px;
+  border-radius: 50%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--mid);
+  text-decoration: none;
+  box-shadow: 0 2px 10px rgba(30, 45, 61, 0.12);
+}
+
+a.arriba:hover {
+  color: var(--dark);
+  border-color: var(--light);
+}
+
+/* Con salto suave, pero solo si el sistema no pide lo contrario: el
+   desplazamiento animado marea a quien tiene activado reducir movimiento. */
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+
 /* Red de seguridad por si el script no llega a cargar: se ve el inglés,
    nunca los dos idiomas encimados. */
 .page > [lang="es"],
