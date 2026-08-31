@@ -116,8 +116,6 @@ const pagina = `<!doctype html>
 <nav>
   <a href="index.html" lang="en">Home</a>
   <a href="index.html" lang="es">Inicio</a>
-  <a href="changelog.html" class="active" lang="en">Changelog</a>
-  <a href="changelog.html" class="active" lang="es">Historial de cambios</a>
   <a href="terms.html" lang="en">Terms of Use</a>
   <a href="terms.html" lang="es">Términos de Uso</a>
   <a href="privacy.html" lang="en">Privacy Policy</a>
@@ -129,8 +127,8 @@ ${bloques}
   </article>
 </main>
 <footer>
-  <span lang="en">Gestrics — <a href="index.html" style="color:inherit">outreachstudio</a> · Support: <a href="mailto:soporte@outreachstudio.app">soporte@outreachstudio.app</a></span>
-  <span lang="es">Gestrics — <a href="index.html" style="color:inherit">outreachstudio</a> · Soporte: <a href="mailto:soporte@outreachstudio.app">soporte@outreachstudio.app</a></span>
+  <span lang="en">Gestrics — <a href="index.html" style="color:inherit">outreachstudio</a> · Support: <a href="mailto:soporte@outreachstudio.app">soporte@outreachstudio.app</a> · <a href="changelog.html">Changelog</a></span>
+  <span lang="es">Gestrics — <a href="index.html" style="color:inherit">outreachstudio</a> · Soporte: <a href="mailto:soporte@outreachstudio.app">soporte@outreachstudio.app</a> · <a href="changelog.html">Historial de cambios</a></span>
 </footer>
 <script src="lang-toggle.js"></script>
 </body>
