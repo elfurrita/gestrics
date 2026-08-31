@@ -189,6 +189,52 @@ article code {
   font-size: 13px;
 }
 
+/* El historial de cambios reutiliza la tarjeta de las páginas legales, pero
+   tiene una jerarquía que aquellas no usan: versión, sección y, dentro de
+   algunas, un subtítulo por área. Sin esto salían con los tamaños por defecto
+   del navegador, que no se parecen a nada del resto del sitio. */
+
+article.changelog h2 {
+  font-size: 17px;
+  color: var(--dark);
+  margin: 40px 0 4px;
+  padding-top: 22px;
+  border-top: 1px solid var(--border);
+}
+
+article.changelog h2:first-of-type {
+  margin-top: 26px;
+}
+
+/* Mismo distintivo que las etiquetas de la aplicación: mono, versalitas y
+   espaciado ancho. Es lo que separa "Añadido" de un titular de verdad. */
+article.changelog h3 {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--light);
+  margin: 24px 0 6px;
+}
+
+/* La regla de arriba pone a cero el margen del primer h4 de la tarjeta, que
+   en las páginas legales es el primer apartado. Aquí no: aquí un h4 es un
+   subtítulo dentro de una sección y necesita aire por encima. */
+article.changelog h4,
+article.changelog h4:first-of-type {
+  margin-top: 20px;
+}
+
+article.changelog ul {
+  margin: 0;
+  padding-left: 20px;
+}
+
+article.changelog li {
+  margin-bottom: 10px;
+}
+
 /* Red de seguridad por si el script no llega a cargar: se ve el inglés,
    nunca los dos idiomas encimados. */
 .page > [lang="es"],
