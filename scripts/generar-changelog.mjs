@@ -65,6 +65,15 @@ function convertir(md, saltar) {
     if (t.startsWith("# ")) { cerrarTodo(); continue; }            // el h1 lo pone el marco
     if (saltar.test(t)) { cerrarTodo(); continue; }                // "ver la otra versión": lo hace el conmutador
 
+    // Definiciones de referencia del final del archivo:
+    //   [1.1.0]: https://github.com/.../releases/tag/v1.1.0
+    // En markdown NO se ven —son el destino de los corchetes de cada versión—,
+    // pero aquí se colaron como párrafos y publicaron cuatro URL de la página
+    // de releases al pie, que es exactamente lo que esta página existe para
+    // no hacer. Además los corchetes se quitan de los títulos, así que aquí
+    // no definen nada.
+    if (/^\[[^\]]+\]:\s/.test(t)) { cerrarTodo(); continue; }
+
     // Los corchetes de "## [1.1.0] — fecha" son convención de Keep a
     // Changelog para el archivo; en una página se leen como resto de markdown.
     if (t.startsWith("## ")) { cerrarTodo(); salida.push(`<h2>${enLinea(t.slice(3).replace(/^\[([^\]]+)\]/, "$1"))}</h2>`); continue; }
