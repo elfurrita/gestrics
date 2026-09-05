@@ -211,6 +211,21 @@ announced.
   instead of by the name it has in the translator's country: with a Mexican
   fiscal profile it read "Withholding" where the rest of the app already said
   "ISR". The VAT on that same line was already correct.
+- The warning about a negative tax rate named IVA and IRPF, two Spanish taxes,
+  regardless of the translator's country: a Mexican user was told the problem
+  was their IRPF, which does not exist there — their withholding is ISR — and an
+  Indian user, who only has GST, got the same. It now refers to "tax rates",
+  naming none of them.
+- Withholding was labelled "IRPF" on almost everyone's invoice. Only Spain and
+  Mexico had a name of their own for it, so a Colombian, Argentine or Chilean
+  translator — or anyone from the remaining countries — saw the Spanish tax
+  named where theirs belonged. When a country has no specific name, it now says
+  "Retención" (plain "Withholding" in the English interface). VAT is unchanged:
+  that one really is called the same across the Spanish-speaking world.
+- The reason field for a credit note asked for it "when changing VAT/IRPF" and
+  offered "VAT applied incorrectly" as the example, two lines below fields that
+  did call each tax by its own name. Those two sentences now use the country's
+  name as well.
 
 **Data and backups**
 
@@ -251,6 +266,60 @@ announced.
   `{{remaining}}` on screen in its second sentence ("Sending to {{remaining}} of
   8 contacts"), in both Spanish and English: the placeholder occurs twice in the
   string and only the first one was being filled in.
+
+**Sending email**
+
+- The same email could reach the client **three times**. If the connection
+  dropped right after the message was handed over — the server already had it
+  queued and only the confirmation was lost — the app treated it as failed and
+  sent it again up to three times, then reported an error. In outreach that
+  means the same cold email repeated to a prospect. Only failures known to have
+  happened before delivery are retried now, such as a temporary rejection of
+  the recipient; everything else is reported without sending again.
+- Every refusal from the mail server was announced as "check your app
+  password". An address that does not exist, a message that is too large or one
+  blocked by a spam filter all sent you off to retype a password that was
+  perfectly fine, with no way out: the check in Settings kept saying it was
+  correct. Each case now says what actually happened.
+- A server that stalled halfway could leave the app on "Sending…" for up to
+  half an hour — ten minutes per attempt, and it tried three times — with
+  nothing to click and no way to tell whether the email had gone out. Each
+  stage of the connection now has its own timeout.
+- The subject line could go out with unresolved variables. If it contained
+  "{{idiomas}}" or "{{especialidad}}" — the body template accepts both, and the
+  unresolved-variable warning treated them as fine — the client received the
+  literal braces in the subject line of a cold email. The contact's history
+  even stored the correctly resolved subject, so it did not show up there
+  either.
+- An empty attachment was sent as if nothing were wrong. A 0-byte file — an
+  export that failed halfway, or one the cloud had not finished downloading —
+  was accepted, listed as an attachment, and then silently dropped at send
+  time: the client got the email without the file and the app reported success.
+  It can no longer be added, and if one arrives empty by another route the send
+  stops and names it.
+- Saving the email settings when the file could not be written to disk — no
+  free space, no permissions, or an antivirus locking it — silently shut down
+  the app's internal server: the window stayed open and everything else stopped
+  responding without a single warning. It now explains the problem and the app
+  stays up.
+
+- A format that cannot be sent is now flagged when you pick the file, not when
+  you send. An .exe or a .docm was accepted as an attachment — the file
+  dialog's filter is only a hint, and picking "All files" got around it — sat
+  in the list like any other, and the rejection only arrived when you pressed
+  Send; in a batch, once per contact. It is now checked when you pick it and
+  when it is saved, with the same rule deliverables already used.
+- The sending warnings that were hardcoded in Spanish now read in the
+  interface language: a malformed recipient address, an attachment that is too
+  large, a format that is not accepted, more than five files, and the
+  send-rate limit. Until now only connection errors with the mail provider
+  were translated.
+- Changing the email account without typing the password said "Settings saved"
+  and changed nothing: the screen showed the new address while emails kept
+  going out from the previous one. Since the password is never pre-filled, all
+  it took was reopening Settings and editing the address. It now says the
+  password is needed to verify the account and leaves the dialog open with
+  everything you typed, instead of reporting as saved what was not.
 
 **Other**
 
@@ -295,6 +364,64 @@ announced.
   screen in the app that did not go through the translation system. On top of
   that, while no language had been chosen it always fell back to Spanish, even
   when the system was in English.
+- Every warning the app gives you when something cannot be done now reads in
+  the interface language. Until now a good part of them arrived in Spanish even
+  with the app set to English, because the text was written inside the program
+  and shown as-is. There are about fifty: contacts, jobs, invoices, recurring
+  plans, hours, expenses, glossary, deliverables, Stripe, licence and exchange
+  rates. Several also say more clearly what happened — that another contact
+  already uses that email, how many jobs have to go before one can be deleted,
+  or that an already-invoiced job has its amount frozen into its invoice.
+
+### Security
+
+The app's first security review, focused on what can realistically happen to a
+translator: a bad file you open yourself, and a web page open in your browser
+while Gestrics is running.
+
+- **Restoring an incomplete backup no longer deletes issued invoices.**
+  Restoring a backup made with an older version — one that did not yet save the
+  invoice ledger — emptied that ledger and reported success. And since invoice
+  numbering is derived from it, the next invoice was named 2026-001 again: a
+  number already sent to another client. The app now stops before touching
+  anything, tells you how many issued invoices would be lost and with which
+  numbers, and only continues if you confirm it explicitly.
+- **A backup with a tampered invoice ledger is never stored.** Ledger entries
+  are hash-chained precisely so that altering one shows; but on restore they
+  were written back as-is, unchecked. A hand-edited backup file could write
+  invented invoices for any amount. The whole chain is now verified before
+  anything is restored, and an entry that does not check out never reaches the
+  disk under any circumstances. If the backup's ledger is damaged, the app
+  tells you and offers to recover everything else - contacts, jobs, invoices -
+  leaving the ledger empty, rather than leaving you unable to restore at all.
+- **A restore that fails halfway no longer leaves your data halfway.**
+  Previously the tables were emptied and then filled row by row, skipping the
+  ones that failed: the result was "restored" with an error count beside it, and
+  an incomplete database. A restore is now a single operation — all of it or
+  none of it — and if something fails it tells you which row, with your data
+  untouched.
+- **The local server only answers requests addressed to 127.0.0.1.** Gestrics
+  runs a server on your machine so the app itself can talk to it. Even though it
+  only listened locally, a web page open in your browser could reach it by
+  pointing its own domain at your machine, and read your contacts, invoices and
+  stored keys from there. The app now checks which name it was called by and
+  turns away anything that is not your own.
+- **The date of the last licence check is now stored encrypted.** The 7-day
+  offline allowance hangs off it, and it sat in plain text inside
+  `license-config.json`: a date in a JSON file inviting you to change it in a
+  text editor. It is now encrypted like everything else, and a hand-written
+  date is discarded rather than trusted. This is the same rule already applied
+  to the trial record; this file had simply been left out. If the first launch
+  after updating happens offline, one online check is needed to regain the
+  offline allowance.
+- **An imported contact can no longer smuggle a formula into your exports.**
+  Excel and LibreOffice execute a cell that starts with `=`, `+`, `-` or `@`.
+  If you imported a contact list from an agency and one of its fields carried
+  a formula, it was stored as-is: exporting your contacts and opening the file
+  ran that formula on your machine. Those cells are now marked as text in CSV
+  and TSV exports. Amounts are left alone, so the CSV for your accountant
+  still adds up, and re-importing one of your own exports into Gestrics gives
+  back the original text.
 
 ---
 

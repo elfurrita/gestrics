@@ -218,6 +218,21 @@ publicación anunciaba.
   nombre genérico en vez de por el que tiene en el país del traductor: con perfil
   fiscal de México ponía «IRPF» donde el resto de la aplicación ya decía «ISR».
   El IVA de esa misma línea sí salía bien.
+- El aviso de un porcentaje de impuesto negativo nombraba el IVA y el IRPF, dos
+  impuestos españoles, sin mirar el país del traductor: uno mexicano leía que el
+  problema estaba en su IRPF, que no existe allí —su retención es el ISR—, y uno
+  indio, que solo tiene GST, lo mismo. Ahora habla de «los porcentajes de
+  impuestos», sin nombrar ninguno.
+- La retención salía llamada «IRPF» en la factura de casi todo el mundo. Solo
+  España y México tenían nombre propio para ella, así que un traductor
+  colombiano, argentino o chileno —o cualquiera de los demás países— veía el
+  nombre del impuesto español ahí donde debía ir el suyo. Ahora, cuando el país
+  no tiene un nombre concreto, pone «Retención» a secas. El IVA no cambia: ese
+  sí se llama igual en toda Hispanoamérica.
+- El motivo de una rectificativa pedía el cambio «al modificar IVA/IRPF» y
+  proponía de ejemplo «IVA aplicado incorrectamente», dos renglones por debajo
+  de unas casillas que sí llamaban a cada impuesto por su nombre. Ahora también
+  esas dos frases usan el del país.
 
 **Datos y copias de seguridad**
 
@@ -258,6 +273,62 @@ publicación anunciaba.
   `{{remaining}}` literal a la vista en su segunda frase («Se enviará a
   {{remaining}} de 8 contactos»), en español y en inglés: el hueco aparece dos
   veces en la cadena y solo se rellenaba la primera.
+
+**Envío de correo**
+
+- Un mismo correo podía llegarle al cliente **tres veces**. Si la conexión se
+  cortaba justo después de entregar el mensaje —el servidor ya lo tenía en
+  cola y lo único que se perdió fue la confirmación—, la aplicación lo daba
+  por fallido y volvía a mandarlo hasta tres veces, para acabar avisando de un
+  error. En prospección eso es el mismo correo en frío repetido a un cliente
+  potencial. Ahora solo se reintenta lo que se sabe ocurrido antes de la
+  entrega, como un rechazo temporal del destinatario; el resto se avisa sin
+  repetir el envío.
+- Cualquier negativa del servidor de correo se anunciaba como «verifica tu
+  contraseña de aplicación». Una dirección que no existe, un mensaje demasiado
+  grande o uno bloqueado por el filtro antispam mandaban a reescribir una
+  contraseña que estaba perfecta, sin ninguna salida: la comprobación de
+  Configuración seguía diciendo que era correcta. Cada caso dice ahora lo que
+  pasó de verdad.
+- Un servidor que se quedaba a medias podía dejar la aplicación en «Enviando…»
+  hasta media hora —diez minutos por intento, y lo intentaba tres veces— sin
+  nada que pulsar y sin saber si el correo había salido. Ahora cada fase de la
+  conexión tiene su propio límite de espera.
+- El asunto podía salir con las variables sin resolver. Si llevaba
+  «{{idiomas}}» o «{{especialidad}}» —la plantilla del cuerpo admite las dos, y
+  el aviso de variables sin resolver las daba por buenas—, el cliente recibía
+  las llaves literales en la línea de asunto de un correo en frío. El historial
+  del contacto guardaba además el asunto bien resuelto, así que ni ahí se veía.
+- Un adjunto vacío se enviaba como si nada. Un archivo de 0 bytes —un export
+  que falló a medias, o uno que la nube todavía no había bajado del todo— se
+  aceptaba, aparecía listado como adjunto y el envío lo descartaba sin decir
+  nada: el cliente recibía el correo sin el archivo y la aplicación informaba
+  de éxito. Ahora no se puede añadir, y si alguno llega vacío por otro camino
+  el envío se detiene y dice cuál es.
+- Guardar la configuración de correo cuando el archivo no se podía escribir en
+  disco —sin espacio libre, sin permisos o con un antivirus bloqueándolo—
+  apagaba en silencio el servidor interno de la aplicación: la ventana seguía
+  abierta y todo lo demás dejaba de responder sin un solo aviso. Ahora lo
+  explica y la aplicación sigue en pie.
+
+- Un formato que no se puede mandar se avisa al elegir el archivo, no al
+  enviar. Un .exe o un .docm se aceptaba como adjunto —el filtro del diálogo
+  de archivos es solo una sugerencia y basta con elegir «Todos los archivos»—,
+  se quedaba en la lista como uno más y el rechazo llegaba al pulsar Enviar;
+  en un lote, una vez por cada contacto. Ahora se comprueba al elegirlo y
+  también al guardarlo, con el mismo criterio que ya usaban los entregables.
+- Los avisos del envío que estaban escritos a fuego en español ahora salen en
+  el idioma de la interfaz: la dirección de destinatario mal escrita, el
+  adjunto demasiado grande, el formato no admitido, más de cinco archivos y el
+  límite de envíos seguidos. Hasta ahora solo se traducían los errores de
+  conexión con el proveedor de correo.
+- Cambiar la cuenta de correo sin escribir la contraseña decía «Configuración
+  guardada» y no cambiaba nada: la pantalla pasaba a mostrar la dirección
+  nueva mientras los correos seguían saliendo de la anterior. Como la
+  contraseña nunca se prerrellena, bastaba con reabrir Configuración y tocar el
+  correo. Ahora avisa de que hace falta la contraseña para verificar la cuenta
+  y deja el diálogo abierto con todo lo escrito, en vez de dar por guardado lo
+  que no lo estaba.
 
 **Otros**
 
@@ -305,6 +376,67 @@ publicación anunciaba.
   aplicación que no pasaba por el sistema de traducción. Además, mientras no
   se hubiera elegido idioma caía siempre en español, aunque el sistema
   estuviera en inglés.
+- Todos los avisos que la aplicación te da cuando algo no se puede hacer salen
+  ya en el idioma de la interfaz. Antes buena parte de ellos llegaba en español
+  aunque la tuvieras en inglés, porque el texto se escribía en el interior del
+  programa y se enseñaba tal cual. Son unos cincuenta: contactos, encargos,
+  facturas, planes recurrentes, horas, gastos, glosario, entregables, Stripe,
+  licencia y tipos de cambio. De paso varios dicen mejor lo que pasa — que ese
+  correo ya lo tiene otro contacto, cuántos encargos hay que quitar antes de
+  poder eliminarlo, o que un encargo ya facturado tiene el importe congelado en
+  su factura.
+
+### Seguridad
+
+Primera revisión de seguridad de la aplicación, centrada en lo que de verdad
+puede pasarle a un traductor: un archivo malo que abre él mismo, y una web
+abierta en el navegador mientras Gestrics está en marcha.
+
+- **Restaurar una copia de seguridad incompleta ya no borra las facturas
+  emitidas.** Restaurar una copia hecha con una versión anterior —de las que no
+  guardaban el libro de facturas— vaciaba ese libro y decía que todo había ido
+  bien. Y como la numeración se calcula a partir de él, la siguiente factura
+  volvía a llamarse 2026-001: un número que ya se le había enviado a otro
+  cliente. Ahora la aplicación se detiene antes de tocar nada, dice cuántas
+  facturas emitidas se perderían y con qué números, y solo sigue si lo
+  confirmas expresamente.
+- **Una copia con el libro de facturas manipulado no se guarda.** Los asientos
+  van encadenados por hash, precisamente para que alterar uno se note; pero al
+  restaurar se guardaban tal cual, sin comprobarlos. Un archivo de copia
+  editado a mano podía escribir facturas inventadas con el importe que se
+  quisiera. Ahora la cadena se verifica entera antes de restaurar nada, y un
+  asiento que no cuadre no llega al disco bajo ningún concepto. Si el libro de
+  la copia está dañado, la aplicación te lo dice y te ofrece recuperar todo lo
+  demás —contactos, encargos, facturas— dejando el libro vacío, en vez de
+  dejarte sin poder restaurar nada.
+- **Una restauración que falla a medias ya no deja los datos a medias.** Antes
+  se vaciaban las tablas y luego se iba fila por fila, saltando las que
+  fallaban: el resultado era "restaurado" con un recuento de errores al lado, y
+  una base de datos incompleta. Ahora la restauración es una sola operación —
+  entra entera o no entra nada— y si algo falla te dice qué fila fue, con tus
+  datos intactos.
+- **El servidor local solo atiende a quien pregunta por 127.0.0.1.** Gestrics
+  levanta un servidor en tu equipo para que la propia aplicación hable con él.
+  Aunque solo escuchaba en local, una web abierta en el navegador podía
+  alcanzarlo haciendo que su dominio apuntara a tu propio equipo, y leer desde
+  ahí tus contactos, tus facturas y tus claves guardadas. Ahora se comprueba
+  con qué nombre se ha llamado y se rechaza cualquiera que no sea el tuyo.
+- **La fecha de la última validación de la licencia se guarda cifrada.** De ella
+  cuelga el margen de 7 días que la aplicación concede sin conexión, y estaba en
+  claro dentro de `license-config.json`: una fecha en un JSON invitando a
+  cambiarla con el Bloc de notas. Ahora va cifrada como el resto, y una fecha
+  escrita a mano se descarta en vez de aceptarse. Es el mismo criterio que ya
+  se seguía con el registro del periodo de prueba; este archivo se había quedado
+  fuera. Si el primer arranque tras actualizar ocurre sin conexión, hará falta
+  una comprobación con red para volver a tener margen sin ella.
+- **Un contacto importado ya no puede colar una fórmula en tus exportaciones.**
+  Excel y LibreOffice ejecutan una celda que empiece por `=`, `+`, `-` o `@`.
+  Si importabas una lista de contactos de una agencia y alguno de sus campos
+  venía con una fórmula dentro, se guardaba tal cual: al exportar tus
+  contactos y abrir el archivo, la fórmula se ejecutaba en tu equipo. Ahora
+  esas celdas salen marcadas como texto en los CSV y TSV. Los importes no se
+  tocan, así que el CSV para tu asesor sigue sumando igual, y volver a
+  importar en Gestrics una exportación propia devuelve el texto original.
 
 ---
 
