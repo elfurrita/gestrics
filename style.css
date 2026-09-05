@@ -256,20 +256,60 @@ a.arriba {
   display: block;
   width: 42px;
   height: 42px;
-  line-height: 40px; /* 42 menos el borde de arriba y el de abajo */
-  text-align: center;
-  font-size: 18px;
+  /* El galón se centra por relleno, no por line-height: no es texto. Con
+     box-sizing global, 42 menos los dos bordes y los dos rellenos deja
+     exactamente los 16px del icono. */
+  padding: 12px;
   border-radius: 50%;
   background: var(--surface);
   border: 1px solid var(--border);
   color: var(--mid);
   text-decoration: none;
   box-shadow: 0 2px 10px rgba(30, 45, 61, 0.12);
+  transition: color 0.15s, border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+
+a.arriba svg {
+  display: block;
+  width: 16px;
+  height: 16px;
+  fill: none;
+  stroke: currentColor; /* así el color del hover llega también al trazo */
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 
 a.arriba:hover {
   color: var(--dark);
   border-color: var(--light);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(30, 45, 61, 0.16);
+}
+
+/* Aparece según se baja, sin JavaScript ni escuchas de scroll: la animación se
+   engancha al avance del propio desplazamiento en vez de a un reloj.
+
+   El @supports no es decorativo. Donde el navegador no entienda
+   animation-timeline, este bloque entero se ignora y el botón se queda visible
+   desde el principio, que es como estaba antes: se pierde el matiz, nunca el
+   botón. Por eso la opacidad 0 vive aquí dentro y no en la regla de arriba.
+
+   La visibilidad se apaga solo en el 0% exacto. Con opacidad 0 a secas el
+   botón seguiría recibiendo clics mientras es invisible, y una esquina que
+   responde sin verse es peor que no tener botón. */
+@supports (animation-timeline: scroll()) {
+  a.arriba {
+    animation: asomar-arriba linear both;
+    animation-timeline: scroll(root block);
+    animation-range: 200px 700px;
+  }
+
+  @keyframes asomar-arriba {
+    0%   { opacity: 0; visibility: hidden; }
+    1%   { opacity: 0; visibility: visible; }
+    100% { opacity: 1; visibility: visible; }
+  }
 }
 
 /* Con salto suave, pero solo si el sistema no pide lo contrario: el
