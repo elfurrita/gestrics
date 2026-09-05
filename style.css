@@ -235,9 +235,11 @@ article.changelog li {
   margin-bottom: 10px;
 }
 
-/* Volver arriba, solo en el historial: es la única página que pasa de seis mil
-   píxeles. Es un enlace de ancla, no un widget — el navegador ya sabe hacer
-   esto, y así funciona aunque el JavaScript no cargue.
+/* Volver arriba, en las cuatro páginas. Es un enlace de ancla, no un widget —
+   el navegador ya sabe hacer esto, y así funciona aunque el JavaScript no
+   cargue. Empezó solo en el historial, que es el que pasa de seis mil píxeles,
+   pero las otras tres también son largas y quien llega al pie de cualquiera
+   tiene el mismo problema.
 
    Vive dentro del <footer> a propósito: el conmutador de idioma ya recorre
    "footer [lang]", así que sale traducido sin tocar lang-toggle.js. Al ir
