@@ -36,12 +36,30 @@ function escapar(s) {
 // El orden importa: primero se escapa, y solo después se meten etiquetas.
 // Al revés, un < del texto se comería el HTML recién generado.
 function enLinea(s) {
-  return escapar(s)
-    .replace(/`([^`]+)`/g, "<code>$1</code>")
+  // Los tramos de código se apartan lo primero y vuelven al final. Dentro de
+  // ellos una barra invertida es texto —una ruta de Windows—, no un escape, y
+  // quitarla rompería la ruta.
+  // El marcador <cN> no puede chocar con el texto: escapar() ya ha convertido
+  // todo "<" en &lt;, así que a esta altura no queda ninguno del original.
+  const codigos = [];
+  let t = escapar(s).replace(/`([^`]+)`/g, (_, c) => "<c" + (codigos.push(c) - 1) + ">");
+
+  t = t
     // No greedy: hay negritas que llevan dentro un asterisco suelto
     // (Veri*Factu), y [^*]+ las partiría por la mitad.
     .replace(/\*\*(.+?)\*\*/g, "<strong>$1</strong>")
-    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>');
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2">$1</a>')
+    // Escapes de markdown. La barra invertida ante un signo de puntuación no se
+    // imprime: solo evita que markdown lea el signo. Los changelogs escriben
+    // "Veri\*Factu" en la 1.0.0 y "Veri*Factu" en la 1.1.0 —las dos formas son
+    // válidas—, y sin esto la primera publicaba la barra a la vista.
+    //
+    // Va la última a propósito: quitarla antes convertiría un \*\* escapado en
+    // negrita de verdad. Y solo ante puntuación ASCII, que es lo que permite
+    // CommonMark, para que un %APPDATA%\gestrics conserve la suya.
+    .replace(/\\([!-\/:-@\[-`{-~])/g, "$1");
+
+  return t.replace(/<c(\d+)>/g, (_, i) => "<code>" + codigos[i] + "</code>");
 }
 
 function convertir(md, saltar) {
