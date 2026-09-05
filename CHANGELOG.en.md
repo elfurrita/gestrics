@@ -10,7 +10,7 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [1.1.0] — 2026-08-30
+## [1.1.0] — 2026-09-05
 
 The first release that actually ships. It replaces the installer uploaded on
 10 August under this same number: that build was produced before the licensing
