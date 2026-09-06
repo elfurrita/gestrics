@@ -154,8 +154,8 @@ ${bloques}
   </article>
 </main>
 <footer>
-  <span lang="en">Gestrics — <a href="index.html" style="color:inherit">outreachstudio</a> · Support: <a href="mailto:soporte@outreachstudio.app">soporte@outreachstudio.app</a> · <a href="changelog.html">Changelog</a></span>
-  <span lang="es">Gestrics — <a href="index.html" style="color:inherit">outreachstudio</a> · Soporte: <a href="mailto:soporte@outreachstudio.app">soporte@outreachstudio.app</a> · <a href="changelog.html">Historial de cambios</a></span>
+  <span lang="en">Gestrics — <a href="index.html" style="color:inherit">outreachstudio</a> · Support: <a href="mailto:contact@outreachstudio.app">contact@outreachstudio.app</a> · <a href="changelog.html">Changelog</a></span>
+  <span lang="es">Gestrics — <a href="index.html" style="color:inherit">outreachstudio</a> · Soporte: <a href="mailto:contact@outreachstudio.app">contact@outreachstudio.app</a> · <a href="changelog.html">Historial de cambios</a></span>
   <a class="arriba" href="#arriba" lang="en" title="Back to top" aria-label="Back to top"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 14l6-6 6 6"/></svg></a>
   <a class="arriba" href="#arriba" lang="es" title="Volver arriba" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 14l6-6 6 6"/></svg></a>
 </footer>
