@@ -11,7 +11,7 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [1.1.0] — 2026-09-05
+## [1.1.0] — 2026-09-07
 
 Primera versión que se lanza de verdad. Sustituye al instalador que se subió el
 10 de agosto bajo este mismo número: aquel se generó antes de que existiera el
@@ -89,6 +89,14 @@ publicación anunciaba.
 
 ### Cambiado
 
+- **Los términos de uso ya no afirman que la factura cumpla el Real Decreto
+  1007/2023.** El apartado de facturación decía que, con el perfil España, la
+  aplicación genera documentos «siguiendo, en modalidad "No Veri*Factu", los
+  requisitos técnicos» de esa norma. No era exacto: el registro encadenado por
+  hash que lleva la aplicación es una medida propia de trazabilidad, y ni el
+  código QR ni la huella siguen el formato que exige la Orden HAC/1177/2024.
+  El texto explica ahora lo que de verdad hace y dice de forma expresa lo que
+  todavía no cumple, para que nadie se apoye en ello ante su asesoría.
 - **Renovación visual completa**: logotipo nuevo, iconos coherentes en toda la
   aplicación, ventanas emergentes con un diseño común, siluetas de carga en vez
   de ruedas giratorias, barras de desplazamiento propias, y un sistema único de
@@ -154,7 +162,163 @@ publicación anunciaba.
   una clave de licencia. Al ser un cambio sustancial, la aplicación vuelve a
   pedir que se acepten los términos la próxima vez que se abre.
 
+- **La dirección de soporte pasa a ser `contact@outreachstudio.app`.**
+  Sustituye a `soporte@`, y es la que sale en el perfil del traductor, en la
+  pantalla de servidor no disponible, en la de recuperación tras un error, en
+  la de activación de licencia y en la línea que pide adjuntar el registro de
+  envíos. Sale de una sola constante, así que las cinco cambian a la vez; la
+  web la anuncia igual.
+
 ### Corregido
+
+**Copia de seguridad**
+
+- **Restaurar una copia perdía once columnas por el camino, sin decir nada.** La
+  restauración escribe cada tabla nombrando sus columnas una a una, y las que se
+  habían añadido después nunca se añadieron ahí. Se perdían, entre otras: la
+  identidad del emisor congelada al facturar —con lo que una factura vieja
+  volvía a tomar tus datos de HOY—, el país fiscal con el que se emitió, la
+  fecha de operación, el estado de los recordatorios de cobro —tu cliente
+  recibía otra vez la reclamación entera de una factura que quizá ya había
+  pagado—, el enlace de pago de Stripe, y el marcador de entregable ya enviado.
+  El más silencioso: el periodo de una factura recurrente, que es lo que impide
+  facturar dos veces el mismo mes; sin él, restaurar bastaba para emitir la
+  mensualidad por duplicado. Ahora la copia devuelve exactamente lo que guardó,
+  y hay una comprobación que lo verifica exportando, restaurando y comparando.
+
+**Facturas y presupuestos**
+
+- **Una de cada diez facturas no sumaba su propio total.** El IVA y la retención
+  se redondean al céntimo, pero el total se calculaba sobre los decimales
+  completos, así que el bloque de totales podía contradecirse: con una base de
+  50,03 €, la factura decía 50,03 + 10,51 − 7,50 y un TOTAL de **53,03** en vez
+  de 53,04. Barriendo las bases entre 50 y 10.000 € con los tipos habituales,
+  descuadraban 1.160.062 de 11.940.012 combinaciones. Ahora cada importe se
+  redondea a la unidad mínima de su divisa —el yen no tiene céntimos, el dinar
+  kuwaití tiene tres— y el total es la suma de esas cifras, que es lo que se
+  paga.
+
+- **Las líneas del desglose CAT no sumaban su propio total.** Cada línea se
+  redondeaba por separado y el total salía de los importes exactos, así que la
+  suma de lo impreso podía separarse un céntimo de la cifra de abajo: con una
+  tarifa de 0,0333 €/palabra, cuatro líneas sumaban 43,92 € y el total decía
+  43,91 €. En el presupuesto invita a una consulta del cliente; en la factura el
+  descuadre iba contra la **base imponible**, que es justo lo que esas líneas
+  sirven para determinar. Ahora la diferencia se reparte sobre la línea de mayor
+  importe y el documento cuadra consigo mismo.
+
+- **Una factura sin fecha de emisión desaparecía del CSV contable.** Se
+  descartaba incluso al exportarlo todo sin acotar fechas, así que una factura
+  emitida podía no llegar nunca a tu asesoría sin que nada lo dijera. Ahora sale
+  en el listado completo, con la fecha en blanco para que se vea que hay algo que
+  corregir; en la exportación de un trimestre sigue sin salir, porque sin fecha
+  no se puede asignar a un periodo.
+
+- **Un nombre de cliente en hindi (o cualquier alfabeto índico) salía en
+  cuadraditos.** La fuente de respaldo que debía cubrirlos estaba buscada con un
+  nombre de archivo que no existe en Windows, así que nunca se usaba. Ya se
+  imprime bien, y el aviso interno que denunciaba los caracteres perdidos —que sí
+  funcionaba— deja de saltar.
+
+- **Aviso nuevo al emitir a un cliente con datos en árabe o hebreo.** El PDF
+  imprime esas letras del revés y sin unir, porque no compone texto de derecha a
+  izquierda. Como el nombre del destinatario es obligatorio en la factura, ahora
+  el diálogo lo advierte antes de emitir en vez de dejarte descubrirlo en el
+  documento ya enviado.
+
+- **Un país escrito sin tildes dejaba la factura sin su mención obligatoria.**
+  El desplegable de la ficha guarda nombres canónicos, pero al **importar
+  contactos** desde una hoja de cálculo se guarda lo que traiga el archivo:
+  «Espana», «Belgica», «Paises Bajos», «Deutschland», «Holanda», «USA»… Ninguno
+  se reconocía, y un país que no se reconoce hacía que la aplicación no
+  imprimiera la mención de inversión del sujeto pasivo en una factura
+  intracomunitaria. Ahora los acentos, los puntos y los endónimos más corrientes
+  se resuelven igual. Y cuando el país sigue sin reconocerse, el diálogo de
+  emisión **avisa antes de emitir** en vez de callar.
+
+- **Editar una factura ya cobrada le borraba la fecha de cobro.** Bastaba con
+  abrir la factura y volver a guardar, aunque no cambiaras nada: el diálogo no
+  envía la fecha de cobro, y el servidor la ponía a vacío igualmente. A partir de
+  ahí, el CSV para tu asesoría declaraba esa factura como **pendiente** y con la
+  columna de fecha de cobro vacía, desaparecía de «Cobrado» y del tiempo medio de
+  cobro en Métricas, y la ficha volvía a ofrecerte generar un enlace de pago para
+  algo que tu cliente ya había pagado.
+
+- **El vencimiento por defecto contaba desde hoy, no desde la fecha de la
+  factura.** Una factura con fecha anterior salía diciendo «30 días» y venciendo
+  a 47. Además, la suma se hacía en horas: el día en que acaba el horario de
+  verano dura 25, así que el plazo caía en la víspera. Ahora son 30 días desde la
+  fecha de la factura, contados en días.
+
+- **Las fechas se corrían un día si no trabajas en el huso de Madrid.** Una
+  fecha guardada como `2026-08-20` se interpretaba como medianoche UTC, así que
+  en México, Estados Unidos, Brasil, Chile, Colombia, Perú, Argentina o Canadá
+  se veía y se imprimía como el 19. Afectaba a todo a la vez: la fecha de
+  expedición y el vencimiento de la factura, la validez del presupuesto, la
+  fecha de operación, y cada fecha de la interfaz. Al escribir fallaba en el
+  sentido contrario —se usaba el día UTC—, de modo que facturar por la tarde en
+  México emitía con la **fecha del día siguiente**, y esa fecha queda congelada
+  en el libro de facturas. Los avisos también iban corridos: una factura
+  aparecía como vencida el mismo día de su vencimiento, y el **recordatorio de
+  cobro le llegaba al cliente un día antes de tocar**.
+
+- **Se podía emitir una factura sin tus propios datos fiscales.** Hasta ahora
+  el identificador fiscal y el domicilio eran campos opcionales de
+  Configuración, así que una instalación recién estrenada podía generar una
+  factura cuyo emisor era solo un nombre. Una factura así no es válida en
+  ningún país. Ahora la aplicación se niega a emitirla y dice exactamente qué
+  campos faltan y dónde rellenarlos; la factura rechazada no consume número ni
+  deja rastro. Los datos del cliente no se bloquean —su identificador fiscal no
+  siempre es obligatorio, y exigirlo impediría facturar a un particular—, pero
+  el diálogo de emisión avisa si faltan y explica cuándo importan.
+
+- **Corregir una factura ya emitida dejaba circulando dos documentos con el
+  mismo número.** Al cambiar el IVA o la retención de una factura enviada, la
+  aplicación pedía un motivo y anotaba la rectificación en su libro interno,
+  pero el PDF seguía saliendo con el número y la fecha originales y los
+  importes nuevos: el cliente acababa con dos papeles distintos que decían ser
+  la factura 2026-001. El código QR, que sí leía el asiento correcto, además
+  contradecía a la cabecera impresa justo encima. Ahora el documento se emite
+  como lo que es — «RECTIFICATIVE INVOICE #R-2026-001», con su propia fecha, la
+  factura que corrige, el motivo y el importe rectificado — y el QR concuerda
+  con la cabecera. La ficha del proyecto y el archivo adjunto al correo usan
+  también ese número.
+
+- **La factura decía dos cosas distintas sobre cuándo hay que pagarla, y
+  ninguna era la tuya.** Arriba a la derecha ponía «Payment due: 30 days end of
+  month» y a media página «Payment due upon receipt»: las dos frases estaban
+  escritas a fuego y se contradecían, mientras que la fecha de vencimiento que
+  tú habías elegido al emitir no se imprimía en ninguna parte. Ahora la factura
+  muestra esa fecha real, junto a la de emisión. Si la dejas en blanco no se
+  imprime nada, en vez de inventar un plazo.
+- **Las «Notas en factura» no salían en la factura.** El diálogo de emisión pide
+  ese texto con esa misma etiqueta y sugiere usarlo para el número de cuenta o
+  las condiciones de pago; luego se guardaba y no aparecía nunca en el
+  documento. Ahora se imprime bajo las condiciones de pago, con su propia página
+  si hace falta y sin recortarlo — es el sitio donde se escribe una mención
+  legal, como la inversión del sujeto pasivo de una factura intracomunitaria.
+- **Cambiar tus datos reescribía las facturas ya enviadas.** El nombre, el
+  identificador fiscal, la dirección y los datos bancarios del emisor se leían
+  de Configuración cada vez que se descargaba un PDF, no de lo que había al
+  emitir. Mudarte, corregir una errata o pasar de autónomo a sociedad cambiaba
+  quién figuraba como emisor en **todas** las facturas anteriores, incluidas las
+  que el cliente ya tenía. Ahora esa identidad queda congelada en la factura, y
+  el QR también deja de atribuir una factura antigua a un identificador nuevo.
+  Las facturas emitidas antes de este cambio siguen comportándose como hasta
+  ahora, porque no tienen nada congelado que mostrar.
+
+- **El nombre de un cliente extranjero se destruía en el PDF.** Los dos
+  documentos se generaban con las fuentes estándar del formato PDF, que solo
+  cubren el alfabeto latino occidental. Cualquier otro carácter salía como
+  basura, sin ningún aviso: una agencia polaca llamada «Biuro Tłumaczeń
+  Sp. z o.o.» aparecía impresa como «Biuro T'VÖ7eB7.». Lo mismo
+  con el checo, el turco, el rumano, el griego, el cirílico, el japonés, el
+  chino y el coreano — y el nombre del destinatario es un dato obligatorio de
+  la factura. Solo se libraban los acentos españoles y el símbolo del euro, por
+  lo que facturando dentro de España no se veía nunca. Ahora los dos documentos
+  incrustan una fuente completa, con respaldo automático para los alfabetos que
+  esa fuente no cubra, y lo que ninguna fuente instalada sepa representar queda
+  anotado en el registro de la aplicación en vez de desaparecer sin más.
 
 **Alta**
 

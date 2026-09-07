@@ -10,7 +10,7 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [1.1.0] — 2026-09-05
+## [1.1.0] — 2026-09-07
 
 The first release that actually ships. It replaces the installer uploaded on
 10 August under this same number: that build was produced before the licensing
@@ -86,6 +86,15 @@ announced.
 
 ### Changed
 
+- **The terms of use no longer claim the invoice complies with Spanish Royal
+  Decree 1007/2023.** The invoicing section said that, on the Spain profile,
+  the app generates documents "following, in 'No Veri*Factu' mode, the
+  technical requirements" of that decree. That was not accurate: the
+  hash-chained record the app keeps is its own traceability measure, and
+  neither the QR code nor the hash follows the format required by Order
+  HAC/1177/2024. The text now describes what it actually does and states
+  plainly what it does not yet meet, so nobody relies on it with their
+  accountant.
 - **Full visual overhaul**: new wordmark, consistent icons throughout, a shared
   design for dialogs, skeleton placeholders instead of spinners, custom
   scrollbars, and a single system of corner radii and shadows.
@@ -149,7 +158,157 @@ announced.
   license key. Because this is a substantive change, the application asks
   for the terms to be accepted again the next time it opens.
 
+- **The support address is now `contact@outreachstudio.app`.** It replaces
+  `soporte@`, and it is the one shown in the translator profile, on the
+  "server unavailable" screen, on the recovery screen after an error, on the
+  licence activation screen and on the line that asks for the send log to be
+  attached. It comes from a single constant, so all five change together; the
+  website advertises the same one.
+
 ### Fixed
+
+**Backup**
+
+- **Restoring a backup silently dropped eleven columns.** The restore
+  writes each table naming its columns one by one, and the ones added later were
+  never added there. Among the losses: the issuer identity frozen at invoicing
+  time — so an old invoice went back to using your CURRENT details — the tax
+  country it was issued under, the date of supply, the payment-reminder state —
+  your client received the whole chasing sequence again for an invoice they may
+  already have paid — the Stripe payment link, and the flag marking a deliverable
+  as already sent. The quietest one: the period of a recurring invoice, which is
+  what stops the same month being invoiced twice; without it, restoring was
+  enough to issue that month's invoice a second time. A backup now returns
+  exactly what it stored, and a check verifies it by exporting, restoring and
+  comparing.
+
+**Invoices and quotes**
+
+- **One invoice in ten did not add up to its own total.** VAT and withholding are
+  rounded to the cent, but the total was computed on the full decimals, so the
+  totals block could contradict itself: on a €50.03 base the invoice read
+  50.03 + 10.51 − 7.50 with a TOTAL of **53.03** instead of 53.04. Sweeping bases
+  from €50 to €10,000 at the usual rates, 1,160,062 of 11,940,012 combinations
+  failed to add up. Each amount is now rounded to its currency's smallest unit —
+  the yen has no cents, the Kuwaiti dinar has three — and the total is the sum of
+  those figures, which is what gets paid.
+
+- **The CAT breakdown lines did not add up to their own total.** Each line was
+  rounded on its own while the total came from the exact amounts, so the printed
+  lines could differ from the figure below by a cent: at €0.0333 per word, four
+  lines added up to €43.92 while the total read €43.91. On a quote that invites a
+  question from the client; on an invoice the mismatch was against the **taxable
+  base**, which is precisely what those lines exist to determine. The difference
+  is now allocated to the largest line and the document adds up.
+
+- **An invoice with no issue date vanished from the accounting CSV.** It was
+  dropped even when exporting everything with no date range, so an issued invoice
+  could simply never reach your accountant without anything saying so. It now
+  appears in the full listing, with the date column blank so the problem is
+  visible; a quarterly export still leaves it out, since without a date it cannot
+  be assigned to a period.
+
+- **A client name in Hindi (or any Indic script) came out as empty boxes.** The
+  fallback font meant to cover them was looked up under a filename that does not
+  exist on Windows, so it was never used. It now prints correctly, and the
+  internal warning that reported the lost characters — which did work — stops
+  firing.
+
+- **New warning when invoicing a client whose details are in Arabic or Hebrew.**
+  The PDF prints those letters reversed and unjoined, because it does not lay out
+  right-to-left text. Since the recipient's name is mandatory on an invoice, the
+  dialog now warns you before issuing instead of letting you find out in the
+  document you already sent.
+
+- **A country written without accents left the invoice missing its mandatory
+  wording.** The dropdown on the client card stores canonical names, but
+  **importing contacts** from a spreadsheet stores whatever the file says:
+  "Espana", "Belgica", "Paises Bajos", "Deutschland", "Holanda", "USA"… None
+  were recognised, and an unrecognised country meant the app did not print the
+  reverse-charge wording on an intra-EU invoice. Accents, dots and the most
+  common endonyms now resolve alike. And when the country still isn't
+  recognised, the issuing dialog **warns before you issue** instead of staying
+  silent.
+
+- **Editing a paid invoice wiped its payment date.** Just opening the invoice and
+  saving again was enough, even without changing anything: the dialog doesn't
+  send the payment date, and the server blanked it anyway. From then on, the CSV
+  for your accountant reported that invoice as **unpaid** with an empty
+  payment-date column, it dropped out of "Collected" and out of the average
+  time-to-payment in Metrics, and the job card offered to generate a payment link
+  again for something your client had already paid.
+
+- **The default due date counted from today, not from the invoice date.** An
+  invoice dated earlier said "30 days" and fell due after 47. The sum was also
+  done in hours: the day daylight saving ends is 25 hours long, so the term
+  landed a day early. It is now 30 days from the invoice date, counted in days.
+
+- **Dates were off by one day outside the Madrid time zone.** A date stored as
+  `2026-08-20` was read as midnight UTC, so in Mexico, the United States,
+  Brazil, Chile, Colombia, Peru, Argentina or Canada it was shown and printed as
+  the 19th. It affected everything at once: the invoice issue and due dates, the
+  quote's validity, the date of supply, and every date in the interface. Writing
+  failed the other way round — the UTC day was used — so invoicing in the
+  afternoon in Mexico issued the document with **tomorrow's date**, and that date
+  is frozen into the invoice ledger. Alerts were off too: an invoice showed as
+  overdue on its own due date, and the **payment reminder reached the client a
+  day early**.
+
+- **You could issue an invoice without your own tax details.** Until now the tax
+  ID and address were optional fields in Settings, so a fresh installation could
+  generate an invoice whose issuer was just a name. Such an invoice is not valid
+  anywhere. The app now refuses to issue it and says exactly which fields are
+  missing and where to fill them in; the rejected invoice consumes no number and
+  leaves no trace. The client's details are not blocked — their tax ID is not
+  always mandatory, and requiring it would prevent invoicing a private
+  individual — but the issuing dialog warns when they are missing and explains
+  when they matter.
+
+- **Correcting an issued invoice left two documents in circulation under the
+  same number.** When you changed the VAT or withholding on an invoice you had
+  already sent, the app asked for a reason and recorded the correction in its
+  internal ledger, but the PDF still came out with the original number and date
+  and the new amounts: the client ended up with two different pieces of paper
+  both claiming to be invoice 2026-001. The QR code, which did read the right
+  ledger entry, also contradicted the heading printed right above it. The
+  document is now issued as what it is — "RECTIFICATIVE INVOICE #R-2026-001",
+  with its own date, the invoice it corrects, the reason and the rectified
+  amount — and the QR agrees with the heading. The project card and the email
+  attachment use that number too.
+
+- **The invoice said two different things about when it was due, and neither
+  was yours.** The top right read "Payment due: 30 days end of month" and
+  halfway down the page "Payment due upon receipt": both were hardcoded and
+  contradicted each other, while the due date you actually picked when issuing
+  never appeared anywhere. The invoice now shows that real date, next to the
+  issue date. Leave it blank and nothing is printed, rather than inventing a
+  term.
+- **"Invoice notes" did not appear on the invoice.** The issuing dialog asks
+  for that text under exactly that label and suggests using it for an account
+  number or payment terms; it was then stored and never shown on the document.
+  It now prints below the payment terms, on its own page if needed and without
+  truncation — it is where a legal mention goes, such as the reverse charge on
+  an intra-EU invoice.
+- **Changing your own details rewrote invoices you had already sent.** The
+  issuer's name, tax ID, address and bank details were read from Settings every
+  time a PDF was downloaded, not from what they were at issue time. Moving
+  house, fixing a typo or incorporating changed who appeared as the issuer on
+  **every** earlier invoice, including the ones the client already had. That
+  identity is now frozen on the invoice, and the QR code likewise stops
+  attributing an old invoice to a new tax ID. Invoices issued before this
+  change behave as they did, since they have nothing frozen to show.
+
+- **A foreign client's name was destroyed in the PDF.** Both documents were
+  generated with the PDF format's standard fonts, which only cover the Western
+  Latin alphabet. Any other character came out as garbage, with no warning: a
+  Polish agency called "Biuro Tłumaczeń Sp. z o.o." was printed as
+  "Biuro T'VÖ7eB7.". The same went for Czech, Turkish, Romanian,
+  Greek, Cyrillic, Japanese, Chinese and Korean — and the recipient's name is a
+  mandatory invoice detail. Only Spanish accents and the euro sign were spared,
+  which is why invoicing within Spain never showed the problem. Both documents
+  now embed a full font, with automatic fallback for alphabets that font does
+  not cover, and anything no installed font can represent is recorded in the
+  application log instead of silently vanishing.
 
 **Onboarding**
 
