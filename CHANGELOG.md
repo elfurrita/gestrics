@@ -440,6 +440,14 @@ publicación anunciaba.
 
 **Envío de correo**
 
+- **Una contraseña ya guardada se veía igual que un campo que nunca tuvo
+  nada.** El servidor no devuelve nunca la contraseña de la cuenta de correo,
+  ni siquiera cifrada, así que el campo de Configuración aparecía vacío tanto
+  si había una cuenta conectada como si no. Quien volvía meses después no tenía
+  forma de saber si su correo seguía configurado. Ahora, cuando la hay, junto a
+  la etiqueta aparece un punto verde con «Ya hay una guardada», y el propio
+  campo dice «Déjalo en blanco para no cambiarla».
+
 - Un mismo correo podía llegarle al cliente **tres veces**. Si la conexión se
   cortaba justo después de entregar el mensaje —el servidor ya lo tenía en
   cola y lo único que se perdió fue la confirmación—, la aplicación lo daba
@@ -495,6 +503,13 @@ publicación anunciaba.
   que no lo estaba.
 
 **Otros**
+
+- **«Cancelar» en Configuración no revertía tres campos.** La contraseña de
+  aplicación, la clave de Stripe y la clave de licencia se escriben fuera del
+  borrador de ajustes —son texto para activar o verificar algo, no un ajuste
+  que se guarde—, así que cerrar con Cancelar las dejaba escritas y seguían
+  ahí al volver a abrir, como si no se hubiera cancelado nada. Ahora el modal
+  las limpia al abrirse.
 
 - Los indicadores de respuesta se quedaban en 0 tras la retirada de la
   detección automática de respuestas.

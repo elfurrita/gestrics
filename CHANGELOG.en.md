@@ -428,6 +428,14 @@ announced.
 
 **Sending email**
 
+- **An already-saved password looked exactly like a field that never had
+  one.** The server never returns the email account password, not even
+  encrypted, so the Settings field showed up empty whether or not an account
+  was connected. Anyone coming back months later had no way to tell if their
+  email was still set up. Now, when there is one, a green dot and “One is
+  already saved” appear next to the label, and the field itself says “Leave
+  blank to keep it unchanged”.
+
 - The same email could reach the client **three times**. If the connection
   dropped right after the message was handed over — the server already had it
   queued and only the confirmation was lost — the app treated it as failed and
@@ -481,6 +489,12 @@ announced.
   everything you typed, instead of reporting as saved what was not.
 
 **Other**
+
+- **“Cancel” in Settings did not revert three fields.** The app password, the
+  Stripe key and the licence key are typed outside the settings draft — they
+  are text used to activate or verify something, not a setting that gets saved
+  — so closing with Cancel left them there, still filled in on the next open,
+  as if nothing had been cancelled. The modal now clears them when it opens.
 
 - Response metrics were stuck at 0 after automatic reply detection was removed.
 - The file types accepted as attachments are the same everywhere in the app, and
