@@ -11,7 +11,7 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [1.1.0] — 2026-09-07
+## [1.1.0] — 2026-09-08
 
 Primera versión que se lanza de verdad. Sustituye al instalador que se subió el
 10 de agosto bajo este mismo número: aquel se generó antes de que existiera el
@@ -88,6 +88,22 @@ publicación anunciaba.
   compra que nunca hubo. Los datos siguen donde estaban.
 
 ### Cambiado
+
+- **La moneda principal se elige por su nombre, no por sus siglas.** El campo
+  del perfil enseña «Euro» o «Dólar estadounidense», con el código en el
+  tooltip, y la lista va ordenada alfabéticamente por ese nombre. Los
+  desplegables de divisa de un proyecto siguen con el código: van en línea y
+  estrechos, y ahí un nombre largo no cabe.
+- **El inglés de la aplicación deja de ser una traducción literal del
+  español.** Auditoría de los 867 pares leídos uno a uno: se quitaron los
+  calcos («E.g.:» donde va «e.g.», rayas españolas, órdenes de frase copiados)
+  y se unificaron los términos que tenían varias formas a la vez — «encargo»
+  era "job" doce veces y "assignment" una, y «factura rectificativa» llegó a
+  tener tres ingleses distintos, uno de ellos ("credit note") otro documento
+  diferente.
+- **El botón «Enviar encargo» pasa a llamarse «Enviar entregables».** Abría un
+  diálogo titulado «Enviar entregables», y lo que se manda son los archivos,
+  no el encargo.
 
 - **Los términos de uso ya no afirman que la factura cumpla el Real Decreto
   1007/2023.** El apartado de facturación decía que, con el perfil España, la
@@ -503,6 +519,14 @@ publicación anunciaba.
   que no lo estaba.
 
 **Otros**
+
+- **El desplegable de moneda principal salía entero en blanco.** Las 159
+  divisas estaban ahí, pero cada opción se pintaba sin texto y sin valor: el
+  campo leía dos propiedades que la lista no tiene. Además, sin divisa
+  guardada el navegador enseñaba la primera de la lista —el dírham de los
+  Emiratos— como si estuviera elegida; ahora la lista abre con una opción que
+  dice lo que la aplicación hace mientras no elijas: resumir por la divisa en
+  la que más factures.
 
 - **«Cancelar» en Configuración no revertía tres campos.** La contraseña de
   aplicación, la clave de Stripe y la clave de licencia se escriben fuera del

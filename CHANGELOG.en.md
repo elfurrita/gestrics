@@ -10,7 +10,7 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [1.1.0] — 2026-09-07
+## [1.1.0] — 2026-09-08
 
 The first release that actually ships. It replaces the installer uploaded on
 10 August under this same number: that build was produced before the licensing
@@ -85,6 +85,20 @@ announced.
   data stays where it was.
 
 ### Changed
+
+- **The main currency is now picked by name, not by its code.** The profile
+  field shows "Euro" or "US Dollar", with the code in the tooltip, and the
+  list is sorted alphabetically by that name. The currency dropdowns on a
+  project still show the code: they sit inline in narrow fields where a long
+  name does not fit.
+- **The app's English is no longer a literal translation of the Spanish.** An
+  audit of all 867 pairs, read one by one: calques were removed ("E.g.:" where
+  "e.g." belongs, Spanish dashes, sentence orders copied across) and terms that
+  had several forms at once were unified — "encargo" was "job" twelve times and
+  "assignment" once, and "factura rectificativa" had three different English
+  words, one of them ("credit note") a different document altogether.
+- **The "Send delivery" button is now "Send deliverables".** It opened a dialog
+  titled "Send deliverables", and what gets sent are the files, not the job.
 
 - **The terms of use no longer claim the invoice complies with Spanish Royal
   Decree 1007/2023.** The invoicing section said that, on the Spain profile,
@@ -489,6 +503,14 @@ announced.
   everything you typed, instead of reporting as saved what was not.
 
 **Other**
+
+- **The main currency dropdown came up completely blank.** All 159 currencies
+  were there, but every option rendered with no text and no value: the field
+  was reading two properties the list does not have. On top of that, with no
+  currency saved the browser showed the first one on the list — the UAE dirham
+  — as if it had been chosen; the list now opens with an option that says what
+  the app actually does until you pick one: summarise in whichever currency you
+  bill most.
 
 - **“Cancel” in Settings did not revert three fields.** The app password, the
   Stripe key and the licence key are typed outside the settings draft — they
