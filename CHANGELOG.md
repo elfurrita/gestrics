@@ -20,6 +20,12 @@ publicación anunciaba.
 
 ### Añadido
 
+- **Aviso de versión nueva.** La aplicación comprueba al arrancar si hay una
+  versión posterior publicada y, si la hay, lo dice en una franja bajo la
+  cabecera con el enlace de descarga. No descarga ni instala nada por su
+  cuenta. "Ahora no" silencia esa versión concreta, así que el aviso vuelve
+  cuando se publique la siguiente. Sin conexión, la franja simplemente no
+  aparece.
 - **Activación y validación de licencia.** La aplicación pide una licencia
   activa para usarse, y permite desactivar el equipo actual para poder
   activarla en otro.
@@ -88,6 +94,13 @@ publicación anunciaba.
   compra que nunca hubo. Los datos siguen donde estaban.
 
 ### Cambiado
+
+- **La política de privacidad enumera también la comprobación de versión.**
+  Es la cuarta conexión que hace la aplicación, junto al servidor de correo,
+  Keygen y los tipos de cambio, y esa lista está para ser completa. No se
+  envía ningún dato —es una petición de lectura de un archivo estático—, pero
+  ahora lo dice. Al ser un cambio de la lista de tratamientos, la aplicación
+  vuelve a pedir que se acepten los textos legales la próxima vez que se abre.
 
 - **La moneda principal se elige por su nombre, no por sus siglas.** El campo
   del perfil enseña «Euro» o «Dólar estadounidense», con el código en el

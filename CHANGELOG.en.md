@@ -19,6 +19,11 @@ announced.
 
 ### Added
 
+- **New-version notice.** On startup the app checks whether a later version has
+  been released and, if so, says so in a strip below the header with a download
+  link. It never downloads or installs anything on its own. "Not now" silences
+  that particular version, so the notice comes back when the next one ships.
+  Offline, the strip simply does not appear.
 - **Licence activation and validation.** The app requires an active licence to
   run, and lets you deactivate the current computer so you can activate it on
   another one.
@@ -85,6 +90,13 @@ announced.
   data stays where it was.
 
 ### Changed
+
+- **The privacy policy now also lists the version check.** It is the fourth
+  connection the app makes, alongside the mail server, Keygen and the exchange
+  rates, and that list exists in order to be complete. No data is sent — it is
+  a read request for a static file — but it now says so. Because this changes
+  the list of processing activities, the app asks for the legal texts to be
+  accepted again next time it opens.
 
 - **The main currency is now picked by name, not by its code.** The profile
   field shows "Euro" or "US Dollar", with the code in the tooltip, and the
