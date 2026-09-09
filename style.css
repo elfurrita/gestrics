@@ -91,51 +91,58 @@ main {
 .lang-toggle {
   display: inline-flex;
   margin-left: auto;
-  gap: 6px;
+  gap: 12px;
   flex-shrink: 0;
 }
 
 .lang-toggle button {
   display: inline-flex;
   align-items: center;
-  padding: 5px;
-  border: 1px solid transparent;
-  border-radius: 6px;
+  /* Sin recuadro: la bandera es el botón. Lo activo se marca con el mismo
+     subrayado verde de 2px que la navegación usa para la página actual — no
+     con una caja, y sin inventar un lenguaje nuevo. */
+  padding: 0 0 4px;
+  border: none;
+  border-bottom: 2px solid transparent;
   background: none;
   cursor: pointer;
   line-height: 0;
-  /* Sin seleccionar, la bandera baja de saturación y se apaga, para que la
-     activa se distinga sin leer nada. Pero no tanto como para dejar de
-     parecer una bandera: con 0.45 de opacidad y 0.35 de saturación, la
-     española quedaba en una barra parduzca irreconocible sobre el banner
-     oscuro, y hay que reconocerla para querer pulsarla. */
-  opacity: 0.62;
-  filter: saturate(0.65);
+  /* La inactiva se apaga, pero poco: hay que reconocer la bandera para querer
+     pulsarla. Con 0.45 de opacidad y 0.35 de saturación la española quedaba en
+     una barra parduzca irreconocible sobre el banner oscuro; con 0.62 y 0.65
+     —lo que había mientras eran pequeñas y llevaban caja— seguía tirando a
+     parda, y al agrandarlas se notaba más. De distinguir cuál está activa se
+     encarga el subrayado, no el apagado. */
+  opacity: 0.8;
+  filter: saturate(0.9);
   transition: opacity 0.15s ease, filter 0.15s ease, border-color 0.15s ease;
 }
 
 .lang-toggle button:hover {
-  opacity: 0.9;
-  filter: saturate(0.9);
+  opacity: 0.94;
+  filter: saturate(1);
 }
 
 .lang-toggle button.active {
   opacity: 1;
   filter: none;
-  border-color: rgba(255, 255, 255, 0.45);
-  background: rgba(255, 255, 255, 0.1);
+  border-bottom-color: var(--teal);
 }
 
 /* Foco visible: el botón ya no tiene texto, así que sin esto no habría
    ninguna pista de dónde está el cursor al navegar con teclado. */
 .lang-toggle button:focus-visible {
   outline: 2px solid var(--peach);
-  outline-offset: 1px;
+  outline-offset: 3px;
+  border-radius: 2px;
 }
 
 .bandera {
-  width: 22px;
-  height: 14px;
+  /* 2:1 exacto, que es el viewBox del SVG. Con la caja anterior de 22x14 la
+     proporción no cuadraba, así que el dibujo se encogía a 22x11 y quedaba
+     flotando dentro de su propio marco, con aire arriba y abajo. */
+  width: 34px;
+  height: 17px;
   display: block;
   border-radius: 2px;
   /* Un borde tenue despega del banner oscuro la franja azul de la británica
