@@ -361,20 +361,24 @@ a.arriba:hover {
     .flow { overflow-x: clip; }
 
     /* 1 · Las dos mitades de cada paso, cada una por su borde. */
-    .step .step-text { --desde: -44px; }
-    .step .shot { --desde: 44px; }
-    .step:nth-child(odd) .step-text { --desde: 44px; }
-    .step:nth-child(odd) .shot { --desde: -44px; }
+    .step .step-text { --desde: -90px; }
+    .step .shot { --desde: 90px; }
+    .step:nth-child(odd) .step-text { --desde: 90px; }
+    .step:nth-child(odd) .shot { --desde: -90px; }
 
     .step .step-text,
     .step .shot {
       animation: ensamblar linear both;
       animation-timeline: view();
-      animation-range: entry 5% entry 85%;
+      /* Termina en "cover", no en "entry": acabando dentro de la fase de
+         entrada la pieza quedaba ensamblada cerca del borde inferior, donde
+         nadie mira, y para cuando subia a la zona de lectura ya no se movia.
+         Ahora sigue viajando hasta estar bien dentro de la pantalla. */
+      animation-range: entry 15% cover 35%;
     }
 
     @keyframes ensamblar {
-      from { opacity: 0; transform: translate3d(var(--desde, 0), 12px, 0); }
+      from { opacity: 0; transform: translate3d(var(--desde, 0), 22px, 0); }
       to { opacity: 1; transform: none; }
     }
 
@@ -385,11 +389,11 @@ a.arriba:hover {
     .pricing .price-box {
       animation: crecer linear both;
       animation-timeline: view();
-      animation-range: entry 0% entry 75%;
+      animation-range: entry 10% cover 30%;
     }
 
     @keyframes crecer {
-      from { opacity: 0; transform: scale(0.94) translateY(16px); }
+      from { opacity: 0; transform: scale(0.88) translateY(28px); }
       to { opacity: 1; transform: none; }
     }
   }
