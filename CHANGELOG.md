@@ -374,6 +374,19 @@ publicación anunciaba.
 
 **Facturación y fiscalidad**
 
+- **Un plan recurrente podía saltarse su primer mes, y nadie lo reclamaba.** La
+  fecha de alta del plan se guarda en horario universal, pero se leía como si
+  fuera la hora local del traductor. Para quien trabaja al oeste de Greenwich,
+  un plan creado a primera hora del día 1 quedaba registrado como del mes
+  siguiente: esa mensualidad no salía nunca en los periodos pendientes, el plan
+  se daba por al día y el retainer se quedaba sin facturar sin ningún aviso. En
+  España el fallo no se veía, porque allí las dos lecturas coinciden.
+
+- **El aviso de facturación electrónica cambiaba de texto un día antes o
+  después de tiempo.** La fecha en que empieza a obligar el mandato de cada país
+  se comparaba contra el día universal en vez de contra el del calendario local,
+  así que el aviso podía adelantarse o retrasarse una jornada según el huso.
+
 - La retención aparece con el nombre que tiene en el país del emisor —ISR en
   México, IRPF en España— en el formulario, en la ficha y en el PDF. Antes decía
   "IRPF" siempre, de modo que una factura canadiense mostraba un impuesto
@@ -532,6 +545,13 @@ publicación anunciaba.
   que no lo estaba.
 
 **Otros**
+
+- **El periodo de prueba se ancla también en los datos ya guardados.** Antes
+  dependía únicamente de su propio archivo de registro, de modo que una
+  instalación con contactos, proyectos y facturas de semanas atrás podía volver
+  a presentarse como recién estrenada. Ahora, si ese registro falta, el inicio
+  se reconstruye a partir del dato más antiguo que haya en la base. No se guarda
+  nada nuevo: solo se leen fechas que ya estaban.
 
 - **El desplegable de moneda principal salía entero en blanco.** Las 159
   divisas estaban ahí, pero cada opción se pintaba sin texto y sin valor: el

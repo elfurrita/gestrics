@@ -360,6 +360,19 @@ announced.
 
 **Invoicing and tax**
 
+- **A recurring plan could skip its own first month, and nobody claimed it.**
+  The date a plan is created is stored in universal time, but it was read as if
+  it were the translator's local time. For anyone working west of Greenwich, a
+  plan created early on the 1st was recorded as belonging to the following
+  month: that instalment never showed up among the pending periods, the plan
+  counted as up to date, and the retainer went unbilled with no warning at all.
+  In Spain the bug was invisible, because there both readings agree.
+
+- **The e-invoicing notice switched its wording a day early or a day late.** The
+  date each country's mandate starts to apply was compared against the universal
+  day instead of the local calendar day, so the notice could move by one day
+  depending on the time zone.
+
 - Withholding tax now appears under the name it has in the issuer's country —
   ISR in Mexico, IRPF in Spain — in the form, on the invoice card and in the
   PDF. It previously always said "IRPF", so a Canadian invoice displayed a
@@ -515,6 +528,13 @@ announced.
   everything you typed, instead of reporting as saved what was not.
 
 **Other**
+
+- **The trial period is now anchored in the data already saved.** It previously
+  relied solely on its own record file, so an installation holding contacts,
+  projects and invoices from weeks earlier could still present itself as brand
+  new. Now, if that record is missing, the start is rebuilt from the oldest
+  entry in the database. Nothing new is stored: only dates that were already
+  there are read.
 
 - **The main currency dropdown came up completely blank.** All 159 currencies
   were there, but every option rendered with no text and no value: the field
