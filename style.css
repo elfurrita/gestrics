@@ -325,6 +325,43 @@ a.arriba:hover {
   html { scroll-behavior: smooth; }
 }
 
+/* Los bloques asoman al entrar en pantalla. Ligado al scroll y sin JavaScript:
+   cada uno lleva su propia linea de tiempo (view()), asi que las diez casillas
+   de la rejilla se escalonan solas segun van entrando, sin un retardo escrito
+   a mano para cada una.
+
+   Dos guardas, y ninguna es decorativa:
+
+   - prefers-reduced-motion: aqui hay desplazamiento de verdad y no solo un
+     fundido, asi que quien pide menos movimiento no ve ninguno. Por eso este
+     bloque la lleva y el del boton de volver arriba no: aquel solo cambia de
+     opacidad.
+   - @supports: y la opacidad 0 vive DENTRO, nunca en la regla base. Fuera,
+     un navegador que no entienda estas lineas de tiempo dejaria medio sitio
+     invisible para siempre, porque no habria nada que volviera a encenderlo.
+     Con ella dentro, lo peor que puede pasar es que no haya animacion.
+
+   El recorrido se queda dentro de la fase de entrada y termina al 75%: el
+   bloque esta a pleno color antes de acabar de entrar, que es lo que evita la
+   sensacion de estar leyendo algo que todavia se esta dibujando. */
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .flow .step,
+    .features .grid li,
+    .local .wrap,
+    .pricing .price-box {
+      animation: asomar linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 75%;
+    }
+
+    @keyframes asomar {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: none; }
+    }
+  }
+}
+
 /* Red de seguridad por si el script no llega a cargar: se ve el inglés,
    nunca los dos idiomas encimados. */
 .page > [lang="es"],
