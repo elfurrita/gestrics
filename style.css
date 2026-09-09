@@ -325,40 +325,82 @@ a.arriba:hover {
   html { scroll-behavior: smooth; }
 }
 
-/* Los bloques asoman al entrar en pantalla. Ligado al scroll y sin JavaScript:
-   cada uno lleva su propia linea de tiempo (view()), asi que las diez casillas
-   de la rejilla se escalonan solas segun van entrando, sin un retardo escrito
-   a mano para cada una.
+/* La portada se ensambla al bajar. Ligado al scroll y sin JavaScript: cada
+   pieza lleva su propia linea de tiempo con view(), asi que las casillas de la
+   rejilla se escalonan solas fila a fila, sin un retardo escrito a mano.
+
+   Las dos mitades de cada paso entran cada una por SU borde y se juntan en el
+   centro. La alternancia no es un capricho: la maqueta ya la tiene —en los
+   pasos impares el texto se va a la derecha y la captura a la izquierda—, asi
+   que cada pieza entra por el lado al que pertenece y el ensamblaje sale de la
+   estructura en vez de ir pegado encima.
 
    Dos guardas, y ninguna es decorativa:
 
-   - prefers-reduced-motion: aqui hay desplazamiento de verdad y no solo un
-     fundido, asi que quien pide menos movimiento no ve ninguno. Por eso este
-     bloque la lleva y el del boton de volver arriba no: aquel solo cambia de
-     opacidad.
-   - @supports: y la opacidad 0 vive DENTRO, nunca en la regla base. Fuera,
-     un navegador que no entienda estas lineas de tiempo dejaria medio sitio
+   - prefers-reduced-motion: aqui hay desplazamiento de verdad, no solo un
+     fundido. Por eso este bloque la lleva y el del boton de volver arriba no,
+     que solo cambia de opacidad.
+   - @supports: y la opacidad 0 vive DENTRO, nunca en la regla base. Fuera, un
+     navegador que no entienda estas lineas de tiempo dejaria medio sitio
      invisible para siempre, porque no habria nada que volviera a encenderlo.
      Con ella dentro, lo peor que puede pasar es que no haya animacion.
 
-   El recorrido se queda dentro de la fase de entrada y termina al 75%: el
-   bloque esta a pleno color antes de acabar de entrar, que es lo que evita la
-   sensacion de estar leyendo algo que todavia se esta dibujando. */
+   En pantalla estrecha el desplazamiento lateral se anula (--desde: 0): la
+   maqueta pasa a una sola columna, entrar de lado deja de tener sentido y
+   ademas evita cualquier riesgo de barra horizontal. */
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
-    .flow .step,
+
+    /* Recorte, y no es opcional: comprobado a 820px de ancho, con la maqueta
+       ya a dos columnas pero estrecha, los 44px de entrada lateral sacaban la
+       pieza fuera y aparecia barra horizontal (scrollWidth 825 sobre 805).
+       "clip" y no "hidden": hidden convertiria la seccion en un contenedor
+       desplazable y ademas forzaria el otro eje. Va aqui dentro a proposito —
+       cualquier navegador que entienda view() entiende overflow: clip, asi que
+       no hace falta guardarlo aparte. */
+    .flow { overflow-x: clip; }
+
+    /* 1 · Las dos mitades de cada paso, cada una por su borde. */
+    .step .step-text { --desde: -44px; }
+    .step .shot { --desde: 44px; }
+    .step:nth-child(odd) .step-text { --desde: 44px; }
+    .step:nth-child(odd) .shot { --desde: -44px; }
+
+    .step .step-text,
+    .step .shot {
+      animation: ensamblar linear both;
+      animation-timeline: view();
+      animation-range: entry 5% entry 85%;
+    }
+
+    @keyframes ensamblar {
+      from { opacity: 0; transform: translate3d(var(--desde, 0), 12px, 0); }
+      to { opacity: 1; transform: none; }
+    }
+
+    /* 2 · La rejilla y el precio crecen desde el fondo, no desde un lado:
+       son bloques centrados y venir de un borde los descolocaria. */
     .features .grid li,
     .local .wrap,
     .pricing .price-box {
-      animation: asomar linear both;
+      animation: crecer linear both;
       animation-timeline: view();
       animation-range: entry 0% entry 75%;
     }
 
-    @keyframes asomar {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: none; }
+    @keyframes crecer {
+      from { opacity: 0; transform: scale(0.94) translateY(16px); }
+      to { opacity: 1; transform: none; }
     }
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) and (max-width: 800px) {
+  @supports (animation-timeline: view()) {
+    .step .step-text,
+    .step .shot,
+    .step:nth-child(odd) .step-text,
+    .step:nth-child(odd) .shot { --desde: 0px; }
   }
 }
 
