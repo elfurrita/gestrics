@@ -584,6 +584,22 @@ footer {
 .cta-meta a { color: var(--teal); text-decoration: none; }
 .cta-meta a:hover { text-decoration: underline; }
 
+/* Aviso de SmartScreen bajo el botón principal. Existía solo dentro del
+   bloque de precio, al final de la página, así que lo leía quien ya se había
+   recorrido la web entera — y no quien acaba de llegar y pulsa el botón del
+   hero, que es el camino de la mayoría. En sans y no en mono como .cta-meta:
+   esto es una frase, no metadatos, y el monoespaciado la hace más lenta de
+   leer. */
+.cta-note {
+  font-family: var(--sans);
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--light);
+  margin-top: 8px;
+  max-width: 52ch;
+}
+.cta-note strong { color: var(--mid); font-weight: 600; }
+
 /* ── Capturas ──
    Fondo y borde propios: una captura de una interfaz clara sobre un fondo
    claro se deshilacha por los bordes si no se le pone marco. */
