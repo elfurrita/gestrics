@@ -92,6 +92,11 @@ publicación anunciaba.
   ya se tenga. Cumplido el plazo, la aplicación pide licencia para volver a
   entrar y lo dice con esas palabras, en vez de mandar a buscar una clave de
   compra que nunca hubo. Los datos siguen donde estaban.
+- **Gestrics ya se descarga también para Mac.** Un solo instalador que vale
+  para Apple Silicon y para Intel, sin tener que saber cuál llevas. Va sin
+  firma de desarrollador, así que la primera vez macOS se niega a abrirlo y
+  hay que autorizarlo en Ajustes del Sistema → Privacidad y seguridad; la web
+  lo explica junto al botón de descarga.
 
 ### Cambiado
 

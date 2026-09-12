@@ -88,6 +88,11 @@ announced.
   is up, the application asks for a license to get back in and says so in those
   words, instead of pointing you to a purchase email that never existed. Your
   data stays where it was.
+- **Gestrics now downloads for Mac too.** A single installer that covers both
+  Apple Silicon and Intel, with nothing to choose between. It carries no
+  developer signature, so the first time macOS refuses to open it and you have
+  to allow it from System Settings → Privacy & Security; the website explains
+  this next to the download button.
 
 ### Changed
 
