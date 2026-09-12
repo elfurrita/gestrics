@@ -366,21 +366,37 @@ a.arriba:hover {
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
 
-    /* TODA la intensidad vive aqui. Subir o bajar estos cinco valores cambia
-       el conjunto sin tocar un solo keyframe, que es lo que hacia falta: esto
-       ya va por la tercera vuelta de "mas" y "menos".
+    /* TODA la intensidad vive aqui. Subir o bajar estos siete valores cambia el
+       conjunto sin tocar un solo keyframe, que es lo que hacia falta: esto ya
+       va por la cuarta vuelta de "mas" y "menos".
 
-       La curva es la palanca mas barata y la que mas se nota. Con linear la
-       pieza avanzaba en proporcion exacta al scroll, que es un movimiento
-       plano; con una salida rapida recorre la mayor parte del camino nada mas
-       asomar y luego se posa. Misma distancia, otra sensacion.
-       Si se quiere un rebote al final: cubic-bezier(0.34, 1.56, 0.64, 1). */
+       CUANTO se mueve la pieza y CUANTO TARDA en hacerlo son dos cosas
+       distintas, y aqui hay una variable para cada una:
+
+       - El RECORRIDO (--anim-desde / --anim-hasta) es cuanto scroll ocupa el
+         movimiento. Alargarlo es lo que hace que la pieza se demore: misma
+         distancia repartida en mas pantalla.
+       - La CURVA es como se reparte dentro de ese recorrido. Una salida muy
+         rapida --la quintica de antes, cubic-bezier(0.22, 1, 0.36, 1)-- se
+         comia el 67% del camino en el primer 20% del recorrido, y llegaba a
+         medio camino al 14%: la pieza se plantaba nada mas asomar y luego no
+         pasaba nada. Eso era lo explosivo, y alargar el recorrido a secas no
+         lo habria arreglado. La de ahora va al 37% en ese primer quinto y
+         llega a la mitad al 28%, y sigue posandose suave al final.
+         Medido, no estimado: las dos curvas resueltas numericamente sobre la
+         pagina servida, con una captura de 331px de alto y ventana de 900.
+
+       Para retocarlo sin tocar nada mas: mas pausado, subir --anim-hasta;
+       mas seco, volver a la quintica. Rebote al final, si algun dia se quiere:
+       cubic-bezier(0.34, 1.56, 0.64, 1). */
     :root {
       --anim-lado: 150px;   /* entrada lateral de las mitades de cada paso */
       --anim-fondo: 240px;  /* cuanto vienen desde atras, en Z */
       --anim-giro: 6deg;    /* giro al entrar; con la perspectiva, da volumen */
       --anim-velo: 8px;     /* desenfoque inicial: la pieza se materializa */
-      --anim-curva: cubic-bezier(0.22, 1, 0.36, 1);
+      --anim-desde: 5%;     /* arranque, dentro de la fase "entry" */
+      --anim-hasta: 48%;    /* final, dentro de la fase "cover" */
+      --anim-curva: cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
     /* Recorte, y no es opcional: comprobado a 820px de ancho, con la maqueta
@@ -413,9 +429,9 @@ a.arriba:hover {
       /* Termina en "cover", no en "entry": acabando dentro de la fase de
          entrada la pieza quedaba ensamblada cerca del borde inferior, donde
          nadie mira, y para cuando subia a la zona de lectura ya no se movia.
-         El recorrido se acorta respecto a antes (era entry 15% cover 35%)
-         porque el mismo viaje en menos scroll se lee como mas rapido. */
-      animation-range: entry 10% cover 28%;
+         Con el 48% de "cover" la pieza no termina de montarse hasta estar casi
+         centrada en la pantalla, que es lo que la hace demorarse. */
+      animation-range: entry var(--anim-desde) cover var(--anim-hasta);
     }
 
     @keyframes ensamblar {
@@ -439,7 +455,7 @@ a.arriba:hover {
     .pricing .price-box {
       animation: crecer var(--anim-curva) both;
       animation-timeline: view();
-      animation-range: entry 8% cover 26%;
+      animation-range: entry calc(var(--anim-desde) - 1%) cover calc(var(--anim-hasta) - 2%);
     }
 
     /* Escalonado de la rejilla. view() ya separa fila de fila, pero las
@@ -448,9 +464,9 @@ a.arriba:hover {
        El ciclo es de cuatro y las columnas las decide auto-fill, asi que con
        otro numero de columnas el escalonado sale en diagonal en vez de en
        barrido — sigue funcionando, solo cambia el dibujo. */
-    .features .grid li:nth-child(4n + 2) { animation-range: entry 12% cover 30%; }
-    .features .grid li:nth-child(4n + 3) { animation-range: entry 16% cover 34%; }
-    .features .grid li:nth-child(4n + 4) { animation-range: entry 20% cover 38%; }
+    .features .grid li:nth-child(4n + 2) { animation-range: entry calc(var(--anim-desde) + 5%) cover calc(var(--anim-hasta) + 4%); }
+    .features .grid li:nth-child(4n + 3) { animation-range: entry calc(var(--anim-desde) + 10%) cover calc(var(--anim-hasta) + 8%); }
+    .features .grid li:nth-child(4n + 4) { animation-range: entry calc(var(--anim-desde) + 15%) cover calc(var(--anim-hasta) + 12%); }
 
     @keyframes crecer {
       from {
