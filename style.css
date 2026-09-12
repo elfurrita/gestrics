@@ -55,7 +55,7 @@ header .title {
 
 header .title span {
   display: block;
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 11px;
   font-weight: 500;
   color: var(--peach);
@@ -70,7 +70,7 @@ nav {
   margin-left: auto;
   display: flex;
   gap: 20px;
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.04em;
@@ -590,7 +590,7 @@ footer {
 }
 
 .cta-meta {
-  font-family: var(--mono);
+  font-family: var(--sans);
   font-size: 12px;
   color: var(--light);
   margin-top: 14px;
@@ -836,15 +836,13 @@ footer a:hover { text-decoration: underline; }
    visual sin tocar el HTML, que en el marcado sigue siendo navegación y luego
    banderas.
 
-   El corte estaba en 800px, heredado de cuando el subtítulo seguía puesto aquí.
-   Medido servido y sin subtítulo, una fila aguanta hasta 660px en español (a
-   640 se rompe, y se rompe mal: las banderas quedan huérfanas en la segunda
-   fila). Se deja en 700 y no en 660 porque el colchón tiene que ir hacia el
-   lado seguro: el banner se compone en Courier New para quien no tenga DM Mono
-   —que el sitio no carga—, y con una fuente más ancha la fila se parte antes,
-   no después. Baratísimo a cambio: un iPad en vertical mide justo 768px, así
-   que pasa de banner apilado de 107px a una sola banda de 72px. */
-@media (max-width: 700px) {
+   Medido servido y sin subtítulo, una fila aguanta hasta 640px en español (a
+   630 se rompe, y se rompe mal: las banderas quedan huérfanas en la segunda
+   fila). Se deja en 680 y no en 640 porque el colchón tiene que ir hacia el
+   lado seguro — ver la nota de la fuente en el bloque de abajo—: con una fuente
+   más ancha la fila se parte antes, no después. Un iPad en vertical mide justo
+   768px, así que cae de este lado y se lleva la banda de una sola fila. */
+@media (max-width: 680px) {
   header { gap: 10px 16px; }
   .lang-toggle { order: 1; margin-left: auto; }
   nav { order: 2; width: 100%; margin-left: 0; }
@@ -871,11 +869,11 @@ footer a:hover { text-decoration: underline; }
    el banner en 119px—. Ocultándolo, la banda se queda en una fila de 72px, más
    baja incluso que los 82px que mide con el subtítulo puesto.
 
-   Medido servido: en español una fila aguanta desde 940px. El corte se pone en
-   960 a propósito, no en 939: var(--mono) pide "DM Mono" y el sitio NO la
-   carga (no hay @font-face ni enlace a Google Fonts), así que quien no la tenga
-   instalada lee el banner en Courier New, con métricas distintas — afinar el
-   umbral al píxel sería afinarlo para una sola máquina.
+   Medido servido: en español una fila aguanta hasta 902px. El corte se pone en
+   930 y no en 901 porque el ancho real depende de la máquina: --sans pide Inter
+   y el sitio NO la carga (no hay @font-face ni enlace a Google Fonts), así que
+   cae en system-ui — Segoe UI en Windows, SF Pro en macOS, Roboto en Android—,
+   y cada una mide distinto. Afinar al píxel sería afinar para este PC.
 
    No se pierde nada informativo: el titular de la portada dice lo mismo justo
    debajo y en cuerpo grande. Antes esto se ocultaba solo por debajo de 520px;
@@ -884,7 +882,7 @@ footer a:hover { text-decoration: underline; }
    El !important no es pereza: lang-toggle.js escribe display en el ESTILO EN
    LÍNEA de todo elemento con atributo lang —y estos dos lo tienen—, así que una
    regla normal no le gana. */
-@media (max-width: 960px) {
+@media (max-width: 930px) {
   header .title span { display: none !important; }
 }
 
