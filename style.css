@@ -366,50 +366,99 @@ a.arriba:hover {
 @media (prefers-reduced-motion: no-preference) {
   @supports (animation-timeline: view()) {
 
-    /* Recorte, y no es opcional: comprobado a 820px de ancho, con la maqueta
-       ya a dos columnas pero estrecha, los 44px de entrada lateral sacaban la
-       pieza fuera y aparecia barra horizontal (scrollWidth 825 sobre 805).
-       "clip" y no "hidden": hidden convertiria la seccion en un contenedor
-       desplazable y ademas forzaria el otro eje. Va aqui dentro a proposito —
-       cualquier navegador que entienda view() entiende overflow: clip, asi que
-       no hace falta guardarlo aparte. */
-    .flow { overflow-x: clip; }
+    /* TODA la intensidad vive aqui. Subir o bajar estos cinco valores cambia
+       el conjunto sin tocar un solo keyframe, que es lo que hacia falta: esto
+       ya va por la tercera vuelta de "mas" y "menos".
 
-    /* 1 · Las dos mitades de cada paso, cada una por su borde. */
-    .step .step-text { --desde: -90px; }
-    .step .shot { --desde: 90px; }
-    .step:nth-child(odd) .step-text { --desde: 90px; }
-    .step:nth-child(odd) .shot { --desde: -90px; }
+       La curva es la palanca mas barata y la que mas se nota. Con linear la
+       pieza avanzaba en proporcion exacta al scroll, que es un movimiento
+       plano; con una salida rapida recorre la mayor parte del camino nada mas
+       asomar y luego se posa. Misma distancia, otra sensacion.
+       Si se quiere un rebote al final: cubic-bezier(0.34, 1.56, 0.64, 1). */
+    :root {
+      --anim-lado: 150px;   /* entrada lateral de las mitades de cada paso */
+      --anim-fondo: 240px;  /* cuanto vienen desde atras, en Z */
+      --anim-giro: 6deg;    /* giro al entrar; con la perspectiva, da volumen */
+      --anim-velo: 8px;     /* desenfoque inicial: la pieza se materializa */
+      --anim-curva: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    /* Recorte, y no es opcional: comprobado a 820px de ancho, con la maqueta
+       ya a dos columnas pero estrecha, la entrada lateral sacaba la pieza
+       fuera y aparecia barra horizontal. Ahora la entrada es mucho mayor y
+       ademas hay giro y desenfoque, que tambien desbordan, asi que el recorte
+       cubre las cuatro secciones animadas y no solo los pasos.
+       "clip" y no "hidden": hidden convertiria la seccion en un contenedor
+       desplazable y ademas forzaria el otro eje. */
+    .flow,
+    .features,
+    .local,
+    .pricing { overflow-x: clip; }
+
+    /* Sin perspectiva, un translate en Z no se ve: se queda en un escalado
+       plano. Va en el contenedor y no en la pieza para que las dos mitades de
+       un paso compartan punto de fuga y entren al MISMO espacio. */
+    .step { perspective: 1100px; }
+
+    /* 1 · Las dos mitades de cada paso, cada una por su borde y su giro. */
+    .step .step-text { --desde: calc(var(--anim-lado) * -1); --giro: calc(var(--anim-giro) * -1); }
+    .step .shot { --desde: var(--anim-lado); --giro: var(--anim-giro); }
+    .step:nth-child(odd) .step-text { --desde: var(--anim-lado); --giro: var(--anim-giro); }
+    .step:nth-child(odd) .shot { --desde: calc(var(--anim-lado) * -1); --giro: calc(var(--anim-giro) * -1); }
 
     .step .step-text,
     .step .shot {
-      animation: ensamblar linear both;
+      animation: ensamblar var(--anim-curva) both;
       animation-timeline: view();
       /* Termina en "cover", no en "entry": acabando dentro de la fase de
          entrada la pieza quedaba ensamblada cerca del borde inferior, donde
          nadie mira, y para cuando subia a la zona de lectura ya no se movia.
-         Ahora sigue viajando hasta estar bien dentro de la pantalla. */
-      animation-range: entry 15% cover 35%;
+         El recorrido se acorta respecto a antes (era entry 15% cover 35%)
+         porque el mismo viaje en menos scroll se lee como mas rapido. */
+      animation-range: entry 10% cover 28%;
     }
 
     @keyframes ensamblar {
-      from { opacity: 0; transform: translate3d(var(--desde, 0), 22px, 0); }
-      to { opacity: 1; transform: none; }
+      from {
+        opacity: 0;
+        filter: blur(var(--anim-velo));
+        transform: translate3d(var(--desde, 0), 34px, calc(var(--anim-fondo) * -1))
+                   rotateY(var(--giro, 0deg));
+      }
+      to { opacity: 1; filter: blur(0); transform: none; }
     }
 
     /* 2 · La rejilla y el precio crecen desde el fondo, no desde un lado:
        son bloques centrados y venir de un borde los descolocaria. */
+    .features .grid li { --escala: 0.8; }
+    .local .wrap,
+    .pricing .price-box { --escala: 0.9; }  /* bloques grandes: mas contenidos */
+
     .features .grid li,
     .local .wrap,
     .pricing .price-box {
-      animation: crecer linear both;
+      animation: crecer var(--anim-curva) both;
       animation-timeline: view();
-      animation-range: entry 10% cover 30%;
+      animation-range: entry 8% cover 26%;
     }
 
+    /* Escalonado de la rejilla. view() ya separa fila de fila, pero las
+       casillas de una MISMA fila comparten posicion y entraban en bloque.
+       Corriendo el arranque en ciclos de cuatro entran una detras de otra.
+       El ciclo es de cuatro y las columnas las decide auto-fill, asi que con
+       otro numero de columnas el escalonado sale en diagonal en vez de en
+       barrido — sigue funcionando, solo cambia el dibujo. */
+    .features .grid li:nth-child(4n + 2) { animation-range: entry 12% cover 30%; }
+    .features .grid li:nth-child(4n + 3) { animation-range: entry 16% cover 34%; }
+    .features .grid li:nth-child(4n + 4) { animation-range: entry 20% cover 38%; }
+
     @keyframes crecer {
-      from { opacity: 0; transform: scale(0.88) translateY(28px); }
-      to { opacity: 1; transform: none; }
+      from {
+        opacity: 0;
+        filter: blur(var(--anim-velo));
+        transform: scale(var(--escala, 0.85)) translate3d(0, 46px, 0);
+      }
+      to { opacity: 1; filter: blur(0); transform: none; }
     }
   }
 }
@@ -419,7 +468,7 @@ a.arriba:hover {
     .step .step-text,
     .step .shot,
     .step:nth-child(odd) .step-text,
-    .step:nth-child(odd) .shot { --desde: 0px; }
+    .step:nth-child(odd) .shot { --desde: 0px; --giro: 0deg; }
   }
 }
 
