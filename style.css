@@ -590,13 +590,21 @@ footer {
    hero, que es el camino de la mayoría. En sans y no en mono como .cta-meta:
    esto es una frase, no metadatos, y el monoespaciado la hace más lenta de
    leer. */
+/* Este aviso dejó de ser una nota al pie cuando entró macOS. En Windows la
+   firma que falta produce un susto que se salta con dos clics; en macOS el
+   sistema se NIEGA a abrir la app y hay que ir a Ajustes a autorizarla. Quien
+   se descarga el .dmg sin haber leído esto cree que la descarga vino rota. A
+   12,5px en gris claro era el texto más tenue de la portada — justo lo que no
+   debe ser el único sitio donde se explica eso. */
 .cta-note {
   font-family: var(--sans);
-  font-size: 12.5px;
-  line-height: 1.5;
-  color: var(--light);
-  margin-top: 8px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--mid);
+  margin-top: 14px;
   max-width: 52ch;
+  padding-left: 12px;
+  border-left: 2px solid var(--peach);
 }
 .cta-note strong { color: var(--mid); font-weight: 600; }
 
