@@ -21,12 +21,22 @@ body {
   line-height: 1.6;
 }
 
+/* El banner es UNA sola banda: logo y nombre a la izquierda, navegación y
+   banderas a la derecha. Antes la navegación era una banda propia debajo, sobre
+   el fondo claro, y eso dejaba dos problemas medibles: 814px de vacío en el
+   centro de la franja oscura, y una cabecera partida en dos que sumaba unos
+   146px de decoración antes del primer titular.
+
+   flex-wrap porque en móvil no caben las cuatro piezas en una línea: al
+   envolver, la navegación y las banderas bajan juntas a una segunda fila en vez
+   de desbordar. */
 header {
   background: var(--dark);
-  padding: 28px 24px;
+  padding: 16px 24px;
   display: flex;
   align-items: center;
-  gap: 14px;
+  flex-wrap: wrap;
+  gap: 14px 20px;
 }
 
 header img {
@@ -54,10 +64,10 @@ header .title span {
   margin-top: 2px;
 }
 
+/* El margen automático empuja a la derecha tanto a los enlaces como a las
+   banderas, que van detrás: por eso .lang-toggle ya no necesita el suyo. */
 nav {
-  max-width: 1040px;
-  margin: 0 auto;
-  padding: 18px 24px 0;
+  margin-left: auto;
   display: flex;
   gap: 20px;
   font-family: var(--mono);
@@ -68,14 +78,20 @@ nav {
 }
 
 nav a {
-  color: var(--mid);
+  /* Invertido respecto a cuando vivía sobre papel: ahí el reposo era
+     var(--mid) y el activo var(--dark). Sobre el azul del banner ninguno de los
+     dos se lee, así que el reposo pasa a blanco al 60% y el activo a blanco
+     puro. El subrayado teal que marca la página actual no cambia: es el mismo
+     lenguaje que usan ahora también las banderas. */
+  color: rgba(255, 255, 255, 0.6);
   text-decoration: none;
   padding-bottom: 4px;
   border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
 }
 
 nav a.active, nav a:hover {
-  color: var(--dark);
+  color: #fff;
   border-bottom-color: var(--teal);
 }
 
@@ -90,7 +106,6 @@ main {
    interponía entre el banner y el contenido de cada página. */
 .lang-toggle {
   display: inline-flex;
-  margin-left: auto;
   gap: 12px;
   flex-shrink: 0;
 }
@@ -812,6 +827,20 @@ footer a:hover { text-decoration: underline; }
    número de paso aparecía después de su propia captura. */
 
 @media (max-width: 800px) {
+  /* El banner necesita unos 732px para caber en una fila —y algo más en
+     español, cuyo subtítulo es más largo—, así que aquí se apila: las banderas
+     suben junto al título y la navegación ocupa una segunda fila entera,
+     alineada a la izquierda con el resto.
+
+     Sin esto el margin-left:auto dejaba la navegación pegada a la derecha y las
+     banderas solas en una TERCERA fila: 156px de banner en un móvil, peor que
+     las dos bandas que este rediseño venía a quitar. El "order" invierte el
+     orden visual sin tocar el HTML, que en el marcado sigue siendo navegación
+     y luego banderas. */
+  header { gap: 10px 16px; }
+  .lang-toggle { order: 1; margin-left: auto; }
+  nav { order: 2; width: 100%; margin-left: 0; }
+
   .hero h1 { font-size: 30px; }
   .page section { padding: 44px 0; }
   .hero { padding-top: 8px; }
@@ -828,6 +857,18 @@ footer a:hover { text-decoration: underline; }
 /* La navegación lleva tres etiquetas y en español son largas ("Política de
    Privacidad"): a partir de aquí se aprieta para que quepan sin partirse en
    dos líneas cada una. */
+@media (max-width: 520px) {
+  /* El subtítulo del banner mide unos 269px, así que por debajo de ~470px se
+     come la fila entera y empuja las banderas a una tercera. Aquí se oculta: en
+     un móvil es redundante, porque el titular dice lo mismo justo debajo y en
+     cuerpo grande. Así la primera fila queda logo + nombre + banderas.
+
+     El !important no es pereza: lang-toggle.js escribe display en el ESTILO EN
+     LÍNEA de todo elemento con atributo lang —y estos dos lo tienen—, así que
+     una regla normal no le gana. */
+  header .title span { display: none !important; }
+}
+
 @media (max-width: 460px) {
   nav { gap: 12px; font-size: 11px; }
   .hero h1 { font-size: 27px; }
