@@ -10,7 +10,7 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [1.1.0] — 2026-09-12
+## [1.1.0] — 2026-09-13
 
 The first release that actually ships. It replaces the installer uploaded on
 10 August under this same number: that build was produced before the licensing
@@ -654,6 +654,19 @@ while Gestrics is running.
   and TSV exports. Amounts are left alone, so the CSV for your accountant
   still adds up, and re-importing one of your own exports into Gestrics gives
   back the original text.
+- **At 14 days the app now really does close.** The end of the trial was
+  enforced by the screen alone: behind it the local server kept answering
+  everything, so there was still a way to go on using the app without a
+  licence. It is now closed from the inside too, and the only thing left open
+  is what you need in order to activate. Your data is untouched: it is all
+  still there, and it comes back the moment you enter your key.
+- **Starting a fresh data folder no longer grants another trial.** The start
+  of the trial is anchored to the oldest trace of your own work, but that was
+  only consulted when the record was missing: starting from scratch and
+  bringing your data over AFTERWARDS gave you fourteen new days losing
+  nothing. It is now always consulted, and the older of the two dates wins.
+  This also fixes the honest case: restoring a backup on a new laptop
+  continues the same trial instead of starting another.
 
 ---
 

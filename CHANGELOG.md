@@ -11,7 +11,7 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [1.1.0] — 2026-09-12
+## [1.1.0] — 2026-09-13
 
 Primera versión que se lanza de verdad. Sustituye al instalador que se subió el
 10 de agosto bajo este mismo número: aquel se generó antes de que existiera el
@@ -678,6 +678,19 @@ abierta en el navegador mientras Gestrics está en marcha.
   esas celdas salen marcadas como texto en los CSV y TSV. Los importes no se
   tocan, así que el CSV para tu asesor sigue sumando igual, y volver a
   importar en Gestrics una exportación propia devuelve el texto original.
+- **A los 14 días la aplicación se cierra de verdad.** El fin de la prueba lo
+  hacía cumplir solo la pantalla: por detrás el servidor local seguía
+  respondiendo a todo, así que seguía habiendo por dónde seguir usando la
+  aplicación sin licencia. Ahora se cierra también por dentro, y lo único que
+  queda abierto es lo necesario para activar. Tus datos no se tocan: siguen
+  ahí enteros, y vuelven en cuanto introduces la clave.
+- **Estrenar carpeta de datos ya no regala otra prueba.** El inicio de la
+  prueba se apoya en la marca más antigua de tu propio trabajo, pero eso solo
+  se miraba cuando faltaba el registro: bastaba con empezar de cero y traerse
+  los datos DESPUÉS para tener catorce días nuevos sin perder nada. Ahora se
+  mira siempre y manda la fecha más antigua de las dos. De paso arregla el
+  caso honrado: restaurar una copia en un portátil nuevo continúa la misma
+  prueba en vez de estrenar otra.
 
 ---
 
