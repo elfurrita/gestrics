@@ -25,14 +25,17 @@
 // Se saca del panel de Cloudflare Web Analytics, al añadir el sitio: es la
 // cadena larga que aparece en el fragmento que te dan para pegar, dentro de
 // data-cf-beacon={"token": "..."}. Pega SOLO esa cadena aquí.
-const TOKEN = "PEGA_AQUI_EL_TOKEN";
+const TOKEN = "a5c751ec65cb4fa4b61af81bac53791e";
 
 // Mientras el token siga sin poner, esto no hace nada: ni carga la baliza ni
 // pide nada a ningún sitio. Es a propósito — olvidarse de pegarlo no debe
 // dejar la web haciendo peticiones rotas a Cloudflare en cada visita.
 if (TOKEN && TOKEN !== "PEGA_AQUI_EL_TOKEN") {
   const baliza = document.createElement("script");
-  baliza.defer = true;
+  // type="module" y no defer: es como lo entrega hoy Cloudflare, y un modulo
+  // ya se aplaza solo. Cargarlo como script clasico podria romperse si el
+  // archivo que sirven es un modulo de verdad.
+  baliza.type = "module";
   baliza.src = "https://static.cloudflareinsights.com/beacon.min.js";
   baliza.setAttribute("data-cf-beacon", JSON.stringify({ token: TOKEN }));
   document.head.appendChild(baliza);
