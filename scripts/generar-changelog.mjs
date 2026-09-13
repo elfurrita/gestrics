@@ -160,6 +160,7 @@ ${bloques}
   <a class="arriba" href="#arriba" lang="es" title="Volver arriba" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 14l6-6 6 6"/></svg></a>
 </footer>
 <script src="lang-toggle.js"></script>
+<script src="analitica.js"></script>
 </body>
 </html>
 `;
