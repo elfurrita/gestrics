@@ -19,6 +19,11 @@ announced.
 
 ### Added
 
+- **A proper menu bar** (File, Edit, View, Window, Help), with the app's real
+  features instead of Electron's generic default: new contact or project,
+  export and import backup, check for updates, reopen the getting-started
+  guide, download the technical log, terms of use and support contact. In
+  Spanish or English depending on the app's chosen language.
 - **New-version notice.** On startup the app checks whether a later version has
   been released and, if so, says so in a strip below the header with a download
   link. It never downloads or installs anything on its own. "Not now" silences

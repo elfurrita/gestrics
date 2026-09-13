@@ -20,6 +20,12 @@ publicación anunciaba.
 
 ### Añadido
 
+- **Barra de menú propia** (Archivo, Editar, Ver, Ventana, Ayuda), con las
+  funciones reales de la aplicación en vez de la genérica que trae Electron
+  por defecto: nuevo contacto o proyecto, exportar e importar copia de
+  seguridad, comprobar actualizaciones, volver a ver la guía de inicio,
+  descargar el registro técnico, términos de uso y contacto de soporte. En
+  español o en inglés según el idioma elegido en la aplicación.
 - **Aviso de versión nueva.** La aplicación comprueba al arrancar si hay una
   versión posterior publicada y, si la hay, lo dice en una franja bajo la
   cabecera con el enlace de descarga. No descarga ni instala nada por su
