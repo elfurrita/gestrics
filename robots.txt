@@ -1,0 +1,11 @@
+# outreachstudio.app
+#
+# Todo el sitio es público y se puede rastrear: son cuatro páginas de venta y
+# dos legales. No hay nada que ocultar a un buscador, así que no hay ninguna
+# regla Disallow — un robots.txt vacío de reglas es exactamente lo correcto
+# aquí, y su única razón de ser es la última línea.
+
+User-agent: *
+Allow: /
+
+Sitemap: https://outreachstudio.app/sitemap.xml

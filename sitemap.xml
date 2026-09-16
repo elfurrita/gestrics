@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Las cuatro páginas del sitio, con su URL canónica en https. Existe porque
+  Google llegaba a ellas solo rastreando enlaces, y porque el informe de
+  "Página con redirección" de http:// se entiende mejor cuando hay una lista
+  explícita de cuáles son las buenas.
+
+  NO lleva <lastmod> a propósito. Son archivos estáticos que cambian a mano y
+  no hay nada que mantenga esa fecha honesta sin añadir un sexto paso al ciclo
+  de publicación, que ya son cinco. Una fecha que miente es peor que ninguna:
+  Google la trata como pista y deja de fiarse del sitemap entero si aprende
+  que no cuadra. Si algún día se añade, que la escriba el generador leyendo
+  git, no una mano.
+
+  Tampoco lleva <changefreq> ni <priority>: Google los ignora desde hace años
+  y ponerlos solo aparenta rigor.
+
+  Queda fuera google36530d83c218e055.html, que es el archivo de verificación
+  de Search Console y no es contenido.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://outreachstudio.app/</loc></url>
+  <url><loc>https://outreachstudio.app/terms.html</loc></url>
+  <url><loc>https://outreachstudio.app/privacy.html</loc></url>
+  <url><loc>https://outreachstudio.app/changelog.html</loc></url>
+</urlset>
