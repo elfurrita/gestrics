@@ -11,7 +11,7 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [1.1.0] — 2026-09-15
+## [1.1.0] — 2026-09-16
 
 Primera versión que se lanza de verdad. Sustituye al instalador que se subió el
 10 de agosto bajo este mismo número: aquel se generó antes de que existiera el
@@ -472,6 +472,24 @@ publicación anunciaba.
 
 **Prospección**
 
+- **Los espacios sobrantes solo se limpiaban del correo.** Un nombre o una
+  empresa pegados desde LinkedIn o desde una hoja de cálculo se guardaban con
+  los espacios de delante y de detrás, y de ahí salían a dos sitios que ve el
+  cliente: la primera línea del email en frío («Hi␣␣␣␣Marie Dupont␣␣␣,») y el
+  bloque de cliente de la factura. Ahora se limpian todos los campos, y lo que
+  queda en blanco se guarda vacío de verdad.
+- **Cambiar el correo de un contacto borraba su historial sin preguntar.**
+  Corregir una errata del dominio se llevaba por delante los envíos
+  registrados, las fechas de contacto y el contador de seguimientos, y devolvía
+  el contacto a «Pendiente»; el aviso aparecía después, ya hecho. Ahora se
+  pregunta antes, diciendo cuántos envíos se van a perder, y solo cuando hay
+  algo que perder. Cancelar no guarda nada y deja el formulario como estaba.
+- **Un nombre de solo espacios** pasaba el formulario y volvía del servidor
+  como «error al guardar el contacto», como si hubiera fallado la aplicación en
+  vez de faltar un dato.
+- **Guardar un contacto podía dejarlo sin nombre o con un correo imposible.**
+  La comprobación existía al crearlo pero no al editarlo, y editar un contacto
+  ya borrado decía que se había guardado.
 - El límite diario de envíos se guardaba y se mostraba, pero no se aplicaba.
 - Cancelar un envío por lotes durante una espera de reintento tardaba hasta un
   minuto en surtir efecto. Ahora responde casi al instante.
@@ -490,6 +508,46 @@ publicación anunciaba.
   `{{remaining}}` literal a la vista en su segunda frase («Se enviará a
   {{remaining}} de 8 contactos»), en español y en inglés: el hueco aparece dos
   veces en la cadena y solo se rellenaba la primera.
+- **Pulsar Enter al final de una plantilla no hacía nada, y lo siguiente que
+  escribías aparecía pegado a la firma.** Añadir una posdata o un enlace
+  debajo de «Un saludo, [Tu nombre]» era imposible: la línea nueva no llegaba
+  a dibujarse, así que el cursor volvía a la anterior. Además dejaba un salto
+  de línea invisible al final del texto guardado, que se iba con el correo.
+- **El Asunto no avisaba de las llaves que no son variables reales.** Escribir
+  algo como `{{tarifa}}` ahí no daba ningún aviso —el cuerpo de la plantilla
+  sí lo daba— y aun así paraba el envío al pulsar enviar, marcando el contacto
+  en rojo. El aviso sale ahora junto al campo que lo provoca, sea el asunto o
+  el cuerpo.
+- **Un envío en lote con una de esas llaves marcaba en error a todos los
+  contactos de la tanda**, uno por uno, por un problema que es de la plantilla
+  y no de ninguno de ellos. Ahora se avisa antes de empezar y los contactos se
+  quedan como estaban, igual que ya pasaba al faltar el asunto, la cuenta de
+  correo o el contenido de un adjunto.
+- **Un contacto sin empresa se marcaba en error si la plantilla usaba esa
+  etiqueta**, con un aviso que mandaba a revisar la plantilla — cuando la
+  plantilla estaba bien y lo que faltaba era un dato suyo. La empresa es
+  opcional, pero era el único de los cuatro campos del contacto que se trataba
+  como obligatorio al enviar. Y como los contactos en error vuelven a entrar
+  en la tanda siguiente, volvía a fallar cada vez. Ahora sale en blanco, como
+  ya hacían especialidad e idiomas, y antes de empezar un lote se dice a
+  cuántos contactos les falta algún dato que la plantilla usa, para poder
+  cancelar y rellenarlo. Lo mismo pasaba en los correos de Proyectos
+  —recordatorio de cobro, presupuesto y entrega—, que además ahora aceptan las
+  cinco etiquetas de contacto y no solo dos.
+- **Deshacer después de insertar una etiqueta borraba otra cosa.** La etiqueta
+  se metía por una vía que el navegador no apunta en su historial, así que
+  Ctrl+Z se la saltaba y deshacía la edición anterior: desaparecía una palabra
+  de otra línea y la etiqueta se quedaba donde estaba. Igual al pegar.
+- **Insertar una etiqueta entre dos palabras dejaba dos espacios.**
+- **Una etiqueta escrita a mano seguía viéndose como `{{nombre}}`.** Ahora, al
+  salir del editor, se convierte en etiqueta como las demás.
+- **Arrastrar texto con formato al editor colaba su HTML.** Pegar ya lo
+  limpiaba; soltar, no.
+- **El Asunto enseña debajo lo que va a salir**, con las mismas etiquetas y los
+  datos del contacto elegido. Antes solo se veían las llaves en crudo.
+- **Vaciar una plantilla y guardarla hacía reaparecer la de fábrica**, sin
+  decir nada, y era la de fábrica la que se enviaba. Ahora se avisa de que no
+  puede quedarse vacía.
 
 **Envío de correo**
 

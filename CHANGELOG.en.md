@@ -10,7 +10,7 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [1.1.0] — 2026-09-15
+## [1.1.0] — 2026-09-16
 
 The first release that actually ships. It replaces the installer uploaded on
 10 August under this same number: that build was produced before the licensing
@@ -457,6 +457,24 @@ announced.
 
 **Outreach**
 
+- **Stray spaces were only trimmed from the email address.** A name or company
+  pasted from LinkedIn or a spreadsheet kept its leading and trailing spaces,
+  and those went straight to two places the client sees: the first line of the
+  cold email ("Hi␣␣␣␣Marie Dupont␣␣␣,") and the client block on the invoice.
+  Every field is trimmed now, and anything left blank is stored as properly
+  empty.
+- **Changing a contact's email address wiped its history without asking.**
+  Fixing a typo in the domain destroyed the logged sends, the contact dates and
+  the follow-up count, and sent the contact back to "Pending"; the notice
+  appeared afterwards, once done. You are now asked first, told how many sends
+  will be lost, and only when there is something to lose. Cancelling saves
+  nothing and leaves the form as it was.
+- **A name made only of spaces** got past the form and came back from the
+  server as "failed to save contact", as if the app had broken rather than a
+  field being missing.
+- **Saving a contact could leave it with no name or an unusable email address.**
+  The check existed when creating one but not when editing, and editing an
+  already-deleted contact reported success.
 - The daily sending limit was saved and displayed, but never enforced.
 - Cancelling a batch send during a retry wait took up to a minute to take
   effect. It now responds almost immediately.
@@ -474,6 +492,43 @@ announced.
   `{{remaining}}` on screen in its second sentence ("Sending to {{remaining}} of
   8 contacts"), in both Spanish and English: the placeholder occurs twice in the
   string and only the first one was being filled in.
+- **Pressing Enter at the end of a template did nothing, and whatever you typed
+  next ended up stuck to your signature.** Adding a postscript or a link below
+  "Best regards, [Your name]" was impossible: the new line was never drawn, so
+  the caret fell back to the previous one. It also left an invisible line break
+  at the end of the saved text, which went out with the email.
+- **The Subject line gave no warning about braces that aren't real variables.**
+  Typing something like `{{tarifa}}` there raised no warning — the template body
+  did — and still stopped the send, marking the contact in red. The warning now
+  appears next to whichever field causes it, subject or body.
+- **A batch send with one of those braces marked every contact in the batch as
+  failed**, one by one, over a problem that belongs to the template and not to
+  any of them. It is now flagged before the batch starts and the contacts are
+  left as they were, the same as already happened with a missing subject, no
+  email account or an empty attachment.
+- **A contact with no company was marked as failed if the template used that
+  tag**, with a message sending you off to check the template — when the
+  template was fine and what was missing was one of their own details. Company
+  is optional, yet it was the only one of the four contact fields treated as
+  required when sending. And since failed contacts re-enter the next batch, it
+  failed again every time. It now comes out blank, as specialty and languages
+  already did, and before a batch starts you are told how many contacts are
+  missing a detail the template uses, so you can cancel and fill it in. The
+  same happened in the Projects emails — payment reminder, quote and delivery —
+  which now also accept all five contact tags instead of just two.
+- **Undo after inserting a tag deleted something else.** The tag went in
+  through a route the browser does not record in its history, so Ctrl+Z skipped
+  it and undid the previous edit instead: a word on another line disappeared
+  and the tag stayed put. Same when pasting.
+- **Inserting a tag between two words left a double space.**
+- **A tag typed by hand still showed as `{{nombre}}`.** It now turns into a tag
+  like any other when you leave the editor.
+- **Dragging formatted text into the editor smuggled its HTML in.** Pasting
+  already stripped it; dropping did not.
+- **The Subject line now shows what will go out underneath**, with the same
+  tags and the chosen contact's details. Before you only saw raw braces.
+- **Emptying a template and saving brought the factory one back**, silently,
+  and that was the one being sent. You are now told it cannot be left empty.
 
 **Sending email**
 
