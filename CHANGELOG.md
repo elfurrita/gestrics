@@ -106,6 +106,19 @@ publicación anunciaba.
 
 ### Cambiado
 
+- **El total aproximado de Métricas ya convierte 24 divisas, no cuatro.** Solo
+  se pedían tipos de cambio para dólar, libra, franco suizo y dólar canadiense,
+  así que facturar en coronas suecas, pesos mexicanos o yenes dejaba ese dinero
+  fuera del total consolidado. Ahora se piden para todas las del desplegable
+  que publica el Banco Central Europeo. Las cuatro que no publica —peso
+  argentino, peso chileno, peso colombiano y dírham— siguen quedando fuera, y
+  la pantalla las enumera en vez de callárselo.
+- **El desplegable de divisa deja de tener 159 monedas.** Para llegar al euro
+  había que pasar por el afgani afgano, el kwanza angoleño y el manat
+  azerbaiyano. Quedan 28, las que un traductor con clientes internacionales
+  puede cobrar de verdad. Un proyecto ya guardado en cualquier otra la
+  conserva: sigue apareciendo en su propio desplegable, así que abrirlo y
+  guardarlo no le cambia la divisa.
 - **Se acabó el «follow-up» en la interfaz en español**, que convivía con
   «seguimiento» en la misma pantalla: el estado del contacto, la plantilla, el
   botón del envío en lote y el tipo de entrada del historial dicen ahora todos

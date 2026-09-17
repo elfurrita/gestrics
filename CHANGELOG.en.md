@@ -101,6 +101,19 @@ announced.
 
 ### Changed
 
+- **The approximate total in Metrics now converts 24 currencies, not four.**
+  Exchange rates were only fetched for the dollar, pound, Swiss franc and
+  Canadian dollar, so invoicing in Swedish krona, Mexican pesos or yen left
+  that money out of the consolidated total. Rates are now fetched for every
+  currency in the dropdown that the European Central Bank publishes. The four
+  it does not — Argentine peso, Chilean peso, Colombian peso and dirham — are
+  still left out, and the screen lists them rather than hiding it.
+- **The currency dropdown is no longer 159 entries long.** Reaching the euro
+  meant scrolling past the Afghan afghani, the Angolan kwanza and the
+  Azerbaijani manat. It is now 28 — the ones a translator with international
+  clients actually gets paid in. A project already saved in any other one keeps
+  it: it still appears in that project's own dropdown, so opening and saving it
+  does not change its currency.
 - **The Spanish interface no longer mixes "follow-up" with "seguimiento".** The
   English wording is unchanged — there "follow-up" is the right term.
 - **Shorter, clearer button labels.** The two "Show key" buttons in Settings
