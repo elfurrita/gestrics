@@ -10,7 +10,7 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [1.1.0] — 2026-09-16
+## [1.1.0] — 2026-09-17
 
 The first release that actually ships. It replaces the installer uploaded on
 10 August under this same number: that build was produced before the licensing
@@ -100,6 +100,13 @@ announced.
   this next to the download button.
 
 ### Changed
+
+- **The Spanish interface no longer mixes "follow-up" with "seguimiento".** The
+  English wording is unchanged — there "follow-up" is the right term.
+- **Shorter, clearer button labels.** The two "Show key" buttons in Settings
+  are now "Show"; the Stripe one is "Connect", pairing with the "Disconnect"
+  next to it; "Deactivate this device" is now "Deactivate"; and the
+  getting-started button says what it opens: "Open getting-started guide".
 
 - **The privacy policy now also lists the version check.** It is the fourth
   connection the app makes, alongside the mail server, Keygen and the exchange

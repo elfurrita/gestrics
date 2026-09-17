@@ -11,7 +11,7 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [1.1.0] — 2026-09-16
+## [1.1.0] — 2026-09-17
 
 Primera versión que se lanza de verdad. Sustituye al instalador que se subió el
 10 de agosto bajo este mismo número: aquel se generó antes de que existiera el
@@ -105,6 +105,17 @@ publicación anunciaba.
   lo explica junto al botón de descarga.
 
 ### Cambiado
+
+- **Se acabó el «follow-up» en la interfaz en español**, que convivía con
+  «seguimiento» en la misma pantalla: el estado del contacto, la plantilla, el
+  botón del envío en lote y el tipo de entrada del historial dicen ahora todos
+  «seguimiento». Los envíos ya registrados se ven con la palabra nueva sin
+  tener que hacer nada. En inglés no cambia: allí «follow-up» es el término
+  correcto, no un anglicismo.
+- **Botones con nombres más cortos.** Los dos «Mostrar clave» de Configuración
+  pasan a «Mostrar»; el de Stripe, a «Conectar», que hace pareja con el
+  «Desconectar» de al lado; «Desactivar este equipo» a «Desactivar»; y el de la
+  guía de inicio dice ya qué abre: «Abrir guía de inicio».
 
 - **La política de privacidad enumera también la comprobación de versión.**
   Es la cuarta conexión que hace la aplicación, junto al servidor de correo,
