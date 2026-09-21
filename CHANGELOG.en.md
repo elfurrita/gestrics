@@ -10,7 +10,7 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [1.1.0] — 2026-09-17
+## [1.1.0] — 2026-09-21
 
 The first release that actually ships. It replaces the installer uploaded on
 10 August under this same number: that build was produced before the licensing
@@ -240,6 +240,63 @@ announced.
 
 **Invoices and quotes**
 
+- **A recurring plan's card read "Source words 1" and "320.00 EUR/word".** A
+  monthly fee is charged neither by word nor by hour, but internally it is
+  stored as one word at a "rate" equal to the fee, and that showed up raw on
+  every retainer. The invoice PDF already handled it; the card now does too,
+  showing the fee under its own label.
+
+- **The quote no longer disappears once the job moves on.** As soon as the
+  project left "Quoted", the PDF the client is looking at could no longer be
+  downloaded: getting it back meant moving the project to its previous state.
+  Its download button now stays, without the edit and resend options, which no
+  longer apply there.
+
+- **A job could charge a cent other than the one its own lines added up to.**
+  With a CAT breakdown, the total was worked out by summing raw amounts and
+  rounding at the end, while the PDF prints one already-rounded row per
+  category: at a rate of €0.11, the five rows add up to €145.69 and the total
+  read €145.70. Same for hourly work, where genuine half-cents turn up: a
+  quarter of an hour at €32.50/h is €8.125, an amount that does not exist in
+  money, and it was stored that way every time you stopped the timer. The total
+  is now always the sum of what is printed, and every amount the app CALCULATES
+  — words by rate, hours by rate, CAT breakdown — is rounded to the cent before
+  being stored.
+
+- **The invoice ledger filed a number its own signature did not back.** The
+  taxable base went into the hash-chained record exactly as it came out of
+  multiplying words by rate — 1,480 × 0.14 gives 207.20000000000002 in floating
+  point — while the hash sealing that record is computed on the rounded figure.
+  None of this showed on screen or in the PDF, which always formatted correctly,
+  but anyone reading the database directly — an audit, a future export — got the
+  dirty value, and base + tax did not match the stored total.
+
+- **A quote already sent looked exactly like one never sent.** The project card
+  still read “Send the quote to the client or edit it first” weeks after it had
+  gone out: the only place that knew was the “Quotes” counter in the header, so
+  it was easy to send the client the same quote twice. The card now shows the
+  day it was sent and the button becomes “Resend quote”.
+
+- **A newly created recurring billing plan did not appear under Alerts until
+  the app was restarted.** The dialog itself tells you generation is confirmed
+  from Alerts; you went there following that instruction and found it empty. It
+  now shows up — and disappears when the plan is deleted — without a restart.
+
+- **The reason for a correction is printed on the invoice the client receives,
+  and the help text did not say so.** It only said it was “recorded alongside
+  the correction”, which reads like an internal filing note. It now warns that
+  it is printed on the client's document and that it should be written in
+  English, like the rest of the invoice.
+
+- **A recurring invoice was issued without the project or the invoice showing
+  up anywhere.** Confirming it from Alerts while already on the Projects tab,
+  the app reported it had been generated and the list did not change: the new
+  project and its invoice — already recorded in the ledger, with its number —
+  were nowhere to be seen until the app was restarted. The list only reloaded
+  when switching tabs, so it failed on exactly the likeliest path: looking at
+  your projects and confirming the alert. It now refreshes on its own and opens
+  the new project, which is what it meant to do all along.
+
 - **One invoice in ten did not add up to its own total.** VAT and withholding are
   rounded to the cent, but the total was computed on the full decimals, so the
   totals block could contradict itself: on a €50.03 base the invoice read
@@ -466,6 +523,19 @@ announced.
 
 **Metrics**
 
+- **Opening the tab took the whole app down.** Going to Metrics replaced the
+  window with the "Unexpected error" screen, the message at its foot: "Cannot
+  access 'expenseForm' before initialization" — in the installed copy,
+  minified, "Cannot access 'M' before initialization", which tells nobody
+  anything. Reloading brought the app back, but going into Metrics again took
+  it down again. The cause was the very
+  change in this same version that cut the currency dropdown down to 28: so
+  that an expense saved in an uncommon currency keeps its own, the list started
+  reading the currency of the expense being edited — and here it read it before
+  it existed. Of the four currency dropdowns that were touched, this was the
+  only one with the bug. The tab opens again, and editing an expense in a
+  currency outside the short list — Thai baht, say — still keeps its option.
+
 - The header overflowed when several currencies were involved: the amount spilled
   out of its cell and over the label next to it.
 - The "Net profit" card stretched across the full width when it wrapped onto a
@@ -552,6 +622,60 @@ announced.
 
 **Sending email**
 
+- **The "no email account" warning could lie in both directions.** The header
+  decided whether an account existed by looking at a copy kept inside the
+  database, while sending uses the real credentials, which live encrypted
+  outside it. The two drifted apart: wipe the database and the warning stayed
+  on forever with email working perfectly; and the other way round — restoring
+  a backup, which carries the username but never the password — the app treated
+  as configured an account every send was going to fail on. And it was not just
+  the warning: **the Outreach batch send was gated on that same copy**, so with
+  the database wiped it refused to send anything — "no email account
+  configured" — while email worked perfectly, and after restoring a backup it
+  started the batch only to fail contact by contact. All of that now asks the
+  server, which is the side holding the credentials, and it also tells apart a
+  third case that did not exist before: an account that is saved but rejected
+  by the provider, with its own warning in the header and, in Settings, a red
+  dot reading "Saved, but the provider rejects it" instead of the green one
+  reassuring you about a password that does not work. The welcome wizard was
+  taking the same wrong path: it counted an account with a saved address but no
+  password as connected, and now only does so when the server confirms it can
+  send.
+
+- **The two emails that ask for money were the only ones not greeting the
+  client by name.** The quote and the delivery said “Hi Anke,”; the invoice and
+  the three payment reminders, a bare “Hi,”. And the invoice subject was the
+  only one of the seven carrying no reference at all — “Invoice for Translation
+  Services” — so three invoices to the same client arrived with identical
+  subjects and their mail client stacked them into a single thread, which is
+  the opposite of what chasing an unpaid invoice needs. All four now greet the
+  client by name, and the invoice subject carries its number and the project.
+  If you had already rewritten a template, yours is kept: this only changes the
+  factory defaults.
+
+- **Sending an invoice said “Deliverables sent”.** The dialog already adapted
+  everything else — title, icon, button and email body — but the confirmation
+  message had been left out.
+
+- **The delivery and the invoice could go out promising an attachment that was
+  not there.** The email delivering the translation says “Please find attached
+  the completed work”, and the invoice one, “Please find attached the invoice”.
+  If no file was added, or if the PDF was removed from the attachment list
+  before hitting send, the email went out anyway: no warning, no way to undo
+  it, and a client reading the promise of a file that was not enclosed. With no
+  attachment at all, sending now stops and says which file is missing.
+
+- **The payment reminder gave the due date in a format the client reads the
+  other way round.** These emails always go out in English, and the amount was
+  already formatted for the client, but the date followed the interface
+  language: “€676.00” and “10/8/2026” sat in the same sentence. That date is 10
+  August to whoever runs the app in Spanish and 8 October to whoever reads the
+  email in English, so the final overdue notice ended up contradicting itself:
+  a due date the client reads as being in the future, in an email chasing them
+  for 39 days of delay. The month is now written out — “August 10, 2026” —
+  which cannot be read two ways in any market. This covers all three reminder
+  stages and the invoice email.
+
 - **An already-saved password looked exactly like a field that never had
   one.** The server never returns the email account password, not even
   encrypted, so the Settings field showed up empty whether or not an account
@@ -613,6 +737,30 @@ announced.
   everything you typed, instead of reporting as saved what was not.
 
 **Other**
+
+- **The browser's spellchecker underlined correct Spanish as misspelt.** The
+  app declared itself English to the browser — the document language was fixed
+  and nothing ever changed it — even with the interface in Spanish. Since that
+  is what the spellchecker picks its dictionary from, writing an email subject
+  or body, or notes on a contact or a project, got correctly spelt words
+  underlined in red. The declared language now follows the one chosen in the
+  header. A screen reader also stops reading Spanish with English
+  pronunciation.
+
+- **The timer left "0min" entries.** Starting and stopping it by mistake — or a
+  double click — created a zero-minute line on the card, with its date and its
+  cross, that only had to be deleted by hand and travelled in the backup too.
+  Under half a minute nothing is stored any more.
+
+- **A file under half a kilobyte showed as "0 KB"**, which looks like an empty
+  file right before sending it to a client. Bytes are now shown.
+
+- **The hourly rate suggested "e.g. 0.12"**, which is a per-word example: under
+  the "Rate per hour" label it was proposing twelve cents an hour.
+
+- **The language pair is now suggested** when you pick a client, taken from the
+  one that contact already has. It is only a suggestion, and only when the
+  contact holds a recognisable pair: anything already typed is left alone.
 
 - **The trial period is now anchored in the data already saved.** It previously
   relied solely on its own record file, so an installation holding contacts,

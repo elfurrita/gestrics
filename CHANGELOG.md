@@ -11,7 +11,7 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [1.1.0] — 2026-09-17
+## [1.1.0] — 2026-09-21
 
 Primera versión que se lanza de verdad. Sustituye al instalador que se subió el
 10 de agosto bajo este mismo número: aquel se generó antes de que existiera el
@@ -252,6 +252,66 @@ publicación anunciaba.
 
 **Facturas y presupuestos**
 
+- **La ficha de un plan recurrente decía "Palabras origen 1" y "320,00 EUR/pal".**
+  Una cuota mensual no se cobra ni por palabras ni por horas, pero por dentro se
+  guarda como una palabra a una "tarifa" igual a la cuota, y eso se enseñaba en
+  crudo en todos los retainers. La factura en PDF ya lo resolvía; ahora la ficha
+  también, con la cuota y su etiqueta.
+
+- **El presupuesto ya no desaparece al avanzar el encargo.** En cuanto el
+  proyecto pasaba de "Presupuestado", el PDF que el cliente tiene delante dejaba
+  de poder descargarse: para recuperarlo había que devolver el proyecto a su
+  estado anterior. Ahora queda su botón de descarga, sin las opciones de editar
+  ni reenviar, que ahí ya no tienen sentido.
+
+- **Un encargo podía cobrar un céntimo distinto del que sumaban sus propias
+  líneas.** Con desglose CAT, el total se calculaba sumando los importes en
+  crudo y redondeando al final, mientras que el PDF imprime una fila por
+  categoría ya redondeada: con una tarifa de 0,11 €, las cinco filas suman
+  145,69 € y el total decía 145,70 €. Lo mismo por horas, donde salen medios
+  céntimos de verdad: un cuarto de hora a 32,50 €/h son 8,125 €, un importe que
+  en dinero no existe, y se guardaba así cada vez que parabas el cronómetro.
+  Ahora el total es siempre la suma de lo que se ve impreso, y todo importe
+  CALCULADO por la aplicación —palabras por tarifa, horas por tarifa, desglose
+  CAT— se redondea al céntimo antes de guardarse.
+
+- **El libro de facturas archivaba un número que su propia firma no
+  respaldaba.** La base imponible entraba en el registro encadenado tal cual
+  salía de multiplicar palabras por tarifa —1.480 × 0,14 da 207,20000000000002
+  en coma flotante—, mientras que el hash que sella ese asiento se calcula
+  sobre la cifra ya redondeada. Nada de esto se veía en pantalla ni en el PDF,
+  que siempre formatearon bien, pero quien leyera la base de datos por su
+  cuenta —una revisión, una exportación futura— se encontraba el valor sucio, y
+  base + cuota no cuadraba con el total guardado.
+
+- **Un presupuesto ya enviado se veía exactamente igual que uno sin enviar.** La
+  ficha seguía diciendo «Envía el presupuesto al cliente o edítalo antes de
+  enviarlo» aunque hubiera salido semanas atrás: el único sitio que lo sabía era
+  el contador «Presupuestos» de la cabecera, así que era fácil mandarle dos
+  veces lo mismo al cliente. Ahora la ficha dice el día en que se envió y el
+  botón pasa a «Reenviar presupuesto».
+
+- **Un plan de facturación recurrente recién creado no aparecía en Avisos hasta
+  reiniciar.** El propio diálogo te dice que la generación se confirma desde
+  Avisos; ibas allí siguiendo esa instrucción y estaba vacío. Ahora aparece —y
+  desaparece al borrar el plan— sin reiniciar nada.
+
+- **El motivo de una rectificación se imprime en la factura que recibe el
+  cliente, y el texto de ayuda no lo decía.** Decía solo «queda registrado
+  junto a la rectificación», que se lee como una nota interna de archivo. Ahora
+  avisa de que se imprime en el documento del cliente y de que conviene
+  escribirlo en inglés, como el resto de la factura.
+
+- **Una factura recurrente se emitía sin que aparecieran ni el proyecto ni la
+  factura.** Al confirmarla desde Avisos estando ya en la pestaña de Proyectos,
+  la aplicación avisaba de que la había generado y la lista no cambiaba: el
+  proyecto nuevo y su factura —ya asentada en el libro, con su número— no se
+  veían por ninguna parte hasta reiniciar la aplicación. Venía de que la lista
+  solo se recargaba al cambiar de pestaña, así que fallaba justo en el camino
+  más probable: estar mirando tus proyectos y confirmar el aviso. Ahora se
+  actualiza sola y se abre la ficha del proyecto nuevo, que era lo que
+  pretendía hacer desde el principio.
+
 - **Una de cada diez facturas no sumaba su propio total.** El IVA y la retención
   se redondean al céntimo, pero el total se calculaba sobre los decimales
   completos, así que el bloque de totales podía contradecirse: con una base de
@@ -485,6 +545,19 @@ publicación anunciaba.
 
 **Métricas**
 
+- **La pestaña tumbaba la aplicación entera.** Al entrar en Métricas, la
+  ventana se sustituía por la pantalla de «Error inesperado», con el mensaje al
+  pie: "Cannot access 'expenseForm' before initialization" —en la copia
+  instalada, minificado, "Cannot access 'M' before initialization", que no dice
+  nada a nadie—. Recargar devolvía la aplicación, pero volver a entrar en
+  Métricas la tumbaba otra vez. Lo causó el mismo cambio que acortó
+  el desplegable de divisa a 28 monedas, de esta misma versión: para que un
+  gasto guardado en una divisa poco corriente conserve la suya, la lista pasó a
+  mirar la divisa del gasto en edición, y aquí la miraba antes de que existiera.
+  De los cuatro desplegables de divisa que se tocaron, este era el único con el
+  fallo. La pestaña vuelve a abrirse, y editar un gasto en una divisa de fuera
+  de la lista —un bat tailandés, por ejemplo— sigue conservando su opción.
+
 - La cabecera se derramaba al haber varias divisas: el importe se salía de su
   celda y pisaba la etiqueta de al lado.
 - La tarjeta "Beneficio neto" se estiraba a todo el ancho al bajar de fila, y
@@ -575,6 +648,60 @@ publicación anunciaba.
 
 **Envío de correo**
 
+- **El aviso de "sin cuenta de correo" podía mentir en los dos sentidos.** La
+  cabecera decidía si había cuenta mirando una copia guardada dentro de la base
+  de datos, mientras que el envío usa las credenciales reales, que viven
+  cifradas fuera de ella. Las dos se separaban: borrada la base, el aviso se
+  quedaba puesto para siempre con el correo funcionando; y al revés —restaurando
+  una copia de seguridad, que lleva el usuario pero nunca la contraseña— la
+  aplicación daba por configurada una cuenta con la que cada envío iba a fallar.
+  Y no era solo el aviso: **el envío en tanda de Prospección se gobernaba con
+  esa misma copia**, así que borrada la base se negaba a mandar nada —«no hay
+  cuenta de correo configurada»— con el correo funcionando perfectamente, y
+  restaurada una copia arrancaba la tanda para fallar contacto a contacto.
+  Ahora todo eso lo pregunta al servidor, que es quien tiene las credenciales,
+  y además distingue un tercer caso que antes no existía: cuenta guardada que
+  el proveedor rechaza, con su propio aviso en la cabecera y, en Configuración,
+  el punto en rojo con «Guardada, pero el proveedor la rechaza» en vez del
+  verde que tranquilizaba sobre una contraseña que no funciona. El asistente de
+  bienvenida seguía el mismo camino equivocado: daba por conectada una cuenta
+  con la dirección guardada pero sin contraseña, y ahora solo lo hace cuando el
+  servidor confirma que puede enviar.
+
+- **Los dos correos que piden dinero eran los únicos que no saludaban por tu
+  nombre.** El presupuesto y la entrega decían «Hi Anke,»; la factura y los
+  tres recordatorios de cobro, «Hi,» a secas. Y el asunto de la factura era el
+  único de los siete sin ninguna referencia —«Invoice for Translation
+  Services»—, así que tres facturas al mismo cliente le llegaban con asunto
+  idéntico y su gestor de correo las apilaba en un solo hilo; para reclamar un
+  impago, justo lo contrario de lo que hace falta. Ahora los cuatro saludan por
+  el nombre del cliente y el asunto de la factura lleva su número y el proyecto.
+  Si ya habías reescrito alguna plantilla, la tuya se respeta: esto solo cambia
+  las de fábrica.
+
+- **Enviar una factura decía «Entregables enviados».** El diálogo ya se
+  adaptaba entero —título, icono, botón y cuerpo del correo—, pero el aviso de
+  confirmación se había quedado fuera.
+
+- **La entrega y la factura podían salir prometiendo un adjunto que no iba
+  dentro.** El correo que entrega la traducción dice «Please find attached the
+  completed work», y el de la factura, «Please find attached the invoice». Si
+  no se añadía ningún archivo, o si se borraba el PDF de la lista de adjuntos
+  antes de darle a enviar, el correo salía igual: sin aviso, sin forma de
+  deshacerlo, y con el cliente leyendo la promesa de un archivo que no estaba.
+  Ahora, sin ningún adjunto, el envío se detiene y dice cuál falta.
+
+- **El recordatorio de cobro daba el vencimiento en un formato que el cliente
+  lee al revés.** Estos correos van siempre en inglés, y el importe ya salía en
+  formato de cliente, pero la fecha seguía el idioma de la interfaz: en el
+  mismo renglón convivían «€676.00» y «10/8/2026». Esa fecha es el 10 de agosto
+  para quien escribe la aplicación en español y el 8 de octubre para quien lee
+  el correo en inglés, así que el aviso final de impago llegaba a contradecirse
+  solo: una fecha de vencimiento que el cliente lee como futura, en un correo
+  que le está reclamando 39 días de retraso. Ahora el mes va escrito —«August
+  10, 2026»—, que no admite lectura doble en ningún mercado. Afecta al
+  recordatorio en sus tres etapas y al correo de la factura.
+
 - **Una contraseña ya guardada se veía igual que un campo que nunca tuvo
   nada.** El servidor no devuelve nunca la contraseña de la cuenta de correo,
   ni siquiera cifrada, así que el campo de Configuración aparecía vacío tanto
@@ -638,6 +765,30 @@ publicación anunciaba.
   que no lo estaba.
 
 **Otros**
+
+- **El corrector del navegador subrayaba el español como si fueran faltas.**
+  La aplicación se declaraba en inglés ante el navegador —el idioma del
+  documento estaba fijado y no lo cambiaba nadie—, aunque la interfaz
+  estuviera en español. Como el diccionario del corrector se elige por ahí, al
+  escribir el asunto y el cuerpo de un correo, o las notas de un contacto o de
+  un proyecto, salían subrayadas en rojo palabras bien escritas. El idioma
+  declarado sigue ahora al que esté elegido en la cabecera. De paso, un lector
+  de pantalla deja de leer el español con pronunciación inglesa.
+
+- **El cronómetro dejaba entradas de "0min".** Arrancarlo y pararlo por error
+  —o un clic doble— creaba una línea de cero minutos en la ficha, con su fecha
+  y su aspa, que solo servía para borrarla a mano y que además viajaba en la
+  copia de seguridad. Por debajo de medio minuto ya no se guarda nada.
+
+- **Un archivo de menos de medio kilobyte se veía como "0 KB"**, que parece un
+  archivo vacío justo antes de mandárselo al cliente. Ahora se dan los bytes.
+
+- **La tarifa por hora sugería "Ej.: 0.12"**, que es un ejemplo de tarifa por
+  palabra: bajo la etiqueta "Tarifa por hora" proponía doce céntimos la hora.
+
+- **El par de idiomas se propone solo** al elegir cliente, tomándolo del que ya
+  tiene guardado ese contacto. Solo se propone, y solo cuando el contacto tiene
+  un par reconocible: lo que ya esté escrito no se toca.
 
 - **El periodo de prueba se ancla también en los datos ya guardados.** Antes
   dependía únicamente de su propio archivo de registro, de modo que una
