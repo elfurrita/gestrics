@@ -10,6 +10,187 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
+## [1.1.1] — 2026-09-26
+
+### Changed
+
+- **"New contact" is no longer a tab, it is a button.** The Outreach panel's
+  header had two tabs, "Contacts" and "New contact", and the second one led
+  nowhere: it opened the new-contact form. An action button dressed up as
+  navigation, which also left "Contacts" looking clickable while you were
+  already standing on it. It now works like Projects: at the top sits the
+  section title —"Contacts", "New contact" or "Edit contact", depending on
+  what is below it, with nothing to click— and adding a contact is a button at
+  the foot of the list. The form gains a "Cancel" next to its save button, the
+  way out the tab used to be, and its labels —"Name", "Company"…— no longer
+  sit centred over fields that are left-aligned.
+- **An empty list now just says "No contacts" again.** It used to carry a
+  three-line hint below it naming both doors —"New contact" and "Import
+  contacts"—. With adding a contact turned into a button at the foot of the
+  list, both announce themselves, and the hint was taking up half of a box
+  that is already short on height.
+- **The contact search box now shares a row with the title, and is a
+  magnifier.** It used to have a whole row to itself, leaving the list with
+  199 of the panel's 652 px: four and a half contacts in view. It now sits to
+  the right of "Contacts" —which moves left until it lines up right under the
+  "T" of "All statuses"— and the "Search contacts…" text gives way to a
+  magnifying glass pinned to the right edge, as in Windows Explorer; while
+  there is something typed, the clear cross takes its place. The list goes
+  from 199 to 262 px: **from 4.6 to 6.2 contacts in view** without scrolling.
+  With the new-contact form open the search box is not drawn, since there is
+  no list to filter.
+- **The Projects search box, the same.** Same measurements as the Outreach
+  one —a 12.5 px field in a 52 px row, instead of 13 in a 62 px one— and the
+  same magnifier in place of the "Search projects or clients…" text. It also
+  gains the clear cross, which it never had. And the same order: the status
+  filter on top and the search below, as in Outreach, so the panel header is
+  the same in both views.
+- **Support moves from the translator profile to Settings.** It sat at the end
+  of the profile, between the IBAN and the CAT rates: a section that is not
+  configured at all, on the screen where you fill in the details that get
+  printed on the invoice. It now closes the maintenance block, next to the
+  backup, the setup guide and diagnostics, which is what you look at when
+  something is not working.
+- **Every title in Settings is now left-aligned.** All eleven came out
+  centred, and the longer ones —"App password", with its notice beside it—
+  looked differently aligned merely because they were wider. The two backup
+  buttons, on the other hand, really were stuck to the left, and are now
+  centred like the rest.
+- **The backup leaves the panel for Settings.** It used to be a collapsible
+  bar at the foot of Outreach, where it spent 50 px of height on something
+  done once a month and where nobody working in Projects could find it. It
+  now lives next to the setup guide and diagnostics, with both buttons and
+  —this is what could not be lost— the notice of how long since the last one,
+  which the File menu has no way to give. With the room it frees, the contact
+  list reaches **7.4 contacts in view**.
+- **The new-project form no longer explains where clients come from.** The
+  "Clients are your Outreach contacts…" hint showed under the dropdown while
+  the list was empty; it has been removed.
+- **"No projects" now looks like "No contacts".** It was a smaller line of
+  text with nothing around it; it now carries the open-folder icon above it
+  —the project icon throughout that view— and the same text size as its
+  Outreach counterpart. The icon follows the reason for the gap: the folder
+  when no project has been created, the magnifier when there are projects but
+  the search box or the filter finds none.
+- **The interval between sends now lives only in Settings.** The Outreach
+  panel carried a twin of the field already there —same setting, same 3 to
+  300 second range— spending permanent height on a number you set once. Added
+  to everything above, the contact list goes from the **4.6 contacts in view**
+  this release started with to **8.3**, without dropping a single feature from
+  the panel.
+
+### Fixed
+
+- **"File → Import Backup…" restored nothing.** It opened the "Import
+  contacts" file picker, so it asked for a CSV or an Excel file and whatever
+  you picked was read as a contact list, not as a backup. That menu entry has
+  never worked since it existed.
+- **Trados analyses now really import, in any of their formats.** "Import CAT
+  analysis" now reads the "Analyze Files" report (or the "GroupShare Analyze
+  and Translate" one) just as Trados leaves it: the `.xml` in the project's
+  Reports folder and whatever its "Save As" produces —XML, Excel, HTML or
+  MHT—; the Excel, HTML and MHT ones with Trados in English, German, Spanish,
+  French or Italian. It sorts it by itself: the
+  rows come with the Trados names, in the app's language, and in the same
+  order as in its report, each one already mapped to its category, and all
+  that is left is to check it and confirm. Whatever the report does not make
+  clear whether to charge is left unmapped, for you to decide: "Locked",
+  internal fuzzy matches when the report's total does not prove they are
+  counted apart from the other rows, and categories that the Trados table does
+  not show. If the table in an export is not laid out as expected, the import
+  says so and asks for the XML instead of sorting it wrongly. Before, only the
+  Excel file could be picked, and it was misread: it opens with the title and
+  the analysis settings, repeats every category file by file —so they were
+  added up twice— and, with Trados in French or Spanish, it did not recognise
+  the new words. With a real 862-word analysis, the import suggested 26; now,
+  in any of the four formats, 862.
+- **The rate accepts a decimal comma.** Typing "0,09" as a project's rate
+  silently dropped the comma and left "009": nine euros per word, a hundred
+  times more. The comma now counts as a decimal point, and in "Source words" a
+  "1.234" with a thousands dot is 1234 words, not 1.234.
+- **And the same in the other number fields.** In the recurring billing plan,
+  the comma was also dropped as you typed it: an amount of "150,50" became
+  €15,050 a month and "1.500,00" €1.50, and a VAT rate of "5,5", 55%. The
+  amount is now read with a decimal comma or point and with a thousands
+  separator —"150,50", "1.500,00", "1 500", "1,500.00"—, a "1.500" is fifteen
+  hundred, and the amount as it will be invoiced shows under the field;
+  anything that cannot be read without guessing, such as "150 50", is flagged
+  and cannot be saved. An expense amount is read the same way and shows next to
+  the button how it will be saved: it was a browser number field, which never
+  takes a dot as a thousands separator and accepts the comma or not depending
+  on the Windows language. The VAT and withholding rates when issuing or
+  correcting an invoice and the CAT rate weights were fields of that same
+  kind, and every percentage now accepts a comma with any Windows —"5,5"—,
+  pasted with its "%" too. And in manual time entries, "1,5" hours was one hour
+  and the half hour was lost: it is now an hour and a half, and "1:30" and
+  "1h30" work too.
+- **A PDF no longer opens the importer as if it were a spreadsheet.** The file
+  picker lets you choose "All files", and the PDF analysis agencies often send
+  opened the column mapping with the PDF's internals as headers; "Import
+  contacts" did the same with a vCard. Each import now reads only the formats
+  its picker offers, and anything else shows a message saying which ones work.
+- **With a window open, the keyboard no longer reaches what is behind it.**
+  The app's windows let the focus out: pressing Tab from "Import CAT
+  analysis", or from the terms of use on first launch, reached the header
+  buttons behind the overlay, and from there the whole page could be used with
+  the window still open. Pressing "Import contacts" or "Import CAT analysis"
+  again also left the new file with the column mapping —or the row
+  assignment— of the previous one, which fell out of line over it without
+  warning. Now the focus moves into the window when it opens, Tab and
+  Shift+Tab cycle inside it without leaving, and closing it returns the focus
+  to the button it was opened from; and each imported file opens its window
+  from scratch. Escape also closes only the window on top: pressing Escape on
+  the confirmation question when sending deliverables without attachments
+  closed both, and the email being written was lost.
+- **The menu no longer acts behind an open window either.** "New Contact",
+  "New Project", both backup entries and "View Getting Started Guide" still
+  worked with a window in front: Ctrl+N switched view out of sight, and
+  "Import Backup…" could restore the whole database with a half-written email
+  on top. They are now greyed out while a window is open, the way Windows
+  treats the menu of a window that has a dialog in front, and come back as soon
+  as it closes. Copy, paste, zoom and quit stay available: they are needed
+  inside the window.
+- **The language switchers, the "skip" links and the CAT analysis links work
+  with the keyboard.** The "ES | EN" in the header and the one in the terms of
+  use on first launch, the "Skip step" and "Skip tour" links in the
+  getting-started guide, and "Replace analysis" and "Remove analysis" in the
+  project form only responded to the mouse: Tab skipped them, and Enter and
+  Space did nothing. In the terms, which cannot be closed without accepting
+  them and no longer let the focus out, keyboard users had no way to change the
+  language before reading them. Now Tab reaches all of them, with the browser's
+  focus ring, and Enter or Space activates them; they look the same as before.
+  Screen readers can also tell which language is active.
+- **The CAT breakdown table no longer shows one cent more than the project
+  amount.** It added up each category's amount before rounding, while the
+  "Calculated amount" and the PDF add up the rounded ones: two categories were
+  enough to see €49.73 in the table above an amount of €49.72. Its word counts
+  now also follow the app's language: they used the system's, so with the
+  system in another language they did not match the amounts next to them.
+- **A name containing "$" or braces no longer scrambles the messages it
+  appears in**, such as the confirmation for deleting a contact or sending them
+  an email, the one for generating a recurring invoice or the summary of a
+  Trados analysis. The name went through a substitution that interprets
+  certain combinations with "$": "Libro de $'final" duplicated the rest of the
+  sentence and left a `{language}` in plain sight, and "$$" became a single
+  "$". And the placeholders were filled in one at a time, so a contact called
+  "Ana {email}" got the email inside their name while the real placeholder was
+  left in plain sight. The name is now copied as is. Emails to clients were not
+  affected: they fill in their variables another way.
+- **Notifications and client folders answer to the keyboard.** Every
+  notification in the bell's dropdown and every client row in the projects
+  tree only worked with the mouse: Tab walked straight past them and neither
+  Enter nor Space did anything, so without a mouse there was no way to open a
+  notification or collapse a client. They are now part of the tab order, they
+  fire on Enter and on Space, and tabbing draws a ring around whichever one
+  has focus. The notification of a recurring invoice being generated stays
+  out of the tab order while it lasts, just as it was already out of the
+  mouse's reach. And a screen reader announces each folder as "Client NAME,
+  N projects" instead of reading out everything in the row. Nothing on screen
+  changes.
+- **The first press on a client folder is no longer lost.** In the projects
+  tree, collapsing a client nobody had touched since the app opened took two
+  clicks: the first one was dropped. It now collapses on the first one.
+
 ## [1.1.0] — 2026-09-21
 
 The first release that actually ships. It replaces the installer uploaded on

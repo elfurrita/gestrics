@@ -11,6 +11,189 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
+## [1.1.1] — 2026-09-26
+
+### Cambiado
+
+- **«Nuevo contacto» ya no es una pestaña, es un botón.** La cabecera del
+  panel de Prospección tenía dos pestañas, «Contactos» y «Nuevo contacto», y
+  la segunda no llevaba a ninguna parte: abría el formulario de alta. Un botón
+  de acción disfrazado de navegación, que además dejaba «Contactos» pintada
+  como pulsable estando ya encima de ella. Ahora funciona como Proyectos:
+  arriba queda el título de la sección —«Contactos», «Nuevo contacto» o
+  «Editar contacto», según lo que haya debajo, y sin nada que pulsar— y el
+  alta es un botón al pie de la lista. El formulario gana un «Cancelar» junto
+  a su botón de guardar, que es la salida que antes daba la pestaña, y sus
+  etiquetas —«Nombre», «Empresa»…— dejan de salir centradas sobre unos campos
+  que van a la izquierda.
+- **La lista vacía vuelve a decir solo «Sin contactos».** Llevaba debajo una
+  pista de tres líneas que nombraba las dos puertas —«Nuevo contacto» e
+  «Importar contactos»—. Con el alta convertida en botón al pie de la lista,
+  las dos se anuncian solas, y la pista ocupaba la mitad de una caja que ya va
+  justa de alto.
+- **El buscador de contactos comparte fila con el título, y es una lupa.**
+  Tenía una fila entera para él, y la lista se quedaba con 199 de los 652 px
+  del panel: cuatro contactos y medio a la vista. Ahora va a la derecha de
+  «Contactos» —que se corre a la izquierda hasta caer justo debajo de la «T»
+  de «Todos los estados»— y el texto «Buscar contacto…» se sustituye por una
+  lupa pegada al borde derecho, como en el explorador de Windows; mientras
+  hay algo escrito, la equis de borrar ocupa su sitio. La lista pasa de 199 a
+  262 px: **de 4,6 a 6,2 contactos a la vista** sin desplazar. Con el
+  formulario de alta abierto el buscador no se pinta, porque no hay lista que
+  filtrar.
+- **El buscador de Proyectos, igual.** Mismas medidas que el de Prospección
+  —campo de 12,5 px en una fila de 52, en vez de 13 en una de 62— y la misma
+  lupa en lugar del texto «Buscar proyecto o cliente…». Estrena además la
+  equis de borrar, que allí no había. Y el mismo orden: el filtro de estado
+  arriba y el buscador debajo, como en Prospección, para que la cabecera del
+  panel sea la misma en las dos vistas.
+- **El soporte se muda del perfil del traductor a Configuración.** Estaba al
+  final del perfil, entre el IBAN y las tarifas CAT: un apartado que no se
+  configura, en la pantalla donde se rellenan los datos que salen impresos en
+  la factura. Ahora cierra el bloque de mantenimiento, junto a la copia de
+  seguridad, la guía de inicio y el diagnóstico, que es lo que se mira cuando
+  algo no va.
+- **Los títulos de Configuración van todos a la izquierda.** Los once salían
+  centrados, y los más largos —«Contraseña de aplicación», con su aviso al
+  lado— parecían alineados de otra forma sólo por ocupar más ancho. Los dos
+  botones de la copia de seguridad, en cambio, sí estaban descolgados a la
+  izquierda y ahora van centrados como los demás.
+- **La copia de seguridad se va del panel a Configuración.** Estaba en una
+  barra plegable al pie de Prospección, donde gastaba 50 px de alto para algo
+  que se hace una vez al mes y donde no la encontraba nadie que estuviera en
+  Proyectos. Ahora vive junto a la guía de inicio y el diagnóstico, con los
+  dos botones y —esto es lo que no se podía perder— el aviso de cuánto hace
+  de la última, que el menú Archivo no sabe dar. Con el hueco que deja, la
+  lista de contactos llega a **7,4 contactos a la vista**.
+- **El formulario de un proyecto nuevo ya no explica de dónde salen los
+  clientes.** La pista «Los clientes son tus contactos de Prospección…»
+  aparecía bajo el desplegable con la lista vacía; se retira.
+- **«Sin proyectos» se ve como «Sin contactos».** Era una línea de texto más
+  pequeña y sin nada alrededor; ahora lleva encima el icono de carpeta
+  abierta —el de proyecto en toda esa vista— y el mismo tamaño de letra que
+  su equivalente de Prospección. El icono cambia según el motivo del hueco:
+  la carpeta cuando no hay ningún proyecto creado, la lupa cuando los hay
+  pero el buscador o el filtro no encuentran ninguno.
+- **El intervalo entre envíos se queda sólo en Configuración.** El panel de
+  Prospección tenía un campo gemelo del que ya estaba allí —mismo ajuste,
+  mismo rango de 3 a 300 segundos—, gastando alto permanente para un número
+  que se pone una vez. Sumado a todo lo anterior, la lista de contactos pasa
+  de los **4,6 contactos a la vista** con los que empezó la versión a **8,3**,
+  sin quitar ninguna función del panel.
+
+### Corregido
+
+- **«Archivo → Importar copia de seguridad…» no restauraba nada.** Abría el
+  selector de archivos de «Importar contactos», así que pedía un CSV o un
+  Excel y lo que eligieras se leía como una lista de contactos, no como una
+  copia. La entrada del menú no funcionó nunca desde que existe.
+- **El análisis de Trados se importa de verdad, en cualquiera de sus
+  formatos.** «Importar análisis CAT» lee ahora el informe de «Analizar
+  archivos» (o el de «Analizar y traducir con GroupShare») tal como lo deja
+  Trados: el `.xml` de la carpeta Reports del proyecto y lo que sale de su
+  «Guardar como» —XML, Excel, HTML o MHT—; el Excel, el HTML y el MHT, con
+  Trados en inglés, alemán, español, francés o italiano. Lo reparte solo: las filas salen con los nombres de Trados, en
+  el idioma de la aplicación, y en el mismo orden que en su informe, cada una
+  ya asignada a su categoría, y basta con revisarlo y confirmar. Lo que el
+  informe no deja claro si se cobra se queda sin asignar, para que lo decidas
+  tú: «Bloqueado», las fuzzy internas cuando el total del informe no demuestra
+  que van aparte de las demás filas, y las categorías que la tabla de Trados no
+  enseña. Si la tabla de una exportación no tiene la forma esperada, la
+  importación lo dice y pide el XML en vez de repartirla mal. Antes solo se
+  podía elegir el Excel, y se leía mal: empieza por el título y los ajustes
+  del análisis, repite cada categoría archivo por archivo —y se sumaban dos
+  veces— y, con Trados en francés o en español, no reconocía las palabras
+  nuevas. Con un análisis real de 862 palabras, la importación proponía 26;
+  ahora, en cualquiera de los cuatro formatos, 862.
+- **La tarifa acepta la coma decimal.** Al teclear «0,09» en la tarifa de un
+  proyecto, la coma se descartaba sin avisar y quedaba «009»: nueve euros por
+  palabra, cien veces más. Ahora la coma vale como punto decimal, y en
+  «Palabras origen» un «1.234» con punto de miles son 1234 palabras, no 1,234.
+- **Y lo mismo en el resto de campos de cifras.** En el plan de facturación
+  recurrente, la coma también se descartaba al teclearla: el importe «150,50»
+  quedaba en 15.050 € al mes y «1.500,00» en 1,50 €, y un IVA de «5,5», en
+  55 %. Ahora el importe se lee con coma o con punto decimal y con separador de
+  miles —«150,50», «1.500,00», «1 500», «1,500.00»—, un «1.500» son mil
+  quinientos, y debajo del campo se ve el importe tal como se va a facturar; lo
+  que no se puede leer sin adivinar, como «150 50», lo avisa y no deja guardar.
+  El importe de un gasto se lee igual y enseña junto al botón cómo se va a
+  guardar: era un campo numérico del navegador, que nunca toma el punto como
+  separador de miles y que acepta la coma o no según el idioma de Windows. Los
+  tipos de IVA y de retención al emitir o rectificar una factura y los pesos
+  del tarifario CAT eran campos de esa misma clase, y ahora todos los
+  porcentajes aceptan la coma con cualquier Windows —«5,5»—, también pegados
+  con su «%». Y en el registro manual de horas, «1,5» era una hora y se perdía
+  la media hora: ahora es hora y media, y también valen «1:30» y «1h30».
+- **Un PDF ya no abre el importador como si fuera una hoja de cálculo.** El
+  selector de archivos deja elegir «Todos los archivos», y el PDF del análisis
+  que suelen mandar las agencias abría el mapeo de columnas con el contenido
+  interno del PDF como cabecera; en «Importar contactos» pasaba lo mismo con un
+  vCard. Ahora cada importación solo lee los formatos que ofrece su selector, y
+  lo demás da un aviso que dice cuáles valen.
+- **Con una ventana abierta, el teclado ya no llega a lo que queda detrás.**
+  Las ventanas de la aplicación dejaban salir el foco: pulsando Tab desde
+  «Importar análisis CAT», o desde los términos de uso del primer arranque, se
+  llegaba a los botones de la cabecera, detrás del velo, y desde ahí se podía
+  usar la página entera con la ventana todavía abierta. Si se volvía a pulsar
+  «Importar contactos» o «Importar análisis CAT», el archivo nuevo se quedaba
+  además con el mapeo de columnas —o la asignación de filas— del anterior, que
+  caía desplazado sobre él sin avisar. Ahora el foco entra en la ventana al
+  abrirse, Tab y Mayús+Tab dan la vuelta dentro sin salir, y al cerrarla vuelve
+  al botón desde el que se abrió; y cada archivo importado abre su ventana de
+  cero. Escape, además, cierra solo la ventana de encima: si al enviar los
+  entregables sin adjuntos se pulsaba Escape en la pregunta de confirmación, se
+  cerraban las dos y se perdía el correo que se estaba escribiendo.
+- **Y el menú tampoco actúa por detrás de una ventana abierta.** «Nuevo
+  contacto», «Nuevo proyecto», las dos copias de seguridad y «Ver guía de
+  inicio» funcionaban con una ventana delante: Ctrl+N cambiaba de vista sin que
+  se viera, e «Importar copia de seguridad…» llegaba a restaurar la base entera
+  con un correo a medio escribir encima. Ahora se ven en gris mientras haya una
+  ventana abierta, como hace Windows con el menú de una ventana que tiene un
+  diálogo delante, y vuelven en cuanto se cierra. Copiar, pegar, el zoom y
+  salir siguen disponibles: hacen falta dentro de la ventana.
+- **Los selectores de idioma, los «omitir» y los enlaces del análisis CAT
+  responden al teclado.** El «ES | EN» de la cabecera y el de los términos de
+  uso del primer arranque, los «Omitir paso» y «Omitir recorrido» de la guía de
+  inicio, y el «Reemplazar análisis» y «Quitar análisis» del formulario de
+  proyecto solo respondían al ratón: Tab se los saltaba, e Intro y Espacio no
+  hacían nada. En los términos, que no se cierran sin aceptarlos y ya no dejan
+  salir el foco, quien usa el teclado se quedaba sin forma de cambiar de idioma
+  antes de leerlos. Ahora Tab llega a todos, con el anillo de foco del
+  navegador, e Intro o Espacio los accionan; se ven igual que antes. Los
+  lectores de pantalla, además, saben cuál es el idioma activo.
+- **La tabla del desglose CAT ya no dice un céntimo más que el importe del
+  proyecto.** Sumaba los importes de cada categoría sin redondear, mientras el
+  «Importe calculado» y el PDF suman los ya redondeados: con dos categorías
+  bastaba para ver 49,73 € en la tabla encima de un importe de 49,72 €. Y sus
+  palabras salen ahora con el formato del idioma de la aplicación: tomaban el
+  del sistema, así que con el sistema en otro idioma no casaban con los
+  importes de al lado.
+- **Un nombre con «$» o con llaves ya no descoloca los mensajes que lo llevan
+  dentro**, como la confirmación de borrar un contacto o de enviarle un correo,
+  la de generar una factura recurrente o el resumen de un análisis de Trados.
+  Pasaban el nombre por una sustitución que interpreta ciertas combinaciones
+  con «$»: «Libro de $'final» duplicaba el resto de la frase y dejaba un
+  `{language}` a la vista, y «$$» se quedaba en un solo «$». Y los huecos se
+  rellenaban de uno en uno, así que un contacto llamado «Ana {email}» se
+  llevaba el email dentro del nombre y el hueco de verdad quedaba a la vista.
+  Ahora el nombre se copia tal cual. Los correos a los clientes no estaban
+  afectados: rellenan sus variables por otro camino.
+- **Los avisos de la campana y las carpetas de cliente responden al teclado.**
+  Cada aviso del desplegable de la campana y cada fila de cliente del árbol de
+  proyectos servían solo con el ratón: el tabulador pasaba de largo y ni Intro
+  ni Espacio hacían nada, así que sin ratón no había forma de abrir un aviso
+  ni de plegar un cliente. Ahora entran en el recorrido del tabulador, se
+  accionan con Intro y con Espacio, y al tabular se ve un recuadro alrededor
+  del que tiene el foco. El aviso de una factura recurrente que se está
+  generando se queda fuera del recorrido mientras dura, igual que ya estaba
+  fuera del alcance del ratón. Y un lector de pantalla anuncia cada carpeta
+  como «Cliente NOMBRE, N proyectos», en vez de leer de corrido todo lo que
+  hay en la fila. Nada de lo que se ve cambia.
+- **La primera pulsación sobre una carpeta de cliente ya no se pierde.** En el
+  árbol de proyectos hacían falta dos clics para plegar un cliente que nadie
+  hubiera tocado desde que se abrió la aplicación: el primero se descartaba
+  sin hacer nada. Ahora pliega a la primera.
+
 ## [1.1.0] — 2026-09-21
 
 Primera versión que se lanza de verdad. Sustituye al instalador que se subió el
