@@ -11,9 +11,81 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [1.1.1] — 2026-09-26
+## [1.1.1] — 2026-09-27
 
+### Añadido
+
+- **El análisis de memoQ se importa, en los cuatro formatos en que memoQ lo
+  exporta.** «Importar análisis CAT» lee ahora lo que sale del botón Export de
+  sus Estadísticas: el HTML y los tres CSV —el que refleja los resultados en
+  pantalla, el de una fila por archivo compatible con Trados y el de una fila
+  por archivo con toda la información—. Antes, su CSV se podía elegir pero
+  caía entero en una sola columna —memoQ nunca separa con comas—, y su HTML se
+  rechazaba con un «esto no lo reconozco como informe de Trados». Las filas llegan ya asignadas a su categoría —101 % y las
+  pretraducidas como contexto, las repeticiones, el 100 %, cada banda y las
+  que no tienen coincidencia—, y «Fragments» se enseña sin asignar, como
+  «Bloqueado» en Trados: que eso se cobre o no lo decide cada cliente. Si el
+  archivo trae varios análisis seguidos, se importa el primero y la ventana lo
+  dice; si trae varios archivos, se suman, sin contar dos veces la fila de
+  totales. Comprobado con el mismo análisis exportado en los cuatro formatos:
+  los cuatro dan 249 palabras y el mismo reparto, y de ahí salen 18,10 € a
+  0,09 €/palabra, tanto en pantalla como en el presupuesto en PDF.
+
+- **El análisis de Wordfast Pro también se importa, en los cuatro formatos que
+  usa un traductor.** «Importar análisis CAT» lee lo que saca su «Export
+  report»: su CSV, el CSV compatible con Trados, el HTML y el XLS. Las filas
+  llegan ya asignadas —contexto, repeticiones, 100 %, cada banda y las que no
+  tienen coincidencia—, y los segmentos «Ignored» se enseñan sin asignar, como
+  «Bloqueado» en Trados. Si el informe trae varios archivos, se suman, y su
+  tabla de totales no se cuenta además de ellos. Wordfast escribe cinco
+  formatos más, pensados para alimentar a otros programas: algunos ni siquiera
+  traen las repeticiones o las palabras nuevas, así que no se reconocen y el
+  archivo sigue al importador genérico, donde se eligen las columnas a mano.
+  Comprobado con informes generados por el propio Wordfast: los cuatro formatos
+  dan las mismas 311 palabras y el mismo reparto, y de ahí 22,09 € a
+  0,09 €/palabra, tanto en pantalla como en el presupuesto en PDF.
 ### Cambiado
+
+- **Un proyecto recién creado ya no parece presupuestado.** Hasta ahora nacía
+  con «Presupuestado» relleno, como paso cumplido, y pedía el clic en «En
+  curso», aunque el presupuesto no hubiera salido todavía. Ahora el paso
+  pendiente es el propio «Presupuestado», punteado y sin fondo, y el aviso dice
+  «Haz clic en Presupuestado para avanzar»: el presupuesto se edita y se envía
+  las veces que haga falta, y el clic, cuando el cliente lo acepta, lleva el
+  proyecto a «En curso».
+- **El presupuesto tiene su propia tarjeta**, como el encargo y la factura, en
+  vez de ir metido en la barra de estado. Sus botones son «Editar»,
+  «Descargar» y «Enviar» (o «Reenviar», si ya salió), sin repetir
+  «presupuesto» en los tres. Cuando el proyecto avanza, la tarjeta se queda con
+  la fecha de envío y la descarga. La tarjeta de Factura sigue el mismo
+  criterio: «Editar», «Descargar» y «Enviar».
+- **Las fechas llevan el mes en letra**: «26 sept 2026» en español y «Sep 26,
+  2026» en inglés, que es la convención de cada idioma (el formato medio de
+  CLDR, el que aplican los navegadores). Antes eran numéricas y
+  cambiaban de orden al cambiar de idioma (26/9/2026 frente a 9/26/2026), y un
+  3/5 no decía si era marzo o mayo. Vale para toda la aplicación —fichas,
+  listas, métricas, historial, avisos— y para los PDF de factura y presupuesto,
+  que siguen en inglés: «26 Sep 2026», o «Sep 26, 2026» con la interfaz en
+  inglés.
+- **Un calendario propio para elegir fechas**, en los siete campos de fecha de
+  la aplicación. El de Windows/Chromium enseñaba la fecha en el formato del
+  idioma de Windows, no del de la aplicación, y su rueda desplazaba las
+  semanas sin cambiar el mes del título. Ahora la rueda pasa de mes, los días
+  del mes anterior y del siguiente salen en gris, y hay botón «Hoy» (y
+  «Borrar» donde la fecha es opcional). Con el teclado: flechas para moverse,
+  RePág/AvPág para cambiar de mes, Intro para elegir y Esc para cerrar.
+- **«Enviar entregables» se bloquea mientras el presupuesto no está
+  aceptado**, igual que «Crear factura» antes de entregar, y dice qué falta:
+  «Marca Presupuestado antes de enviar entregables».
+- **Los botones de confirmar envío dicen solo «Enviar»** en los diálogos de
+  entregables, factura y presupuesto; el título del diálogo ya dice qué se
+  envía.
+- **El aviso bajo los tipos de impuesto de la factura explica qué son los
+  botones** (el tipo general de tu país y el 0 % que suele corresponder a un
+  cliente de otro país) y qué hacer si toca otro, en vez de un «tipos
+  orientativos» que no aclaraba nada.
+- En inglés, **«Encargo» se traduce ahora «Assignment»** en vez de «Job», en la
+  ficha y en todos los mensajes.
 
 - **«Nuevo contacto» ya no es una pestaña, es un botón.** La cabecera del
   panel de Prospección tenía dos pestañas, «Contactos» y «Nuevo contacto», y
@@ -82,6 +154,15 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
   sin quitar ninguna función del panel.
 
 ### Corregido
+
+- **Un CSV con punto y coma ya no se lee como una sola columna.** Excel en
+  español y en francés exporta «CSV delimitado por punto y coma», y las
+  estadísticas de memoQ solo se exportan con punto y coma o con tabulador. La
+  aplicación leía todo como si fuera coma, así que el archivo entero caía en
+  una columna: al importar contactos salía una cabecera larguísima y ninguna
+  otra, y al importar un análisis no se reconocía ninguna categoría. Ahora el
+  separador se decide leyendo el propio archivo, sin mirar la extensión, y una
+  coma dentro de «"Dupont, Marie"» sigue siendo parte del nombre.
 
 - **«Archivo → Importar copia de seguridad…» no hacía nada.** No ha
   funcionado nunca desde que existe, y por dos motivos a la vez. Apuntaba al
