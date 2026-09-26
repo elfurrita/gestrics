@@ -83,10 +83,16 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ### Corregido
 
-- **«Archivo → Importar copia de seguridad…» no restauraba nada.** Abría el
-  selector de archivos de «Importar contactos», así que pedía un CSV o un
-  Excel y lo que eligieras se leía como una lista de contactos, no como una
-  copia. La entrada del menú no funcionó nunca desde que existe.
+- **«Archivo → Importar copia de seguridad…» no hacía nada.** No ha
+  funcionado nunca desde que existe, y por dos motivos a la vez. Apuntaba al
+  selector de archivos de «Importar contactos», así que habría pedido un CSV
+  o un Excel y lo elegido se habría leído como una lista de contactos; y
+  aunque hubiera apuntado al suyo, tampoco habría abierto ninguna ventana,
+  porque el navegador que hay dentro de la aplicación sólo abre un selector
+  de archivos cuando lo pide un clic del usuario, y una orden del menú no
+  cuenta como tal. Ahora la ventana de elegir archivo la abre la propia
+  aplicación, por fuera de esa regla, y la restauración sigue su curso
+  normal: confirmación incluida.
 - **El análisis de Trados se importa de verdad, en cualquiera de sus
   formatos.** «Importar análisis CAT» lee ahora el informe de «Analizar
   archivos» (o el de «Analizar y traducir con GroupShare») tal como lo deja

@@ -81,10 +81,15 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ### Fixed
 
-- **"File → Import Backup…" restored nothing.** It opened the "Import
-  contacts" file picker, so it asked for a CSV or an Excel file and whatever
-  you picked was read as a contact list, not as a backup. That menu entry has
-  never worked since it existed.
+- **"File → Import Backup…" did nothing at all.** It has never worked since
+  it existed, and for two reasons at once. It pointed at the "Import contacts"
+  file picker, so it would have asked for a CSV or an Excel file and read your
+  choice as a contact list; and even pointing at the right one it would have
+  opened no window either, because the browser inside the app only opens a
+  file picker when a click of yours asks for it, and a menu command does not
+  count as one. The file-picking window is now opened by the app itself,
+  outside that rule, and the restore carries on as normal: confirmation
+  included.
 - **Trados analyses now really import, in any of their formats.** "Import CAT
   analysis" now reads the "Analyze Files" report (or the "GroupShare Analyze
   and Translate" one) just as Trados leaves it: the `.xml` in the project's
