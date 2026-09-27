@@ -14,6 +14,17 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ### Added
 
+- **Invoice payment terms are written once and appear on the PDF.** The issuing
+  dialog had an "Invoice notes (optional)" field that started empty, with a grey
+  hint, and whose text was printed at the end of the document under a "Notes"
+  heading — far from the "Payment terms" block, where a fixed "Bank transfer"
+  line could contradict it. There is now a **Payment terms** field in the
+  translator profile, with a starting text you can change ("Payment by bank
+  transfer within 30 days of the invoice date. Please quote the invoice number
+  as the payment reference."); every new invoice starts from it and can be
+  adjusted for that invoice only; and the PDF prints it where it belongs, right
+  under "Payment terms" and above the IBAN. If you write none, the invoice comes
+  out as before. It is in English because the invoice PDF is entirely in English.
 - **memoQ analyses can be imported, in all four formats memoQ exports them
   in.** "Import CAT analysis" now reads what the Export button of its
   Statistics produces: the HTML and the three CSVs — the one reflecting the
@@ -45,6 +56,16 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ### Changed
 
+- **The translator profile is split in two halves.** It mixed what the client
+  sees printed with what only the app uses: the IBAN next to the CAT rate table,
+  the tax ID under "Personal information" and the Metrics currency in between.
+  Now the top holds **what appears on your documents** — identity and contact,
+  online presence, and billing and payment — and the bottom **what the app
+  uses** — main currency, CAT rate table, post-editing rates and reminders —
+  each half with a line explaining it. Within billing, the tax country comes
+  first because the name of the tax ID ("NIF", "RFC") and of the tax in the
+  following fields come from it, and the tax note gains an explanation of where
+  it is printed and what it is for.
 - **A newly created project no longer looks quoted.** Until now it started with
   "Quoted" filled in, as a completed step, and asked for a click on "In
   progress" even though the quote had not gone out yet. Now the pending step is

@@ -15,6 +15,18 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ### Añadido
 
+- **Los términos de pago de la factura se escriben una vez y salen en el PDF.**
+  El diálogo de emisión tenía un campo «Notas en factura (opcional)» que
+  arrancaba vacío, con una pista gris, y cuyo texto se imprimía al final del
+  documento bajo un título «Notes» —lejos del bloque «Payment terms», donde
+  salía un «Bank transfer» fijo que podía contradecirlo—. Ahora hay un campo
+  **Términos de pago** en el perfil del traductor, con un texto de partida que
+  se puede cambiar («Payment by bank transfer within 30 days of the invoice
+  date. Please quote the invoice number as the payment reference.»); cada
+  factura nueva arranca con él y se puede ajustar solo para esa factura; y el
+  PDF lo imprime donde corresponde, justo bajo «Payment terms» y encima del
+  IBAN. Si no escribes ninguno, la factura sale igual que antes. Va en inglés
+  porque el PDF de la factura está entero en inglés.
 - **El análisis de memoQ se importa, en los cuatro formatos en que memoQ lo
   exporta.** «Importar análisis CAT» lee ahora lo que sale del botón Export de
   sus Estadísticas: el HTML y los tres CSV —el que refleja los resultados en
@@ -44,8 +56,19 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
   Comprobado con informes generados por el propio Wordfast: los cuatro formatos
   dan las mismas 311 palabras y el mismo reparto, y de ahí 22,09 € a
   0,09 €/palabra, tanto en pantalla como en el presupuesto en PDF.
+
 ### Cambiado
 
+- **El perfil del traductor se reparte en dos mitades.** Mezclaba lo que el
+  cliente ve impreso con lo que solo usa la aplicación: el IBAN junto al
+  tarifario CAT, el identificador fiscal bajo «Datos personales» y la moneda de
+  Métricas en medio. Ahora arriba va **lo que sale en tus documentos**
+  —identidad y contacto, presencia online, y facturación y cobro— y abajo **lo
+  que usa la aplicación** —moneda principal, tarifario CAT, tarifas de
+  post-edición y recordatorios—, cada mitad con una línea que lo explica. En
+  facturación, el país fiscal va primero porque de él salen el nombre del
+  identificador («NIF», «RFC») y el del impuesto de los campos siguientes, y la
+  nota de impuesto gana una explicación de dónde se imprime y para qué sirve.
 - **Un proyecto recién creado ya no parece presupuestado.** Hasta ahora nacía
   con «Presupuestado» relleno, como paso cumplido, y pedía el clic en «En
   curso», aunque el presupuesto no hubiera salido todavía. Ahora el paso
