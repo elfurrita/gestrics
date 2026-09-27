@@ -11,7 +11,7 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [1.1.1] — 2026-09-27
+## [1.1.1] — 2026-09-28
 
 ### Añadido
 
@@ -59,6 +59,34 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ### Cambiado
 
+- **El carril de estados lo marcas tú, paso a paso.** Emitir la factura ponía
+  el proyecto en «Facturado» sola, y el carril pasaba a pedir el clic en
+  «Cobrado»: invitaba a dar por pagada una factura recién creada, a veces ni
+  enviada. Ahora el recorrido es el que de verdad haces: mandas la traducción y
+  pulsas «Entregado»; el paso pendiente pasa a «Facturado», punteado pero sin
+  poder pulsarse mientras el cliente no tenga la factura; creas la factura y se
+  la mandas con «Enviar», y entonces sí se puede pulsar; al pulsarlo el paso
+  pendiente pasa a «Cobrado», y lo pulsas cuando el dinero llega. El proyecto
+  se queda en «Entregado» entre emitir la factura y pulsar «Facturado»; eso no
+  cambia nada de lo que cuenta: «Pendientes», los vencimientos y los
+  recordatorios miran la factura, no el estado.
+- **Sin globos de ayuda en el carril.** El nombre de cada paso ya está escrito
+  debajo de su icono, y lo que falta para poder pulsarlo lo dice entero el
+  renglón de debajo —«emite antes la factura con Crear factura», «mándale antes
+  la factura al cliente con Enviar»—, sin tener que pasar el ratón por encima.
+- **Los colores del carril, unificados.** Las líneas discontinuas del paso
+  pendiente van todas del mismo gris azulado, el de los botones secundarios:
+  antes cada paso las pintaba de su propio color y cambiaban de color según
+  avanzabas. Y un paso alcanzado se ve siempre del mismo verde —un proyecto
+  terminado salía con cuatro pasos verdes y «Cobrado» en morado, como si fuera
+  otra cosa—. Los colores de cada estado siguen donde sí distinguen: la lista
+  de proyectos y el calendario de entregas.
+- **La caja de la factura lleva los mismos botones que la del presupuesto.**
+  Editar y Descargar en gris, y Enviar en ámbar y del doble de ancho, igual que
+  allí. Antes el botón ancho y de color era el de descargar —en azul, un color
+  que no usa ningún otro botón de la ficha— y el de enviar iba en gris
+  estrecho, así que dos cajas con la misma disposición proponían cosas
+  distintas.
 - **El perfil del traductor se reparte en dos mitades.** Mezclaba lo que el
   cliente ve impreso con lo que solo usa la aplicación: el IBAN junto al
   tarifario CAT, el identificador fiscal bajo «Datos personales» y la moneda de
@@ -103,10 +131,14 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 - **Los botones de confirmar envío dicen solo «Enviar»** en los diálogos de
   entregables, factura y presupuesto; el título del diálogo ya dice qué se
   envía.
-- **El aviso bajo los tipos de impuesto de la factura explica qué son los
-  botones** (el tipo general de tu país y el 0 % que suele corresponder a un
-  cliente de otro país) y qué hacer si toca otro, en vez de un «tipos
-  orientativos» que no aclaraba nada.
+- **El aviso bajo los tipos de impuesto de la factura pasa a una sola línea
+  que dice qué hacer.** Antes eran tres líneas explicando qué proponían los
+  botones —el tipo general del país y el 0 % que suele tocar a un cliente
+  extranjero—, unos botones que se entienden solos, y no decían lo único que
+  hacía falta saber: qué escribir y a quién preguntar en caso de duda. Ahora
+  dice «Establece IVA e IRPF si aplican. En caso de dudas, busca asesoría.»,
+  con los dos nombres del perfil fiscal y no a fuego: un traductor mexicano lee
+  «IVA e ISR», uno indio, «GST y Retención».
 - En inglés, **«Encargo» se traduce ahora «Assignment»** en vez de «Job», en la
   ficha y en todos los mensajes.
 

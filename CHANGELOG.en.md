@@ -10,7 +10,7 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [1.1.1] — 2026-09-27
+## [1.1.1] — 2026-09-28
 
 ### Added
 
@@ -56,6 +56,33 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ### Changed
 
+- **You mark the status bar yourself, step by step.** Issuing the invoice used
+  to move the project to "Invoiced" on its own, and the bar then asked for a
+  click on "Paid": it invited you to treat a brand-new invoice, sometimes not
+  even sent, as already paid. The bar now follows what you actually do: you
+  send the translation and click "Delivered"; the pending step becomes
+  "Invoiced", dashed but not clickable while the client does not have the
+  invoice; you create it and send it with "Send", and only then can it be
+  clicked; clicking it moves the pending step to "Paid", which you click when
+  the money arrives. The project stays in "Delivered" between issuing the
+  invoice and clicking "Invoiced"; that changes nothing that counts: pending
+  invoices, due dates and reminders all look at the invoice, not at the status.
+- **No tooltips in the status bar.** The name of each step is already written
+  under its icon, and what is missing before you can click it is spelled out in
+  the line below — "issue the invoice first with Create invoice", "send the
+  invoice to your client first with Send" — with no need to hover.
+- **One colour scheme for the status bar.** The dashed outline of the pending
+  step is always the same slate grey, the one used by secondary buttons: each
+  step used to paint it in its own colour, so it changed colour as you
+  advanced. And a step you have reached is always the same green — a finished
+  project used to show four green steps and "Paid" in purple, as if it were
+  something else. Each status keeps its own colour where it does tell things
+  apart: the project list and the delivery calendar.
+- **The invoice card has the same buttons as the quote card.** Edit and Download
+  in grey, and Send in amber and twice as wide, just like there. The wide
+  coloured button used to be Download — in blue, a colour no other button on
+  the card uses — and Send was a narrow grey one, so two cards with the same
+  layout suggested different things.
 - **The translator profile is split in two halves.** It mixed what the client
   sees printed with what only the app uses: the IBAN next to the CAT rate table,
   the tax ID under "Personal information" and the Metrics currency in between.
@@ -96,10 +123,14 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
   sending deliverables".
 - **The confirm buttons of the send dialogs just say "Send"** for deliverables,
   invoices and quotes; the dialog title already says what is being sent.
-- **The note under the invoice tax rates explains what the buttons are** (your
-  country's standard rate and the 0% usually applied to a client in another
-  country) and what to do if another one applies, instead of an "indicative
-  rates" line that explained nothing.
+- **The note under the invoice tax rates is now a single line that says what
+  to do.** It used to be three lines explaining what the buttons proposed —
+  the country's standard rate and the 0% usually applied to a client abroad —
+  buttons that explain themselves, and it never said the one thing that
+  mattered: what to write and who to ask if in doubt. It now reads "Set VAT
+  and Withholding if they apply. If in doubt, seek professional advice.", with
+  both names coming from the fiscal profile rather than fixed: a Mexican
+  translator reads "VAT and ISR", an Indian one "GST and Withholding".
 - In English, **"Encargo" is now translated as "Assignment"** instead of "Job",
   in the detail panel and in every message.
 
