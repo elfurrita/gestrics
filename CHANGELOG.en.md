@@ -10,7 +10,7 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [1.1.1] — 2026-09-28
+## [1.1.1] — 2026-10-03
 
 ### Added
 
@@ -56,6 +56,11 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ### Changed
 
+- **Save and cancel on the new-contact form are always in view.** The form has
+  thirteen fields in a 340 px panel, so its two buttons sat at the end of a long
+  scroll: saving — or leaving without saving — meant scrolling all the way
+  down. They now stay pinned to the bottom of the panel, with the fields
+  scrolling underneath.
 - **You mark the status bar yourself, step by step.** Issuing the invoice used
   to move the project to "Invoiced" on its own, and the bar then asked for a
   click on "Paid": it invited you to treat a brand-new invoice, sometimes not
@@ -201,6 +206,28 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ### Fixed
 
+- **Activating a licence with the trial over left the app empty, and wiped
+  settings on top of that.** Entering the key on the "Your free trial has
+  ended" screen got you in with no contacts, every counter at zero and none
+  of your settings. The data was still intact on disk and came back on a
+  restart, but in the meantime the app saved that emptiness over what was
+  stored: the sender name, the email account details, the signature and the
+  sending preferences were really lost, and the first template you touched
+  reverted to the factory one. It happened right after paying. The window now
+  reloads on activation and everything is where it should be. Contacts,
+  projects, invoices and the tax profile were never at risk.
+- **"Check for updates" was not checking anything.** The answer came from a
+  cache that launching the app had just filled, so the menu kept saying
+  "You're already on the latest version" even when a new one had shipped. It
+  now really asks every time you click it, and says so when there is no
+  connection instead of passing off a stale answer as current.
+- **And with the trial over it did nothing at all**: the button stayed
+  clickable and no message appeared. It now answers, and the result shows on
+  the licence screen itself.
+- **Nor did it do anything once you had hidden the notice with "Not now"**:
+  the strip stayed hidden and, since there really was a new version, the
+  "you're up to date" message did not come up either. Asking for the check by
+  hand now brings back a notice you had hidden.
 - **A semicolon-separated CSV is no longer read as a single column.** Excel in
   Spanish and French exports "CSV (semicolon delimited)", and memoQ's
   statistics are only exported with semicolons or tabs. The app read

@@ -11,7 +11,7 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [1.1.1] — 2026-09-28
+## [1.1.1] — 2026-10-03
 
 ### Añadido
 
@@ -59,6 +59,11 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ### Cambiado
 
+- **Guardar y cancelar el alta de un contacto, siempre a la vista.** El
+  formulario tiene trece campos en un panel de 340 px, así que sus dos botones
+  quedaban al final de un desplazamiento largo: para guardar —o para salir sin
+  guardar— había que bajar hasta el fondo. Ahora van pegados abajo del panel,
+  con los campos pasando por debajo.
 - **El carril de estados lo marcas tú, paso a paso.** Emitir la factura ponía
   el proyecto en «Facturado» sola, y el carril pasaba a pedir el clic en
   «Cobrado»: invitaba a dar por pagada una factura recién creada, a veces ni
@@ -210,6 +215,28 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ### Corregido
 
+- **Activar la licencia con la prueba agotada dejaba la aplicación vacía, y
+  encima borraba ajustes.** Quien introducía la clave en «Se acabó la prueba
+  gratuita» entraba sin contactos, con los contadores a cero y sin sus
+  ajustes. Los datos seguían intactos en disco y reaparecían al reiniciar,
+  pero mientras tanto la aplicación guardaba ese vacío encima de lo guardado:
+  el nombre del remitente, los datos de la cuenta de correo, la firma y las
+  preferencias de envío se perdían de verdad, y la primera plantilla que tocaras
+  volvía a la de fábrica. Pasaba justo después de pagar. Ahora la ventana se
+  recarga al activar y todo está en su sitio. Los contactos, los proyectos, las
+  facturas y el perfil fiscal nunca estuvieron en peligro.
+- **«Buscar actualizaciones» no comprobaba nada.** La respuesta salía de una
+  caché que la propia apertura de la aplicación acababa de llenar, así que el
+  menú contestaba «Ya tienes la última versión» aunque se hubiera publicado una
+  nueva. Ahora pregunta de verdad cada vez que se pulsa, y si no hay conexión
+  lo dice en vez de dar por buena una respuesta vieja.
+- **Y con el periodo de prueba agotado no hacía nada en absoluto**: el botón
+  seguía pulsable y no aparecía ni un aviso. Ahora responde, y el resultado se
+  lee en la propia pantalla de la licencia.
+- **Tampoco hacía nada si antes habías ocultado el aviso con «Ahora no»**:
+  la franja seguía oculta y, como sí había versión nueva, tampoco salía el
+  mensaje de que estás al día. Pedir la comprobación a mano vuelve a mostrar
+  el aviso que hubieras ocultado.
 - **Un CSV con punto y coma ya no se lee como una sola columna.** Excel en
   español y en francés exporta «CSV delimitado por punto y coma», y las
   estadísticas de memoQ solo se exportan con punto y coma o con tabulador. La
