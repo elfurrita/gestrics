@@ -10,6 +10,295 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
+## [1.1.2] — 2026-10-05
+
+### Added
+
+- **Fixed price.** A new project type for work not charged by the word or
+  the hour: a sworn translation per document, a minimum fee, a flat-rate job.
+  You enter the price, and the quote and the invoice show it as a single line
+  ("Translation EN-ES — fixed price", 1 × price), with no word count or
+  per-word rate.
+- **Warning for a very high per-word rate.** Typing 0.85 instead of 0.085
+  multiplied the amount by ten with nothing to say so. From 0.50 per word in
+  euros, dollars, pounds and similar currencies, the form now shows a one-line
+  warning ("check the decimals"); it does not block.
+- **Accounting export also in Excel.** CSV is the format Holded, QuickBooks
+  or Xero ask for, but opened with a double click in Excel set to Spanish it
+  put everything in the first column, with broken accents and no amount that
+  could be added up. Invoices and expenses can now also be exported as .xlsx,
+  with amounts as real numbers.
+- **A warning when issuing an invoice without VAT to a client in Spain.** The
+  dialog opens with the tax at 0, which is right for a foreign client, and an
+  invoice to a Spanish company could be issued like that with nothing to flag
+  it. It is a warning, not a block: there are exceptions the app cannot know.
+- **A warning when issuing without VAT to a client in your own country without
+  having written the reason** in the VAT note of your profile (outside Spain,
+  where the warning above applies). This is the case for anyone exempt, such
+  as a French micro-entrepreneur under the franchise scheme: the invoice has to
+  say why there is no VAT.
+- **7% IRPF among the one-click rates**, next to 0% and 15%: it is the rate for
+  those starting out, and until now it had to be typed in.
+- **Marking "Paid" asks for the payment date**, with today suggested. It used
+  to store the date of the click, and since you mark it whenever you remember,
+  the average payment time in Metrics came out wrong. Future dates are not
+  accepted.
+- **When creating a first project with no clients yet**, the form says where to
+  add them. The drop-down used to come up empty with no explanation.
+- **The project's purchase order (PO) number is printed on the invoice**, under
+  the due date. Agencies ask for it to match the invoice to their order.
+- **A warning when sending the quote for an hourly project with no hours
+  logged**, which would come out at 0.00.
+- **Correcting an invoice's amount, or cancelling it.** Until now an issued
+  invoice could only have its VAT and withholding corrected: an invoice for
+  5,000 words instead of 3,000, a discount agreed afterwards or a cancelled job
+  had no way out. Editing the invoice now lets you correct the words, hours,
+  rate or price, or tick "Void the invoice" (base to 0). It produces an R-
+  corrective invoice with the corrected line, the reason and the amount
+  corrected, and the project card is brought up to date. A voided invoice
+  no longer shows as overdue.
+- **Estimated hours on hourly projects.** Hours only came from time
+  tracking, so hourly work could not be quoted before starting: the quote
+  showed 0 h and 0.00. A project now takes estimated hours, which the quote,
+  its email and its PDF use ("Estimated hours: 10.00 h", €500.00). The
+  invoice still charges the hours actually logged.
+
+### Changed
+
+- **PDFs are named in English, like the document**: the invoice
+  "Invoice-2026-001.pdf", the corrective invoice
+  "Rectificative-Invoice-R-2026-001.pdf", the quote "Quote-12.pdf". They were
+  called "Factura-…" and "presupuesto-…", including in the attachment the
+  client receives.
+- **The invoice dialog no longer offers withholding in France**, where a
+  freelancer's invoice does not carry it. It is only removed for countries that
+  have been checked (France, for now); elsewhere the field stays, because not
+  having researched it does not mean it does not exist. An invoice that already
+  has withholding still shows it when corrected.
+- **The withholding field uses its name in your country**: with the Mexico
+  profile it says "ISR (%)", as the summary and the hint already did, instead of
+  a generic "Withholding (%)".
+- **The tax ID in your profile and your clients' tax IDs are written in
+  capitals**: a "12345678-z" typed that way was printed as such on the invoice.
+- **Countries on the contact card in the app's language**, and sorted in it:
+  with the app in Spanish you had to look for "Alemania" under "Germany". What
+  is stored — and printed on the invoice — is still the English name.
+
+### Fixed
+
+- **A PO the agency sends after receiving the invoice can now be added.** The
+  invoice kept the PO from the moment it was issued, and if there was none,
+  there was no way to add it. Changing the project's PO now also changes it on
+  the issued invoice, without a corrective invoice: it is the client's
+  reference, not tax data. The form says the invoice needs resending. The
+  invoice's title, amounts and client stay unchanged.
+- **The accounting export (CSV and Excel) showed the client with their
+  current card details**, not those on the invoice: if they changed company
+  name, their old invoices came out under the new one. They now appear as on
+  each invoice.
+- **After reopening the app, an invoice without VAT could carry the French
+  exemption** ("VAT not applicable — French Tax Code, Article 293 B") even
+  for a Spanish translator. It happened to anyone who had not written a VAT
+  note in their profile and already had a contact; if they had also skipped
+  the profile in the setup wizard, their tax country became France. These
+  were two migrations meant for a single old installation; they have been
+  removed, and settings already saved do not change.
+- **Generating a recurring invoice did not say which month it was for.**
+  With overdue months there was no telling which one would go out; the
+  dialog now says ("the October 2026 recurring invoice").
+- **A quote resent after changing it carried the date and expiry of the
+  first one**, so a revision sent a month later could arrive already
+  expired, and the client had two "Quote-1.pdf" files with different
+  amounts and nothing saying which one stood. A resend now goes out as
+  "REVISED QUOTE", dated today, in a "Quote-1-rev1.pdf" file, and the email
+  is titled "Revised quote" and says which quote it replaces. Resending it
+  unchanged ("it never arrived") still sends the same quote.
+- **The quote email did not give the delivery date**, which the PDF did.
+  It now includes "Estimated delivery" when the project has a date.
+- **Pasting an email copied from Outlook or Gmail** ("Anna Weber
+  <anna@agency.de>", or with "mailto:") left the contact unable to be saved,
+  and importing a list dropped the row. The address is now kept.
+- **Sending follow-ups without a subject said "Subject is required"** with a
+  subject plainly visible: the missing one belonged to the follow-up
+  template, which was not open. The warning now names the template. When
+  sending to one contact, it also appears before the confirmation rather
+  than after.
+- **"Send now" to a contact already emailed** asked the same question as for
+  a new one. The dialog now says when they were last emailed.
+- **The quote the client received rounded the rate.** A rate of €0.085/word
+  came out as "0.09 EUR/word" next to a total worked out at 0.085, so 12,500
+  words × 0.09 did not give the €1,062.50 on the line below and the quote
+  looked wrong. The rate is now written with the decimals it has (up to four),
+  in the email, on the project card and in Metrics.
+- **The language pair of a new project came pre-filled with "EN-ES".** Anyone
+  working with another pair clicked and typed theirs, and the project was saved
+  as "EN-ESDE-ES", which is how it then appeared on the quote and the invoice.
+  The field now starts empty, with examples.
+- **Picking a client suggests their language pair even when it is written with
+  names**, as the contact card itself suggests ("German ↔ Spanish"). Only codes
+  ("DE→ES") used to be recognised.
+- **Importing contacts from a CSV saved by Excel in Spanish or French mangled
+  accented letters**: "Inés Peña" came in as "In�s Pe�a" and the "País" column
+  was not recognised. That CSV, the one Excel saves by default, uses a
+  different encoding; it is now detected. CAT analyses in CSV benefit too.
+- **The country of an imported contact is stored the way the contact card
+  stores it.** A sheet with "España" or "Francia" kept the Spanish name, and
+  the invoice, which is in English, said "España". A contact already saved
+  that way is fixed the next time it is saved.
+- **The email for a corrected invoice quoted the original's number.** The
+  attached PDF was the corrective invoice R-YYYY-NNN, but the subject said
+  "Invoice 2026-002". The invoice email and the payment reminders now quote
+  the corrective invoice.
+- **On an hourly project, the form said "Source words" above the logged
+  hours.**
+- **Without sending the invoice from the app you could not mark "Invoiced" or
+  "Paid".** Anyone sending the PDF from their own email — and, without a
+  connected account, everyone — was stuck at "Delivered". Issuing the invoice
+  is now enough; "Paid" then stays pending until you mark it when the payment
+  arrives.
+- **On opening the app, the bell did not warn about overdue invoices.** It said
+  "No pending notifications" until you visited Projects, even with an invoice
+  weeks overdue. It now warns from start-up.
+- **Long-standing clients counted as replies to outreach.** Creating a project
+  moves a client to "Active client", and the Outreach header counted that as a
+  reply even if you had never written to them from the app: with only your
+  existing clients entered it showed "Sent 0 · Rate 100%". Only contacts you
+  actually wrote to count now.
+- **Attachments with accented names arrived with a broken name.** A
+  "CV_Lucía.pdf" reached the agency as "CV_LucÃ­a.pdf". It happened with any
+  accent, ñ or ç in the file name.
+- **Importing contacts dropped a row with two addresses in the same cell**
+  ("jobs@agency.com; vendor@agency.com", common in agency lists) without
+  saying which. It is now imported with the first address and the rest go to
+  the contact's notes. It never sends to more than one.
+- **The batch-send confirmation gave odd durations**: "~0 min" for one email
+  and "~1 min" for three that take 16 s. It now gives seconds under a minute,
+  and with a single email it just says so.
+- **Outreach attachment sizes used a decimal point in Spanish** ("0.20 MB"),
+  and "0.00 MB" for small files. They now follow the language's format and use
+  B or KB where appropriate.
+- **A timer left running logged every hour at once** when stopped the next day,
+  and those hours go on the invoice. From 8 hours on it now asks before logging
+  them and offers to discard it so the real time can be added by hand.
+- **The payment link was not in the invoice email.** It was generated to send
+  to the client, but had to be copied and pasted by hand. If the invoice has a
+  live link, the invoice email and the payment reminders now include it on a
+  line of its own. Once the invoice is corrected or paid the link is closed,
+  and it is not sent.
+- **The payment link allowed the same invoice to be paid twice.** It stayed
+  active after payment until Paid was marked by hand, so a client reopening
+  the email could pay again. Each link now accepts a single payment and Stripe
+  closes it as soon as it completes. This applies to links generated from now
+  on; earlier ones are closed when Paid is marked.
+- **With a Stripe test key, Settings just said "Connected to Stripe".** It now
+  says it is in test mode and that clients will not be able to pay.
+- **A licence key copied from the email with the final full stop was reported
+  as non-existent.** The full stop, quotes or brackets picked up when copying
+  it from a sentence are now stripped from the ends.
+- **The backup downloaded as "outreach-backup-…"**, the old name. It is now
+  "gestrics-backup-…". Old backups can still be restored.
+- **Changing the title or PO of an invoiced project changed the issued
+  invoice.** Downloading the PDF again showed the new title and PO, not the ones
+  the client received. They are now stored when the invoice is issued, like the
+  rest of its data.
+- **If the free trial ran out with the app open**, the strip still said "14
+  days left" and every action failed with a stray error, with no licence
+  screen until a restart. It now appears as soon as you try something, and the
+  day count updates by itself.
+- **Deleting a contact with invoices led to a dead end.** The message said to
+  delete their projects first, but an invoiced project cannot be deleted. It
+  now says what happens: the contact has issued invoices, which must be kept,
+  so it cannot be deleted.
+- **"Imported 1 contacts"** now reads "Imported 1 contact".
+- **In the client glossary, clicking a field did nothing.** The fields were
+  inert until you pressed "+". Clicking any of them (or starting to type) now
+  opens the row to add the term.
+- **Client emails could go out unsigned.** The signature name was only set by
+  the name step of the setup wizard; anyone who skipped it and entered their
+  name later in the profile sent quotes, invoices and reminders ending in a
+  bare "Best regards,". With no sender name set, the profile name now signs.
+- **An invoice could be issued with a due date earlier than its issue
+  date.** Picking the wrong month in the calendar was enough: the invoice went
+  out already overdue and the payment reminder fired straight away. The
+  generate button is now disabled with a one-line note. Today is still valid
+  (payment on receipt).
+- **Sending an invoice with no email account said "Failed to send
+  deliverables".** It now says "Failed to send the invoice".
+- **"1 invoices exported", "1 expenses exported", "1 months left to
+  generate" and, when importing contacts, "1 duplicates (already existed)".**
+  Now singular.
+- **Amounts on the invoice and quote PDFs did not follow the English format
+  of the rest of the document.** They had no thousands separator and the
+  symbol after the figure ("1062.50 €", "320.00 £"), while the email sent with
+  them said "€1,062.50". The PDFs now use the same format as the email:
+  "€1,062.50", "£320.00", "¥12,000".
+- **The average rates in Metrics counted the fee of recurring plans as if it
+  were a per-word rate**, sending that client's average sky-high. They are now
+  left out, as is the fixed price.
+- **Searching "2026-007" in Projects found nothing.** The search box only
+  looked at the title and the client, while the invoice number and the PO are
+  exactly what clients and accountants quote. It now searches both too.
+- **With two corrections to the same invoice, the accounting export lost the
+  first one**, and each corrective invoice was compared with the original:
+  correcting €450 to €270 and then cancelling gave -€190.80 and -€477.00, a
+  reduction counted twice. All of them are now exported, and each one corrects
+  the previous one ("Rectifies invoice R-2026-001") with its own difference:
+  -€190.80 and -€286.20, which add up to the real reduction.
+- **A project could be saved with delivery before receipt** (picking the
+  wrong month in the calendar), and it showed as overdue from day one. It can
+  no longer be saved, with a one-line note.
+- **Editing a project with no receipt date gave it today's date** on saving,
+  though nobody had entered it. It now stays empty; a new project still
+  proposes today.
+- **Switching a fixed-price project to per-word translation left "1 word" at
+  the price as the rate** (1 × €30/word). The words and rate are now cleared.
+- **Invoices from a recurring plan had the month in the interface language**
+  ("Monthly translation retainer — octubre 2026") on an English document. It
+  is now always in English ("October 2026"). Invoices already issued keep
+  their title.
+- **Choosing "Paid" in the status field of the edit form left the project
+  paid with no payment date**, so Metrics did not count it as collected and
+  the accounting export listed it as pending. It now opens the same
+  payment-date dialog as the "Paid" step.
+- **Correcting an invoice that had already been paid said nothing about the
+  difference.** The dialog now says in one line whether money must be
+  refunded to the client or the client owes more.
+- **The rate on the PDF did not match the one in the app.** The quote and the
+  invoice always printed it with four decimals ("€0.0700") while the project
+  card said "0.07 EUR/word". The PDF now follows the app's rule —the currency's
+  decimals and up to four, with no padding zeros—: "€0.07", "€0.085", and
+  "€0.015" on a CAT category.
+- **The Outreach response rate used a full stop in Spanish** ("0.0%"). It now
+  follows the language's format: "0,0 %".
+- **A translation over 15 MB only said "File exceeds the 15 MB limit"**,
+  without saying which one when several were picked or what to do. It now
+  names the file and suggests sending a download link in the message.
+- **The quote email for a project with a CAT analysis gave an average rate**
+  ("Rate: 0.0755 EUR/word", amount ÷ words) that appeared nowhere else and did
+  not add up to the total. It now lists the breakdown, one line per category
+  with the same labels and figures as the attached PDF ("No Match: 3,000 words
+  × 0.10 EUR/word = €300.00").
+- **The email for a corrected invoice did not say it replaces another one.**
+  It carried the corrective invoice but read like a new invoice, so a client
+  who already had the original could pay both. It now adds, after the invoice
+  paragraph: "This corrective invoice R-2026-001 replaces invoice 2026-001;
+  please disregard the earlier one."
+- **A revision or post-editing project showed the base rate on its card**
+  (€0.10/word with 2,000 words and an amount of €100, which does not add up)
+  and nothing said it was a revision; the quote email called it "per CAT
+  analysis". The card now shows the service and the rate actually charged
+  (€0.05/word), the same as the email and the PDF, and the average rates in
+  Metrics count that one, not the base rate.
+- **Changing a client's email sent them back to "Pending" and wiped their
+  history**, as if they were a new contact. When an agency changed project
+  manager, the next "Send to pending" mailed the outreach email to the client
+  itself. For an active client only the email changes now; for a prospect it
+  still asks as before.
+- **Undoing a "Paid" marked by mistake left the invoice paid.** Going back to
+  "Invoiced" from the form kept the invoice's payment date: the accounting
+  export listed it as paid and it never showed as overdue. The payment date
+  is now cleared.
+
 ## [1.1.1] — 2026-10-03
 
 ### Added

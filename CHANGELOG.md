@@ -11,6 +11,302 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
+## [1.1.2] — 2026-10-05
+
+### Añadido
+
+- **Precio cerrado.** Nuevo tipo de proyecto para lo que no se cobra por
+  palabras ni por horas: una traducción jurada por documento, un mínimo, un
+  encargo a tanto alzado. Se escribe el precio y el presupuesto y la factura
+  lo muestran como una sola línea («Translation EN-ES — fixed price», 1 ×
+  precio), sin palabras ni tarifa por palabra.
+- **Aviso de tarifa por palabra muy alta.** Escribir 0,85 en vez de 0,085
+  multiplicaba el importe por diez sin que nada lo dijera. A partir de 0,50
+  por palabra en euros, dólares, libras y divisas parecidas, el formulario
+  avisa en una línea («revisa los decimales»); no bloquea.
+- **Exportación contable también en Excel.** El CSV es el formato que piden
+  Holded, QuickBooks o Xero, pero abierto con doble clic en un Excel en español
+  lo metía todo en la primera columna, con las tildes rotas y sin un importe
+  que se pudiera sumar. Facturas y gastos se exportan ahora además en .xlsx,
+  con los importes como números.
+- **Aviso al emitir una factura sin IVA a un cliente en España.** El diálogo
+  abre con el impuesto a 0, que es lo que toca para un cliente extranjero, y
+  una factura a una empresa española se podía emitir así sin que nada lo
+  advirtiera. Es un aviso, no un bloqueo: hay excepciones que la aplicación no
+  puede saber.
+- **Aviso al emitir sin IVA a un cliente de tu propio país sin haber escrito
+  el motivo** en la nota de IVA del perfil (fuera de España, donde el aviso es
+  el de arriba). Es el caso de quien está exento, como el microempresario
+  francés en franquicia: la factura tiene que decir por qué va sin IVA.
+- **El 7 % de IRPF, entre los tipos de un clic**, junto al 0 % y el 15 %: es
+  el de quien empieza su actividad, y hasta ahora había que teclearlo.
+- **Al marcar «Cobrado» se elige el día del cobro**, con hoy propuesto. Antes
+  se guardaba siempre la fecha del clic, y como se marca cuando uno se acuerda,
+  el tiempo medio de cobro de Métricas salía falseado. No admite fechas
+  futuras.
+- **Al crear el primer proyecto sin tener clientes**, el formulario dice dónde
+  darlos de alta. Antes el desplegable salía vacío sin más.
+- **La referencia de pedido (PO) del proyecto sale en la factura**, debajo del
+  vencimiento. Las agencias la piden para casar la factura con su pedido.
+- **Aviso al enviar el presupuesto de un proyecto por horas sin horas
+  registradas**, que saldría a 0,00.
+- **Rectificar el importe de una factura, o anularla.** Hasta ahora una
+  factura emitida solo admitía corregir el IVA y la retención: una factura con
+  5.000 palabras en vez de 3.000, un descuento acordado después o un encargo
+  cancelado no tenían salida. Al editar la factura se pueden corregir ahora las
+  palabras, las horas, la tarifa o el precio, o marcar «Anular la factura»
+  (base a 0). Sale una rectificativa R- con la línea corregida, el motivo y el
+  importe rectificado, y la ficha del proyecto se pone al día. Una factura
+  anulada ya no aparece como vencida.
+- **Horas estimadas en los proyectos por horas.** Las horas solo salían del
+  control de tiempo, así que un trabajo por horas no se podía presupuestar
+  antes de empezar: el presupuesto salía con 0 h y 0,00. Ahora el proyecto
+  admite unas horas estimadas, que son las que cotizan el presupuesto, su
+  correo y su PDF («Estimated hours: 10.00 h», €500.00). La factura sigue
+  cobrando las horas registradas de verdad.
+
+### Cambiado
+
+- **Los PDF se llaman en inglés, como el documento**: la factura,
+  «Invoice-2026-001.pdf»; la rectificativa, «Rectificative-Invoice-R-2026-001.pdf»;
+  el presupuesto, «Quote-12.pdf». Se llamaban «Factura-…» y «presupuesto-…»
+  también en el adjunto que recibe el cliente.
+- **El diálogo de factura ya no ofrece retención en Francia**, donde una
+  factura de autónomo no la lleva. Solo se quita en los países comprobados (de
+  momento, Francia); en el resto el campo sigue, porque que no esté estudiado
+  no quiere decir que no exista. Una factura que ya lleve retención la sigue
+  mostrando al corregirla.
+- **El campo de retención lleva el nombre que tiene en tu país**: con perfil
+  México dice «ISR (%)», como ya decían el resumen y la ayuda, en vez de un
+  genérico «Retención (%)».
+- **El NIF del perfil y el identificador fiscal de los clientes se escriben en
+  mayúsculas**: un «12345678-z» tecleado así salía igual en la factura.
+- **Los países de la ficha del contacto, en el idioma de la aplicación** y
+  ordenados en él: con la aplicación en español había que buscar «Alemania»
+  como «Germany». Lo que se guarda —y sale en la factura— sigue siendo el
+  nombre en inglés.
+
+### Corregido
+
+- **Una PO que la agencia manda después de recibir la factura ya se puede
+  añadir.** La factura guardaba la PO del momento de emitirla, y si no la había,
+  no había forma de ponerla. Ahora, al cambiar la PO del proyecto, cambia
+  también en la factura emitida, sin rectificativa: es la referencia del
+  cliente, no un dato fiscal. El formulario avisa de que hay que reenviarla. El
+  título, los importes y el cliente de la factura siguen sin cambiar.
+- **La exportación contable (CSV y Excel) ponía al cliente con los datos de
+  su ficha actual**, no con los de la factura: si cambiaba de razón social,
+  sus facturas antiguas salían con el nombre nuevo. Ahora sale como figura en
+  cada factura.
+- **Al reabrir la aplicación, una factura sin IVA podía salir con la
+  exención francesa** («VAT not applicable — French Tax Code, Article 293 B»)
+  aunque el traductor fuera español. Le pasaba a quien no había escrito nota
+  de IVA en su perfil y ya tenía algún contacto, y si además había omitido el
+  perfil en el asistente, su país fiscal pasaba a ser Francia. Eran dos
+  migraciones pensadas para una sola instalación antigua; se han retirado, y
+  los ajustes ya guardados no cambian.
+- **Generar una factura recurrente no decía de qué mes era.** Con meses
+  atrasados no se sabía cuál salía; ahora el diálogo lo dice («la factura
+  recurrente de octubre de 2026»).
+- **Un presupuesto reenviado tras cambiarlo llegaba con la fecha y la
+  caducidad del primero**, así que el revisado al mes podía llegar ya
+  caducado, y el cliente tenía dos «Quote-1.pdf» con importes distintos sin
+  nada que dijera cuál valía. Ahora el reenvío sale como «REVISED QUOTE», con
+  fecha de hoy, en un archivo «Quote-1-rev1.pdf», y el correo lo titula
+  «Revised quote» y dice a qué presupuesto sustituye. Reenviarlo sin cambios
+  («no me ha llegado») sigue mandando el mismo presupuesto.
+- **El correo del presupuesto no decía la fecha de entrega**, que sí iba en el
+  PDF. Ahora lleva «Estimated delivery» cuando el proyecto tiene fecha.
+- **Pegar un email copiado de Outlook o Gmail** («Anna Weber
+  <anna@agencia.de>», o con «mailto:») dejaba el contacto sin poder guardarse,
+  y al importar una lista se descartaba la fila. Ahora se queda la dirección.
+- **Enviar los seguimientos sin asunto decía «El asunto es obligatorio»** con
+  un asunto escrito a la vista: el que faltaba era el de la plantilla de
+  seguimiento, que no estaba abierta. Ahora el aviso dice qué plantilla es. En
+  el envío individual, además, el aviso sale antes de pedir confirmación y no
+  después.
+- **«Enviar ahora» a un contacto al que ya se escribió** preguntaba lo mismo
+  que con uno nuevo. Ahora el diálogo dice cuándo se le escribió.
+
+- **El presupuesto que recibía el cliente redondeaba la tarifa.** Una tarifa
+  de 0,085 €/palabra salía como «0.09 EUR/word» junto al total calculado con
+  0,085, así que 12.500 palabras × 0,09 no daba los 1.062,50 € de la línea de
+  abajo y el presupuesto parecía tener un error. Ahora la tarifa se escribe con
+  los decimales que tiene (hasta cuatro), en el correo, en la ficha del
+  proyecto y en Métricas.
+- **El par de idiomas de un proyecto nuevo venía relleno con «EN-ES».** Quien
+  trabaja con otro par hacía clic y tecleaba el suyo, y el proyecto se guardaba
+  como «EN-ESDE-ES», que es como salía después en el presupuesto y en la
+  factura. Ahora el campo empieza vacío, con ejemplos.
+- **Al elegir cliente se propone su par de idiomas también si está escrito con
+  nombres**, como sugiere la propia ficha del contacto («Alemán ↔ Español»).
+  Antes solo se reconocían códigos («DE→ES»).
+- **Importar contactos desde un CSV guardado con Excel en español o en francés
+  destrozaba las tildes**: «Inés Peña» llegaba como «In�s Pe�a» y la columna
+  «País» no se reconocía. Ese CSV, el que Excel guarda por defecto, va en otra
+  codificación; ahora se detecta. Afecta también a los análisis CAT en CSV.
+- **El país de un contacto importado se guarda como lo guarda la ficha.** Una
+  hoja con «España» o «Francia» dejaba el nombre en español, y la factura, que
+  va en inglés, decía «España». Un contacto que ya lo tuviera así se corrige al
+  volver a guardarlo.
+- **El correo de una factura rectificada citaba el número de la original.** El
+  PDF adjunto era la rectificativa R-AAAA-NNN, pero el asunto decía «Invoice
+  2026-002». Ahora el correo de la factura y los recordatorios de cobro citan
+  la rectificativa.
+- **En un proyecto por horas, el formulario decía «Palabras origen» encima de
+  las horas registradas.**
+- **Sin enviar la factura desde la aplicación no se podía marcar «Facturado»
+  ni «Cobrado».** Quien manda el PDF desde su propio correo —y sin cuenta
+  conectada, todo el mundo— se quedaba en «Entregado». Ahora basta con haber
+  emitido la factura; después «Cobrado» queda pendiente hasta que lo marques
+  al recibir el pago.
+- **Al abrir la aplicación, la campana no avisaba de las facturas vencidas.**
+  Decía «Sin avisos pendientes» hasta que se pasaba por Proyectos, aunque una
+  factura llevara semanas vencida. Ahora avisa desde el arranque.
+- **Los clientes de siempre contaban como respuestas a la prospección.** Al
+  crearle un proyecto, un cliente pasa a «Cliente activo», y la cabecera de
+  Prospección lo sumaba como respuesta aunque nunca le hubieras escrito desde
+  la aplicación: con solo clientes dados de alta salía «Enviados 0 · Tasa
+  100 %». Ahora solo cuentan los contactos a los que se escribió.
+- **Los adjuntos con tilde en el nombre llegaban con el nombre roto.** Un
+  «CV_Lucía.pdf» le llegaba a la agencia como «CV_LucÃ­a.pdf». Pasaba con
+  cualquier tilde, eñe o cedilla en el nombre del archivo.
+- **Importar contactos descartaba la fila con dos correos en la misma celda**
+  («jobs@agencia.com; vendor@agencia.com», lo normal en listas de agencias),
+  sin decir cuál. Ahora se importa con la primera dirección y las demás quedan
+  en las notas del contacto. Nunca se envía a más de una.
+- **La confirmación del envío en lote daba una duración rara**: «~0 min» para
+  un correo y «~1 min» para tres que tardan 16 s. Ahora da segundos cuando es
+  menos de un minuto, y con un solo correo dice solo eso.
+- **El tamaño de los adjuntos de Prospección salía con punto decimal en
+  español** («0.20 MB»), y «0.00 MB» para archivos pequeños. Ahora va con el
+  formato del idioma y en B o KB cuando toca.
+- **Un cronómetro olvidado en marcha registraba todas las horas de golpe** al
+  pararlo al día siguiente, y esas horas pasan a la factura. Ahora, a partir de
+  8 horas, pregunta antes de registrarlas y ofrece descartarlo para añadir el
+  tiempo real a mano.
+- **El enlace de pago no iba en el correo de la factura.** Se generaba para
+  mandárselo al cliente, pero había que copiarlo y pegarlo a mano. Ahora, si
+  la factura tiene un enlace vigente, el correo de la factura y los
+  recordatorios de cobro lo incluyen en una línea propia. Si la factura se ha
+  rectificado o ya está cobrada, el enlace está cerrado y no se manda.
+- **El enlace de pago admitía pagar la misma factura dos veces.** Seguía
+  activo después del pago hasta que se marcaba Cobrado a mano, así que el
+  cliente que volvía a abrir el correo podía pagar de nuevo. Ahora cada enlace
+  admite un solo pago y Stripe lo cierra en cuanto se completa. Afecta a los
+  enlaces generados desde ahora; los anteriores se cierran al marcar Cobrado.
+- **Con una clave de Stripe de prueba, Configuración decía solo «Conectado con
+  Stripe».** Ahora dice que está en modo de prueba y que los clientes no podrán
+  pagar.
+- **La clave de licencia copiada del correo con el punto final se daba por
+  inexistente.** Ahora se quitan de los extremos el punto, las comillas o los
+  paréntesis que se arrastran al copiarla de una frase.
+- **La copia de seguridad se descargaba como «outreach-backup-…»**, el nombre
+  antiguo. Ahora es «gestrics-backup-…». Las copias viejas se siguen pudiendo
+  restaurar.
+- **Cambiar el título o la PO de un proyecto ya facturado cambiaba la factura
+  emitida.** Al volver a descargar el PDF salían el título y la PO nuevos, no
+  los que recibió el cliente. Ahora se guardan al emitir, como el resto de
+  los datos de la factura.
+- **Si la prueba gratuita se acababa con la aplicación abierta**, la franja
+  seguía diciendo «quedan 14 días» y cada acción fallaba con un error suelto,
+  sin la pantalla para activar la licencia hasta reiniciar. Ahora aparece en
+  cuanto se intenta algo, y la cuenta de días se actualiza sola.
+- **Borrar un contacto con facturas mandaba a un callejón sin salida.** El
+  aviso decía que se borraran antes sus proyectos, pero un proyecto facturado
+  no se puede borrar. Ahora dice lo que pasa: tiene facturas emitidas, que
+  deben conservarse, y no se puede eliminar.
+- **«Importados 1 contactos»** ahora dice «Importado 1 contacto».
+- **En el glosario del cliente, pinchar en un campo no hacía nada.** Los
+  campos estaban inertes hasta pulsar «+». Ahora pinchar en cualquiera de ellos
+  (o empezar a escribir) abre la fila para añadir el término.
+- **Los correos al cliente podían salir sin firma.** El nombre de la firma solo
+  lo ponía el paso del nombre del asistente; quien se lo saltaba y escribía su
+  nombre después en el perfil mandaba presupuestos, facturas y recordatorios
+  acabados en «Best regards,» sin más. Ahora, sin remitente, firma el nombre
+  del perfil.
+- **Se podía emitir una factura con el vencimiento anterior a la fecha de
+  emisión.** Bastaba con equivocarse de mes en el calendario: la factura salía
+  ya vencida y el aviso de cobro saltaba enseguida. Ahora el botón de generar
+  se desactiva y lo dice en una línea. Hoy sí vale (pago al contado).
+- **Enviar una factura sin cuenta de correo avisaba de un «Error al enviar los
+  entregables».** Ahora dice «Error al enviar la factura».
+- **«1 facturas exportadas», «1 gastos exportados», «Quedan 1 meses por
+  generar» y, al importar contactos, «1 duplicados (ya existentes)».** Ahora
+  en singular.
+- **Los importes del PDF de factura y presupuesto no seguían el formato
+  inglés del resto del documento.** Salían sin separador de miles y con el
+  símbolo detrás («1062.50 €», «320.00 £»), mientras que el correo que los
+  acompaña decía «€1,062.50». Ahora los PDF usan el mismo formato que el
+  correo: «€1,062.50», «£320.00», «¥12,000».
+- **Las tarifas medias de Métricas contaban la cuota de los planes
+  recurrentes como si fuera una tarifa por palabra**, y la media de ese
+  cliente salía disparada. Ahora quedan fuera, igual que el precio cerrado.
+- **Buscar «2026-007» en Proyectos no encontraba nada.** El buscador miraba
+  solo el título y el cliente, y el número de factura o la PO son justo lo que
+  citan el cliente y la gestoría. Ahora busca también por los dos.
+- **Con dos rectificaciones de la misma factura, la exportación contable
+  perdía la primera**, y cada rectificativa se comparaba con la factura
+  original: corregir 450 € a 270 € y luego anular daba -190,80 € y -477,00 €,
+  una rebaja contada dos veces. Ahora salen todas en la exportación, y cada
+  una rectifica la anterior («Rectifies invoice R-2026-001») con su
+  diferencia: -190,80 € y -286,20 €, que suman la rebaja real.
+- **Se podía guardar un proyecto con la entrega anterior a la recepción**
+  (equivocarse de mes en el calendario), y salía con la entrega vencida desde
+  el primer día. Ahora no se puede guardar y lo dice en una línea.
+- **Editar un proyecto sin fecha de recepción le ponía la de hoy** al
+  guardar, aunque nadie la hubiera escrito. Ahora se queda vacía; en un
+  proyecto nuevo se sigue proponiendo hoy.
+- **Al pasar un proyecto de precio cerrado a traducción por palabras se
+  quedaba «1 palabra» a la tarifa del precio** (1 × 30 €/palabra). Ahora se
+  vacían las palabras y la tarifa.
+- **El título de las facturas de un plan recurrente llevaba el mes en el
+  idioma de la interfaz** («Monthly translation retainer — octubre 2026») en
+  un documento en inglés. Ahora va siempre en inglés («October 2026»). Las
+  facturas ya emitidas conservan su título.
+- **Elegir «Cobrado» en el estado del formulario de edición dejaba el
+  proyecto cobrado sin fecha de cobro**, y entonces Métricas no lo contaba como
+  cobrado y la exportación contable lo daba por pendiente. Ahora abre el mismo
+  diálogo de la fecha de cobro que el paso «Cobrado».
+- **Rectificar una factura ya cobrada no decía nada de la diferencia.** Ahora
+  el diálogo avisa en una línea si hay que devolver dinero al cliente o si el
+  cliente debe más.
+- **La tarifa del PDF no coincidía con la de la aplicación.** El presupuesto
+  y la factura la escribían siempre con cuatro decimales («€0.0700») mientras
+  la ficha del proyecto decía «0,07 EUR/pal». Ahora el PDF usa la misma regla
+  que la aplicación —los decimales de la divisa y hasta cuatro, sin ceros de
+  relleno—: «€0.07», «€0.085», y «€0.015» en una categoría CAT.
+- **La tasa de respuesta de Prospección salía con punto en español**
+  («0.0%»). Ahora va con el formato del idioma: «0,0 %».
+- **Una traducción de más de 15 MB solo decía «El archivo supera el límite de
+  15 MB»**, sin decir cuál si se elegían varios ni qué hacer. Ahora nombra el
+  archivo y propone enviar un enlace de descarga en el mensaje.
+- **El correo del presupuesto de un proyecto con análisis CAT daba una
+  tarifa media** («Rate: 0.0755 EUR/word», importe ÷ palabras) que no salía en
+  ningún otro sitio y no cuadraba con el total. Ahora escribe el desglose, una
+  línea por categoría con las mismas etiquetas y cifras que el PDF adjunto
+  («No Match: 3,000 words × 0.10 EUR/word = €300.00»).
+- **El correo de una factura rectificada no decía que sustituye a otra.**
+  Llevaba adjunta la rectificativa pero el texto era el de una factura nueva,
+  y el cliente, que ya tenía la original, podía pagar las dos. Ahora añade,
+  tras el párrafo de la factura: «This corrective invoice R-2026-001 replaces
+  invoice 2026-001; please disregard the earlier one.»
+- **Un proyecto de revisión o post-edición enseñaba la tarifa base en la
+  ficha** (0,10 EUR/pal con 2.000 palabras y un importe de 100 €, que no
+  cuadra) y nada decía que era una revisión; el correo del presupuesto lo
+  llamaba «per CAT analysis». Ahora la ficha muestra el servicio y la tarifa
+  que se cobra (0,05 EUR/pal), la misma del correo y del PDF, y las tarifas
+  medias de Métricas cuentan esa y no la base.
+- **Cambiar el email de un cliente lo devolvía a «Pendiente» y borraba su
+  historial**, como si fuera un contacto nuevo. Cuando una agencia cambia de
+  gestor, el siguiente «Enviar a pendientes» le mandaba al propio cliente el
+  correo de prospección. Ahora, con un cliente activo, solo cambia el email;
+  con un prospecto sigue preguntando como antes.
+- **Deshacer un «Cobrado» marcado por error dejaba la factura cobrada.** Al
+  volver a «Facturado» desde el formulario, la factura conservaba su fecha de
+  cobro: la exportación contable la daba por cobrada y nunca avisaba de
+  vencimiento. Ahora se quita la fecha de cobro.
+
 ## [1.1.1] — 2026-10-03
 
 ### Añadido
@@ -737,7 +1033,6 @@ publicación anunciaba.
   en el libro de facturas. Los avisos también iban corridos: una factura
   aparecía como vencida el mismo día de su vencimiento, y el **recordatorio de
   cobro le llegaba al cliente un día antes de tocar**.
-
 - **Se podía emitir una factura sin tus propios datos fiscales.** Hasta ahora
   el identificador fiscal y el domicilio eran campos opcionales de
   Configuración, así que una instalación recién estrenada podía generar una
