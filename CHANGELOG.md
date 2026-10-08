@@ -11,10 +11,28 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [1.1.2] — 2026-10-05
+## [1.1.2] — 2026-10-08
 
 ### Añadido
 
+- **Email de facturación en la ficha del contacto.** Muchas agencias piden
+  que las facturas vayan a su contabilidad y no a la gestora que encarga.
+  Si el contacto tiene «Email de facturación», la factura y los
+  recordatorios de cobro salen ahí; presupuestos y entregas siguen yendo a
+  su email de siempre. Es opcional, se valida como una sola dirección, viaja
+  en la copia de seguridad y en la exportación e importación de contactos.
+- **Aviso del BIC/SWIFT al facturar a un cliente de fuera de la UE.** Un
+  cliente de Estados Unidos o del Reino Unido paga con una transferencia
+  internacional, y para eso necesita el BIC además del IBAN. La factura ya lo
+  imprimía si estaba en el perfil; ahora, si falta, el diálogo de emisión lo
+  dice. No avisa si el cliente es del mismo país que el traductor, porque ahí
+  la transferencia es nacional.
+
+- **Restaurar una copia desde la bienvenida.** Quien estrena ordenador ya no
+  tiene que rellenar el perfil y el correo para que la restauración los
+  sobrescriba después: la primera pantalla del asistente ofrece «¿Vienes de
+  otro ordenador? Restaurar una copia», y al terminar la aplicación arranca
+  con sus datos, sin volver al asistente.
 - **Precio cerrado.** Nuevo tipo de proyecto para lo que no se cobra por
   palabras ni por horas: una traducción jurada por documento, un mínimo, un
   encargo a tanto alzado. Se escribe el precio y el presupuesto y la factura
@@ -88,6 +106,105 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ### Corregido
 
+- **«Nuevo proyecto» con la edición de otro abierta lo duplicaba.** El
+  formulario «nuevo» salía con los datos del proyecto que se estaba
+  editando, y al guardarlo se creaba una copia. Ahora sale vacío.
+- **Un prospecto convertido en cliente podía recibir un correo de
+  seguimiento.** Al crear su primer proyecto el contacto pasa a «Cliente
+  activo», pero Prospección no se enteraba hasta reiniciar: seguía
+  «Enviado» y en «Necesita seguimiento». Peor, el siguiente envío del
+  proyecto (la entrega) le devolvía el «Enviado» en la base, y «Enviar
+  seguimientos» acababa mandándole un «just following up» a un cliente con
+  trabajo entregado. Ahora el cambio se ve en el acto y se conserva.
+- **Métricas contaba cada gestora de una agencia como un cliente distinto.**
+  Con dos fichas de la misma agencia, salían «Clientes 2», lo cobrado partido
+  en dos barras y los días de cobro en dos filas. Ahora el cliente es la
+  empresa (sin distinguir mayúsculas ni tildes) y, si no hay empresa, la
+  persona. La lista de Proyectos sigue agrupada por persona, que es quien
+  encarga.
+- **Una rectificativa podía salir ya vencida.** Se emite con fecha de hoy,
+  pero heredaba el vencimiento de la factura original: rectificar en enero
+  una factura que vencía en diciembre producía un documento con fecha del 4
+  de enero que vencía el 20 de diciembre, y la campana pedía el recordatorio
+  de cobro en el acto. Ahora, si la factura está sin cobrar, el diálogo pide
+  un vencimiento a partir de hoy, como al emitir; y el aviso de términos de
+  pago cuenta los días desde la fecha de la rectificativa.
+- **Buscar una factura ya cobrada daba «Sin resultados».** Lo cobrado se
+  archiva, y es justo por lo que pregunta meses después el cliente o la
+  gestoría; el buscador de proyectos dejaba fuera los archivados aunque se
+  escribiera su número. Tampoco encontraba una rectificativa por su número
+  R-, que es el que tiene el cliente. Ahora la búsqueda alcanza a los
+  archivados (con su icono de archivo) y a los números R-; sin buscar, la
+  lista sigue sin ellos.
+- **Salir sin guardar descartaba los cambios sin avisar**, en tres sitios:
+  al cambiar de plantilla de correo (la posdata que se estaba escribiendo
+  desaparecía), al cerrar el perfil del traductor con Escape o pulsando fuera
+  (un IBAN o un teléfono recién tecleados se perdían) y al pulsar otro
+  proyecto de la lista con el formulario de proyecto abierto. Ahora, con
+  cambios sin guardar, se pregunta antes de salir; sin cambios, se sale como
+  siempre.
+- **El glosario de un cliente admitía el mismo término dos veces** con
+  traducciones distintas («lease → arrendamiento» y, semanas después, «Lease
+  → alquiler»). Ahora, si el término de origen ya está (sin distinguir
+  mayúsculas ni tildes), se avisa con su traducción y se pregunta antes de
+  añadirlo otra vez: un término con dos sentidos según el contexto se puede
+  guardar dos veces a propósito.
+- **La factura podía contradecirse con el plazo de pago.** Los términos por
+  defecto decían «within 30 days», y quien ponía el vencimiento a 60 días para
+  una agencia emitía una factura con «Due» a 60 días arriba y «30 days» abajo.
+  Los términos por defecto ya no llevan plazo propio («by the due date shown
+  above»), y si los tuyos dicen un número de días que no coincide con el
+  vencimiento elegido, el diálogo de la factura lo avisa.
+- **Las horas registradas por minutos salían ilegibles en la factura y en el
+  presupuesto.** 80 minutos (1,333… horas) se imprimían como
+  «1.3,333,333,333,333,333». Ahora salen con hasta cuatro decimales,
+  «1.3333», para que la línea cuadre: 1.3333 × 40 € = 53,33 €, el importe que
+  figura al lado (con dos decimales, 1.33 × 40 daría 53,20). El diálogo de
+  rectificar enseña las horas igual.
+- **Cambiar el tipo de proyecto dejaba una tarifa que ya no valía.** Al pasar
+  un proyecto por palabras a precio cerrado, el campo «Precio» se quedaba con
+  la tarifa por palabra (0,10) y la factura salía por 0,10; al pasar a por
+  horas, 0,10 €/palabra quedaba como 0,10 €/hora. Ahora, si cambia la unidad
+  de la tarifa, el campo se vacía; entre tipos de la misma unidad se conserva.
+- **Un encargo archivado seguía saliendo como retrasado** en su ficha y en el
+  calendario («Lleva 2 días de retraso»), aunque la campana ya no lo
+  avisaba. Archivar un encargo cancelado lo saca de todos los avisos de
+  entrega.
+- **Borrar un proyecto también borra su tiempo registrado**, y la
+  confirmación no lo decía. Ahora lo dice.
+- **La factura escribía los impuestos de dos maneras**: «VAT 21.0%» con IVA
+  y «VAT (0%)» sin él, e «IRPF -15.0%». Ahora siempre entre paréntesis y sin
+  decimales de relleno, como en el diálogo de la factura: «VAT (21%)»,
+  «IRPF (-15%)».
+- **El aviso de datos que faltan en la ficha del cliente se leía mal** («no
+  tiene Identificador fiscal, Dirección guardados»). Ahora: «Falta en la ficha
+  de este cliente: identificador fiscal y dirección».
+- **Un trabajo ya entregado al cliente avisaba de «entrega vencida».** Enviar
+  los entregables no cambia el estado (el carril se marca a mano), así que,
+  pasado el plazo, el proyecto seguía «En curso» y salía como retrasado en la
+  campana, en la ficha y en el calendario. Ahora, con los entregables
+  enviados, el aviso dice «Entregables enviados: márcalos como Entregado».
+- **Volver a añadir un archivo con el mismo nombre lo duplicaba.** Al
+  entregar, la versión corregida de «Novela_ES.docx» se sumaba a la anterior y
+  el cliente recibía las dos; en los adjuntos de Prospección, el CV
+  actualizado se sumaba al viejo y cada correo en frío salía con los dos.
+  Ahora el archivo nuevo sustituye al del mismo nombre, y se avisa en una
+  línea. Al reenviar una versión corregida de un trabajo ya entregado, la
+  vieja se retira también de los entregables guardados: si no, la siguiente
+  entrega volvía a cargar las dos.
+- **Una factura emitida antes del plazo de entrega decía que el servicio se
+  prestaba después de expedirla.** La fecha de operación salía de la fecha de
+  entrega del proyecto, que es el plazo: entregado y facturado el día 6 con
+  plazo el 20, la factura llevaba «Service date 20». Ahora solo se pone cuando
+  es anterior a la fecha de la factura.
+- **Al apuntar varios gastos seguidos, la fecha volvía a hoy** tras cada uno.
+  Quien apuntaba en octubre los tickets de septiembre dejaba el segundo y los
+  siguientes en octubre, y en otro trimestre. Ahora se propone la fecha del
+  gasto anterior. Además, la fecha de hoy que proponía el formulario se
+  calculaba una sola vez y con la aplicación abierta varios días se quedaba
+  atrás.
+- **La exportación contable ordenaba mal las facturas del mismo día** (la
+  2026-002 antes que la 2026-001). Ahora, a igual fecha, por número.
 - **Una PO que la agencia manda después de recibir la factura ya se puede
   añadir.** La factura guardaba la PO del momento de emitirla, y si no la había,
   no había forma de ponerla. Ahora, al cambiar la PO del proyecto, cambia

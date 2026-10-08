@@ -10,10 +10,28 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [1.1.2] — 2026-10-05
+## [1.1.2] — 2026-10-08
 
 ### Added
 
+- **Billing email on the contact record.** Many agencies ask for invoices
+  to go to their accounts department rather than to the project manager who
+  places the order. If the contact has a "Billing email", the invoice and the
+  payment reminders go there; quotes and deliveries still go to their usual
+  email. It is optional, validated as a single address, and carried by the
+  backup and by contact export and import.
+- **BIC/SWIFT notice when invoicing a client outside the EU.** A client in
+  the United States or the United Kingdom pays by international transfer,
+  which needs the BIC as well as the IBAN. The invoice already printed it when
+  it was in the profile; now, if it is missing, the issue dialog says so. It
+  does not warn when the client is in the translator's own country, where the
+  transfer is domestic.
+
+- **Restore a backup from the welcome screen.** Someone setting up a new
+  computer no longer has to fill in their profile and email only for the
+  restore to overwrite them: the first screen of the setup wizard offers
+  "Moving from another computer? Restore a backup", and once it finishes the
+  app starts with their data, without going back to the wizard.
 - **Fixed price.** A new project type for work not charged by the word or
   the hour: a sworn translation per document, a minimum fee, a flat-rate job.
   You enter the price, and the quote and the invoice show it as a single line
@@ -86,6 +104,103 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ### Fixed
 
+- **"New project" while editing another one duplicated it.** The "new" form
+  came up with the data of the project being edited, and saving it created a
+  copy. It now comes up empty.
+- **A prospect who had become a client could receive a follow-up email.**
+  Creating their first project turns the contact into an "Active client",
+  but Outreach did not notice until a restart: it still showed "Sent" and
+  "Needs follow-up". Worse, the project's next email (the delivery) wrote
+  "Sent" back to the database, and "Send follow-ups" ended up sending a
+  "just following up" to a client whose work had already been delivered.
+  The change now shows at once and sticks.
+- **Metrics counted each project manager at an agency as a separate
+  client.** With two contacts from the same agency it showed "Clients 2", the
+  amount collected split into two bars and the payment days in two rows. The
+  client is now the company (ignoring case and accents) or, when there is no
+  company, the person. The Projects list is still grouped by person, since
+  that is who places the order.
+- **A corrective invoice could be overdue the moment it was issued.** It is
+  dated today but inherited the original invoice's due date: correcting in
+  January an invoice due in December produced a document dated 4 January and
+  due on 20 December, and the notification bell immediately asked for a
+  payment reminder. Now, if the invoice is unpaid, the dialog asks for a due
+  date from today on, as when issuing; and the payment-terms notice counts
+  the days from the corrective invoice's date.
+- **Searching for an invoice that had been paid gave "No results".** Paid
+  work gets archived, and it is exactly what the client or the accountant
+  asks about months later; the project search left archived projects out
+  even when their number was typed. Nor did it find a corrective invoice by
+  its R- number, which is the one the client has. Search now reaches archived
+  projects (shown with their archive icon) and R- numbers; without a search,
+  the list still leaves them out.
+- **Leaving without saving silently discarded changes**, in three places:
+  switching email templates (the postscript being written disappeared),
+  closing the translator profile with Escape or a click outside (a freshly
+  typed IBAN or phone number was lost) and clicking another project in the
+  list with the project form open. With unsaved changes the app now asks
+  before leaving; without them, it leaves as before.
+- **A client's glossary accepted the same term twice** with different
+  translations ("lease → arrendamiento" and, weeks later, "Lease →
+  alquiler"). If the source term is already there (ignoring case and
+  accents), the app now says so, shows its translation and asks before
+  adding it again: a term with two meanings depending on context can be
+  saved twice on purpose.
+- **The invoice could contradict itself on the payment period.** The default
+  terms said "within 30 days", so setting the due date to 60 days for an
+  agency produced an invoice with "Due" at 60 days at the top and "30 days"
+  below. The default terms no longer state a period of their own ("by the due
+  date shown above"), and if yours state a number of days that does not match
+  the chosen due date, the invoice dialog points it out.
+- **Hours logged in minutes came out unreadable on the invoice and the
+  quote.** 80 minutes (1.333… hours) printed as "1.3,333,333,333,333,333".
+  They now show up to four decimals, "1.3333", so the line adds up:
+  1.3333 × €40 = €53.33, the amount next to it (with two decimals,
+  1.33 × 40 would give 53.20). The correction dialog shows hours the same
+  way.
+- **Changing the project type kept a rate that no longer applied.** Switching
+  a per-word project to a fixed price left the "Price" field holding the
+  per-word rate (0.10), and the invoice came out at 0.10; switching to hourly,
+  €0.10/word became €0.10/hour. The field is now cleared when the rate's unit
+  changes, and kept between types with the same unit.
+- **An archived job still showed as late** on its card and in the calendar
+  ("2 days late"), although the bell no longer flagged it. Archiving a
+  cancelled job removes it from every delivery notice.
+- **Deleting a project also deletes its logged time**, and the confirmation
+  did not say so. It now does.
+- **The invoice wrote taxes in two different ways**: "VAT 21.0%" with VAT and
+  "VAT (0%)" without it, and "IRPF -15.0%". They are now always in brackets
+  with no padding decimals, as in the invoice dialog: "VAT (21%)",
+  "IRPF (-15%)".
+- **The notice about details missing from a client's card read badly**
+  ("This client has no Tax ID, Address on file"). It now reads "Missing from
+  this client's card: tax ID and address".
+- **Work already delivered to the client showed as "delivery overdue".**
+  Sending the deliverables does not change the status (the status bar is set
+  by hand), so after the deadline the project stayed "In progress" and showed
+  as late in the bell, the project card and the calendar. With the
+  deliverables sent, the notice now reads "Deliverables sent: mark them as
+  Delivered".
+- **Adding a file again with the same name duplicated it.** When delivering,
+  the corrected version of "Novel_ES.docx" was added next to the old one and
+  the client received both; in the Outreach attachments, an updated CV was
+  added next to the old one and every cold email went out with both. The new
+  file now replaces the one with the same name, with a one-line notice. When
+  a corrected version of work already delivered is sent again, the old one is
+  also removed from the saved deliverables: otherwise the next delivery loaded
+  both again.
+- **An invoice issued before the delivery deadline said the service was
+  provided after the invoice date.** The service date came from the
+  project's delivery date, which is the deadline: delivered and invoiced on
+  the 6th with a deadline on the 20th, the invoice read "Service date 20".
+  It is now only set when it is earlier than the invoice date.
+- **When entering several expenses in a row, the date went back to today**
+  after each one. Entering September receipts in October left the second and
+  later ones in October, and in another quarter. The form now proposes the
+  previous expense's date. Also, the "today" it proposed was worked out only
+  once, and fell behind with the app left open for several days.
+- **The accounting export ordered invoices from the same day wrongly**
+  (2026-002 before 2026-001). Same-day invoices are now ordered by number.
 - **A PO the agency sends after receiving the invoice can now be added.** The
   invoice kept the PO from the moment it was issued, and if there was none,
   there was no way to add it. Changing the project's PO now also changes it on
