@@ -10,7 +10,7 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [1.1.2] — 2026-10-11
+## [1.1.2] — 2026-10-12
 
 ### Added
 
@@ -158,6 +158,14 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
   is stored — and printed on the invoice — is still the English name.
 
 ### Fixed
+
+- **The invoice to a client outside the EU with no tax ID cited the wrong
+  article.** For any client abroad, the "not subject" wording cited art.
+  69.Uno.1º of the VAT Act, which only holds when the recipient is a business
+  or professional; a private individual falls under 69.Dos.f, the one that
+  names translation. The app cannot tell whether the client is a business or a
+  private individual, so with no client tax ID it now cites art. 69 alone,
+  which is true in both cases. With a tax ID it still cites 69.Uno.1º.
 
 - **A project created for the wrong client could not be fixed.** Editing it
   offered no client field, and the only way out was to delete it, along with

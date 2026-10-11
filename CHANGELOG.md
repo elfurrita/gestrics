@@ -11,7 +11,7 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [1.1.2] — 2026-10-11
+## [1.1.2] — 2026-10-12
 
 ### Añadido
 
@@ -160,6 +160,15 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
   nombre en inglés.
 
 ### Corregido
+
+- **La factura a un cliente de fuera de la UE sin identificador fiscal citaba
+  el artículo equivocado.** Para cualquier cliente de fuera, la mención de
+  «no sujeta» citaba el art. 69.Uno.1º de la Ley del IVA, que solo vale si el
+  destinatario es empresario o profesional; a un particular se le aplica el
+  69.Dos.f, el que nombra la traducción. La aplicación no sabe si el cliente
+  es empresa o particular, así que ahora, sin identificador fiscal del cliente,
+  cita el art. 69 a secas, cierto en los dos casos. Con identificador sigue
+  citando el 69.Uno.1º.
 
 - **Un proyecto creado para el cliente equivocado no se podía corregir.** Al
   editarlo no había campo de cliente, y la única salida era borrarlo, con su
