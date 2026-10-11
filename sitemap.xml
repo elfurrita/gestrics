@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Las cuatro páginas del sitio, con su URL canónica en https. Existe porque
+  Las páginas del sitio, con su URL canónica en https. Existe porque
   Google llegaba a ellas solo rastreando enlaces, y porque el informe de
   "Página con redirección" de http:// se entiende mejor cuando hay una lista
   explícita de cuáles son las buenas.
@@ -23,4 +23,5 @@
   <url><loc>https://outreachstudio.app/terms.html</loc></url>
   <url><loc>https://outreachstudio.app/privacy.html</loc></url>
   <url><loc>https://outreachstudio.app/changelog.html</loc></url>
+  <url><loc>https://outreachstudio.app/guia-facturacion-traductores.html</loc></url>
 </urlset>
