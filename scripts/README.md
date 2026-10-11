@@ -63,23 +63,43 @@ el orden de arriba es el método.
 ## La página del historial de cambios
 
 `changelog.html` **no se edita a mano**: la genera `generar-changelog.mjs` a
-partir de `CHANGELOG.md` y `CHANGELOG.en.md`, que son copias literales de los
-del repositorio de la aplicación.
-
-```
-node scripts/generar-changelog.mjs
-```
+partir de `CHANGELOG.md` y `CHANGELOG.en.md`, que vienen del repositorio de la
+aplicación.
 
 El ciclo completo, cada vez que la aplicación publica una versión:
 
-1. Copiar los dos `CHANGELOG*.md` desde `../outreach-studio`, **pasando CRLF a
-   LF**: aquel repositorio es CRLF y este LF, y sin convertir el siguiente
-   `git diff` sale entero como cambiado.
-2. `node scripts/generar-changelog.mjs`.
-3. Comprobar que la página abre con la versión nueva arriba.
+```
+node scripts/copiar-changelogs.mjs
+node scripts/generar-changelog.mjs
+```
 
-Saltarse el paso 2 deja la página con el texto de la versión anterior mientras
-los `.md` ya están al día, y nada avisa.
+Y abrir la página para comprobar que la versión nueva está arriba.
+
+Saltarse el segundo deja la página con el texto de la versión anterior
+mientras los `.md` ya están al día, y nada avisa.
+
+**Los `.md` de aquí NO son copias literales de los de la aplicación**, y antes
+este README decía que sí. Hay dos diferencias, y las dos las aplica
+`copiar-changelogs.mjs` para que nadie tenga que acordarse:
+
+- **Se pasa de CRLF a LF.** Aquel repositorio es CRLF y éste LF; sin convertir,
+  el siguiente `git diff` sale entero como cambiado y esconde lo que de verdad
+  cambió.
+- **Se quita la sección `[Sin publicar]`.** Describe trabajo que todavía no
+  está dentro del instalador que cuelga de la página, y enseñárselo a quien
+  entra a comprar es prometerle lo que no puede descargarse. Esto se venía
+  haciendo a mano, sin que estuviera escrito en ninguna parte: la siguiente
+  copia "literal" lo habría publicado.
+
+Que lo quite el script no basta por sí solo, así que hay dos cerrojos:
+
+- `generar-changelog.mjs` descarta ese bloque aunque aparezca en el `.md`, por
+  si alguien copia a mano. Comprobado en los dos sentidos: con el generador
+  anterior y el `.md` crudo, «Sin publicar», «Unreleased» y sus entradas
+  salían publicadas en la página.
+- Y el script lo quita del **archivo**, no solo de la página, porque GitHub
+  Pages sirve estos `.md` tal cual: `https://outreachstudio.app/CHANGELOG.md`
+  responde 200 aunque no haya ningún enlace que lleve ahí.
 
 ### Por qué existe esta página
 

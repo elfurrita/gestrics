@@ -5,7 +5,7 @@
 // releases, que tiene el instalador al final y es pública. Ahora el historial
 // se sirve desde el propio sitio y no manda a nadie fuera.
 //
-// Los dos .md se siguen copiando del repositorio de la aplicación tal cual
+// Los dos .md los trae copiar-changelogs.mjs del repositorio de la aplicación
 // (ver el README de esta carpeta). Este script NO los toca: solo los traduce
 // a HTML dentro del marco de las otras páginas. Después de recopiarlos, hay
 // que volver a ejecutarlo o la página se queda con el texto viejo.
@@ -62,11 +62,20 @@ function enLinea(s) {
   return t.replace(/<c(\d+)>/g, (_, i) => "<code>" + codigos[i] + "</code>");
 }
 
+// Lo que todavía no se ha publicado no se pinta. Quien copia los .md ya
+// debería haberlo quitado —lo hace copiar-changelogs.mjs, y ahí está el
+// porqué largo—, pero esto es la red por si alguien vuelve a copiarlos a
+// mano: ese bloque describe trabajo que NO está en el instalador que cuelga
+// de la página, y enseñárselo a quien entra a comprar es prometerle algo que
+// no puede descargarse.
+const SIN_PUBLICAR = /^##\s*\[?\s*(sin publicar|unreleased)\s*\]?/i;
+
 function convertir(md, saltar) {
   const lineas = md.replace(/\r\n/g, "\n").split("\n");
   const salida = [];
-  let lista = null;   // viñetas acumuladas del bloque en curso
-  let parrafo = null; // líneas de un párrafo con saltos duros
+  let lista = null;    // viñetas acumuladas del bloque en curso
+  let parrafo = null;  // líneas de un párrafo con saltos duros
+  let sinPublicar = false; // dentro del bloque de lo no publicado
 
   const cerrarLista = () => {
     if (lista) { salida.push("<ul>" + lista.map((i) => `<li>${enLinea(i)}</li>`).join("") + "</ul>"); lista = null; }
@@ -78,6 +87,13 @@ function convertir(md, saltar) {
 
   for (const linea of lineas) {
     const t = linea.trim();
+
+    // Va lo primero, antes que ninguna otra regla: un encabezado de versión
+    // abre o cierra el tramo que no se publica, y mientras está abierto se
+    // descarta TODO lo que venga detrás (subtítulos, viñetas y separadores),
+    // no solo su encabezado.
+    if (t.startsWith("## ")) sinPublicar = SIN_PUBLICAR.test(t);
+    if (sinPublicar) { cerrarTodo(); continue; }
 
     if (t === "" || t === "---") { cerrarTodo(); continue; }
     if (t.startsWith("# ")) { cerrarTodo(); continue; }            // el h1 lo pone el marco
