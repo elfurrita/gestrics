@@ -11,10 +11,65 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [1.1.2] — 2026-10-08
+## [1.1.2] — 2026-10-11
 
 ### Añadido
 
+- **La factura nueva propone las condiciones de la anterior al mismo
+  cliente.** El diálogo de emisión arrancaba siempre con los impuestos a 0 y
+  el vencimiento a 30 días: a una agencia que paga a 60 había que corregir la
+  fecha en cada factura, y si se olvidaba, el aviso de cobro saltaba con el
+  cliente todavía en plazo. Ahora propone los tipos y el plazo de la última
+  factura a esa empresa (aunque la encargara otra gestora) y lo dice en una
+  línea; solo si se emitió con el perfil fiscal de hoy. Sin factura previa,
+  todo sigue como antes.
+- **Los gastos llevan la factura del proveedor.** Para la declaración
+  trimestral, el gestor pide de cada factura recibida el proveedor, su
+  identificador fiscal, el número de factura, la base y el impuesto soportado,
+  y la app solo guardaba el total. Cada gasto admite ahora, opcionales, el
+  impuesto incluido (con su nombre del perfil fiscal: IVA, GST…), el proveedor,
+  su identificador fiscal y el número de su factura; al teclearlo se ve la base
+  resultante, y un impuesto igual o mayor que el total no se acepta. La
+  exportación de gastos (CSV y Excel) añade esas columnas con base, impuesto y
+  total por separado. Un gasto sin impuesto apuntado sale con base e impuesto
+  en blanco, no a cero: para uno sin impuesto de verdad, como la cuota de
+  autónomo, se apunta 0.
+- **Los clientes, primero al elegir el cliente de un proyecto.** El
+  desplegable listaba toda la agenda del contacto más nuevo al más antiguo,
+  con la persona delante: tras importar 300 agencias para prospectar, los dos
+  clientes de verdad quedaban al final, y teclear «Reed» no llevaba a «Tom
+  Reed · Reed Legal». Ahora los clientes (con algún proyecto o marcados como
+  cliente activo) van en su propio grupo arriba, y el resto de contactos
+  debajo; cada grupo por orden alfabético y con la empresa delante.
+- **Hora en el plazo de entrega.** Las agencias citan la entrega con hora
+  («lunes a las 9:00»), y la app solo guardaba el día: a las 11 de ese lunes
+  seguía diciendo «Vence hoy». El proyecto admite ahora una hora opcional
+  junto a la fecha de entrega (se escribe como venga: «9», «9:00», «17h30»).
+  Pasada esa hora, la ficha, la campana y el calendario la dan por vencida
+  («Venció hoy a las 09:00»), y el calendario la enseña delante del título.
+  Los avisos se ponen al día solos con la aplicación abierta, a esa hora, a
+  medianoche y al volver a la ventana (con el portátil suspendido de noche,
+  la medianoche llegaba tarde): antes solo se calculaban al abrirla. También
+  el aviso de copia de seguridad vieja.
+- **Un solo recordatorio para todas las facturas vencidas de un cliente.**
+  Las agencias suelen retrasarse con varias a la vez, y la gestora recibía un
+  correo por factura el mismo día. Ahora el recordatorio de una nombra las
+  demás vencidas del mismo cliente, con su importe y vencimiento y el total
+  pendiente, y al enviarlo todas quedan recordadas: la campana ya no pide un
+  correo por cada una. Si alguna lleva la cuenta bancaria anterior, el
+  recordatorio da la nueva aunque la principal ya lleve la actual.
+- **Aviso al cobrar IVA a quien no corresponde.** Facturar el 21 % por
+  costumbre a una agencia alemana es un error habitual: a una empresa de otro
+  país de la UE se le factura sin IVA, con inversión del sujeto pasivo, y a un
+  cliente de fuera de la UE tampoco se le repercute. El diálogo de emisión lo
+  dice ahora en esos dos casos, con la misma regla que decide la mención de la
+  factura al 0 %; a un particular de la UE (sin identificador fiscal) no avisa,
+  porque ahí sí corresponde.
+- **Aviso de copia de seguridad en la campana.** Si no hay ninguna copia o la
+  última tiene una semana o más, la campana lo dice («Sin copias de
+  seguridad» / «Última copia hace 12 días») y lleva a Configuración, donde se
+  descarga. Antes solo se veía dentro de Configuración, que en el día a día
+  no se abre, y en la aplicación viven facturas que hay que conservar.
 - **Email de facturación en la ficha del contacto.** Muchas agencias piden
   que las facturas vayan a su contabilidad y no a la gestora que encarga.
   Si el contacto tiene «Email de facturación», la factura y los
@@ -106,6 +161,78 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ### Corregido
 
+- **Un proyecto creado para el cliente equivocado no se podía corregir.** Al
+  editarlo no había campo de cliente, y la única salida era borrarlo, con su
+  tiempo registrado y sus entregables. Ahora el cliente se cambia al editar
+  mientras el proyecto no tenga factura; con factura no, porque el cliente
+  queda en ella: se anula con una rectificativa y se factura en otro
+  proyecto.
+- **El presupuesto nombraba los impuestos a fuego.** Su nota decía «Excludes
+  VAT/withholding tax» para todos: al traductor indio (que cobra GST) y al
+  francés (que no tiene retención) también. Ahora usa los nombres de su país,
+  como la factura: «Excludes VAT/IRPF» en España, «Excludes VAT» en Francia,
+  «Excludes GST» en la India.
+- **El buscador de proyectos no encontraba por par de idiomas ni por tipo de
+  contenido.** Buscar «DE-ES» o «técnico» para repasar un año de trabajo no
+  daba nada. Ahora sí, y el tipo también por el nombre que enseña la interfaz
+  en inglés («Technical»).
+- **Buscar contactos por país, especialidad o par de idiomas no encontraba
+  nada.** El país se guarda en inglés aunque la ficha lo enseñe en español, así
+  que «alemania» no daba resultados; y la especialidad («legal», «médico») y
+  el par de idiomas («DE-ES») no se buscaban. Ahora sí, y como el envío en lote
+  trabaja sobre la lista filtrada, sirve para mandar una campaña solo a las
+  agencias de un país o de una especialidad.
+- **Los gastos no tenían dónde poner lo más habitual, ni se sabía a qué
+  proyecto iban.** Pagar a un colega o a un revisor, la gestoría, el teléfono
+  y las asociaciones profesionales acababan en «Software» o en «Otros»; ahora
+  tienen su categoría. Y al vincular un gasto a un proyecto, el desplegable,
+  la tabla y el CSV para la gestoría enseñaban solo el título, que se repite
+  («Manual de usuario» de dos clientes): ahora dicen «título · cliente», con
+  los archivados al final y marcados.
+- **Tras cambiar de banco, una factura pendiente mandaba a pagar a la cuenta
+  vieja.** La factura conserva el IBAN con el que se emitió, como el resto de
+  sus datos, pero al reenviarla o al recordar su cobro el cliente pagaba con
+  esa cuenta, quizá ya cerrada. Ahora, si la factura está sin cobrar y su
+  IBAN no es el del perfil, el correo de la factura y el del recordatorio
+  añaden una línea con los datos bancarios nuevos, y el diálogo lo avisa
+  antes de enviar.
+- **Tras cambiar de país fiscal, las facturas anteriores se enseñaban con el
+  perfil nuevo.** Quien se muda de España a Francia veía una factura española
+  con «Retención» en vez de IRPF, y al rectificarla el diálogo ofrecía los
+  tipos de IVA franceses (0 y 20 %) en vez de los españoles. El PDF ya era el
+  correcto; ahora la ficha y el diálogo de rectificar usan también el país en
+  que se emitió cada factura.
+- **Un intervalo de envío corto hacía el lote más lento, no más rápido.**
+  Configuración dejaba poner 3 segundos entre correos, pero la aplicación
+  solo manda 12 por minuto: tras el 12.º el lote se paraba 65 segundos, y la
+  duración anunciada no contaba esas esperas. El mínimo es ahora 5 segundos,
+  y un valor más bajo guardado antes se sube solo.
+- **En un día con muchas entregas, el calendario escondía las demás.** Solo se
+  veían tres, y «+5 más» era un texto que no hacía nada: las otras no se
+  podían ver ni abrir desde el calendario. Ahora «+5 más» despliega el día
+  entero (y «Ver menos» lo recoge), enseña sus títulos al pasar el ratón, y
+  las tres que se ven primero son las más urgentes.
+- **Importar una hoja grande de contactos se cortaba a mitad.** Los contactos
+  se guardaban de uno en uno, y el límite de peticiones de la aplicación (300
+  por minuto) cortaba una hoja de 500 agencias hacia la fila 290: el resto
+  salía como «no se pudieron guardar» sin más explicación. Ahora la hoja
+  entera va de una vez, con las mismas comprobaciones que el alta de un
+  contacto: 500 contactos se importan en un par de segundos.
+- **Dos cronómetros podían contar a la vez.** Arrancar el de un proyecto sin
+  parar el de otro dejaba los dos en marcha, y la misma hora se cobraba a dos
+  clientes. Ahora «Empezar» avisa del que sigue en marcha y lo para antes de
+  empezar; si llevaba más de 8 horas, pregunta antes si se registran o se
+  descartan, como al pararlo. Tampoco se puede facturar un proyecto con su
+  cronómetro en marcha: ese tiempo no entraba en la factura, y el cronómetro
+  ya no se podía parar ni borrar, lo que además impedía empezar el de
+  cualquier otro proyecto. Uno que hubiera quedado así se puede descartar
+  desde la ficha.
+- **Dos textos de la interfaz en inglés se entendían mal.** El aviso de la
+  campana para los trabajos entregados sin marcar decía «mark them as
+  Delivered», como si se marcaran los entregables y no el proyecto; ahora el
+  grupo se llama «Delivered, not marked» («Entregados sin marcar» en
+  español), corto como los demás. Y el aviso de datos que faltan del cliente
+  llamaba «card» a su ficha; ahora dice «details», como el resto.
 - **«Nuevo proyecto» con la edición de otro abierta lo duplicaba.** El
   formulario «nuevo» salía con los datos del proyecto que se estaba
   editando, y al guardarlo se creaba una copia. Ahora sale vacío.

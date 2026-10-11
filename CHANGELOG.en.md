@@ -10,10 +10,65 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [1.1.2] — 2026-10-08
+## [1.1.2] — 2026-10-11
 
 ### Added
 
+- **A new invoice suggests the terms of the last one to the same client.**
+  The invoice dialog always opened with taxes at 0 and the due date 30 days
+  out: for an agency that pays at 60 days the date had to be fixed on every
+  invoice, and if forgotten, the payment alert fired while the client was
+  still within terms. It now suggests the rates and payment days of the last
+  invoice to that company (even if another project manager ordered it) and
+  says so in one line; only if it was issued under today's tax profile.
+  Without a previous invoice, nothing changes.
+- **Expenses carry the supplier's invoice.** For the quarterly tax return,
+  the accountant needs each incoming invoice's supplier, tax ID, invoice
+  number, taxable base and input tax, and the app only stored the total. Each
+  expense now takes, optionally, the tax included (named by the tax profile:
+  VAT, GST...), the supplier, their tax ID and their invoice number; the
+  resulting base shows as you type, and a tax equal to or above the total is
+  refused. The expense export (CSV and Excel) adds those columns, with base,
+  tax and total apart. An expense with no tax entered exports base and tax
+  blank, not zero: for one that truly has no tax, such as the self-employed
+  social security fee, enter 0.
+- **Clients first when choosing a project's client.** The dropdown listed
+  the whole contact book from newest to oldest, with the person's name first:
+  after importing 300 agencies to prospect, the two real clients were at the
+  very bottom, and typing "Reed" did not reach "Tom Reed · Reed Legal". Clients
+  (with any project, or marked as active client) now have their own group at
+  the top, with every other contact below; each group is alphabetical, with
+  the company first.
+- **Time of day on delivery deadlines.** Agencies give deadlines with a
+  time ("Monday at 9:00"), and the app only stored the day: at 11 that Monday
+  it still said "Due today". A project now takes an optional time next to the
+  delivery date (typed as it comes: "9", "9:00", "17h30"). Once that time
+  passes, the project page, the notification bell and the calendar show it as
+  overdue ("Was due today at 09:00"), and the calendar shows the time before
+  the title. Alerts now refresh on their own while the app stays open, at that
+  time, at midnight and when you return to the window (with a laptop asleep
+  overnight, midnight arrived late): before, they were only worked out on
+  launch. The same goes for the stale-backup notice.
+- **One reminder for all of a client's overdue invoices.** Agencies are
+  often late with several at once, and the project manager got one email per
+  invoice on the same day. The reminder for one invoice now lists the
+  client's other overdue invoices, with amount, due date and the total
+  outstanding, and once sent they are all marked as reminded: the bell no
+  longer asks for one email each. If any of them carries the previous bank
+  account, the reminder gives the new one even when the main invoice already
+  shows the current one.
+- **Notice when charging VAT where it does not belong.** Charging 21% out of
+  habit to a German agency is a common mistake: a business in another EU
+  country is invoiced without VAT, under the reverse charge, and a client
+  outside the EU is not charged it either. The issue dialog now says so in
+  those two cases, following the same rule that decides the 0% wording on the
+  invoice; it does not warn for a private client in the EU (no tax ID), where
+  VAT does apply.
+- **Backup notice in the bell.** If there is no backup or the last one is a
+  week old or more, the bell says so ("No backups" / "Last backup 12 days
+  ago") and takes you to Settings, where it is downloaded. Before, it only
+  showed inside Settings, which is not opened day to day, and the app holds
+  invoices that must be kept.
 - **Billing email on the contact record.** Many agencies ask for invoices
   to go to their accounts department rather than to the project manager who
   places the order. If the contact has a "Billing email", the invoice and the
@@ -104,6 +159,77 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ### Fixed
 
+- **A project created for the wrong client could not be fixed.** Editing it
+  offered no client field, and the only way out was to delete it, along with
+  its logged time and deliverables. The client can now be changed when
+  editing, as long as the project has no invoice; once invoiced it cannot,
+  since the client is recorded on the invoice: void it with a correction and
+  invoice the work in another project.
+- **The quote hard-coded the tax names.** Its note said "Excludes
+  VAT/withholding tax" for everyone, including a translator in India (who
+  charges GST) and one in France (who has no withholding). It now uses the
+  names of the translator's country, like the invoice: "Excludes VAT/IRPF" in
+  Spain, "Excludes VAT" in France, "Excludes GST" in India.
+- **Project search did not find by language pair or content type.**
+  Searching "DE-ES" or "technical" to look back over a year's work gave
+  nothing. It does now, and content type also by the name the interface shows
+  in each language.
+- **Searching contacts by country, specialty or language pair found
+  nothing.** The country is stored in English even when the record shows it in
+  Spanish, so "alemania" gave no results; and specialty ("legal") and language
+  pair ("DE-ES") were not searched. They are now, and since batch sending works
+  on the filtered list, it can send a campaign only to agencies in one country
+  or specialty.
+- **Expenses had no place for the most common items, and it was unclear
+  which project they belonged to.** Paying a colleague or a reviser, the
+  accountant, phone and internet and professional associations ended up under
+  "Software" or "Other"; they now have their own category. And when linking an
+  expense to a project, the dropdown, the table and the CSV for the accountant
+  showed only the title, which repeats ("User manual" for two clients): they
+  now say "title · client", with archived projects last and marked.
+- **After changing bank, an unpaid invoice sent the client to the old
+  account.** The invoice keeps the IBAN it was issued with, like the rest of
+  its details, but when resending it or chasing payment the client paid into
+  that account, which might be closed. Now, if the invoice is unpaid and its
+  IBAN is not the one in the profile, the invoice email and the reminder add
+  a line with the new bank details, and the dialog says so before sending.
+- **After changing tax country, earlier invoices were shown with the new
+  profile.** Someone moving from Spain to France saw a Spanish invoice with
+  "Withholding" instead of IRPF, and the correction dialog offered the
+  French VAT rates (0 and 20%) instead of the Spanish ones. The PDF was
+  already right; the project page and the correction dialog now also use the
+  country each invoice was issued in.
+- **A short sending interval made the batch slower, not faster.** Settings
+  allowed 3 seconds between emails, but the app only sends 12 per minute:
+  after the 12th the batch paused for 65 seconds, and the announced duration
+  did not count those pauses. The minimum is now 5 seconds, and a lower value
+  saved earlier is raised automatically.
+- **On a day with many deliveries, the calendar hid the rest.** Only three
+  showed, and "+5 more" was text that did nothing: the others could not be
+  seen or opened from the calendar. "+5 more" now expands the whole day (and
+  "Show less" collapses it), shows their titles on hover, and the three shown
+  first are the most urgent.
+- **Importing a large contact sheet stopped halfway.** Contacts were saved
+  one at a time, and the app's request limit (300 per minute) cut off a sheet
+  of 500 agencies around row 290: the rest showed up as "could not be saved"
+  with no further explanation. The whole sheet now goes in one go, with the
+  same checks as adding a single contact: 500 contacts import in a couple of
+  seconds.
+- **Two timers could run at once.** Starting one project's timer without
+  stopping another's left both running, and the same hour was billed to two
+  clients. "Start" now warns about the one still running and stops it before
+  starting; if it had run for more than 8 hours, it first asks whether to log
+  or discard that time, as when stopping it. A project can no longer be
+  invoiced with its timer running: that time was left off the invoice, and the
+  timer could then be neither stopped nor deleted, which also blocked starting
+  any other project's timer. One left in that state can be discarded from the
+  project page.
+- **Two texts in the English interface were unclear.** The bell notice for
+  delivered work not yet marked said "mark them as Delivered", as if the
+  deliverables were marked rather than the project; the group is now called
+  "Delivered, not marked" ("Entregados sin marcar" in Spanish), short like
+  the others. And the notice about missing client data called the record a
+  "card"; it now says "details", like everywhere else.
 - **"New project" while editing another one duplicated it.** The "new" form
   came up with the data of the project being edited, and saving it created a
   copy. It now comes up empty.
