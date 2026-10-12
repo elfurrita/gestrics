@@ -19,7 +19,7 @@
 // WebSocket global, así que no hace falta añadir ninguna dependencia ni a este
 // repositorio ni al de la aplicación.
 
-import { spawn } from "node:child_process";
+import { spawn, spawnSync } from "node:child_process";
 import { writeFileSync, mkdirSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -229,3 +229,17 @@ for (const { nombre, guion, espera } of PASOS) {
 ws.close();
 edge.kill();
 console.log(`\nListo: ${PASOS.length} capturas en shots/${IDIOMA}/`);
+
+
+// Y ENCADENADO, no como paso suelto que haya que recordar. La portada sirve
+// las versiones WebP reducidas (ver optimizar-capturas.mjs); si se rehicieran
+// los PNG y no ellas, la pagina seguiria ENSENIANDO LAS VIEJAS mientras el
+// enlace de "ver grande" abriria la nueva, y nada avisaria de la mezcla.
+console.log("\nGenerando las versiones WebP...");
+const optimizador = spawnSync(process.execPath, [join(RAIZ, "scripts", "optimizar-capturas.mjs"), IDIOMA], { stdio: "inherit" });
+if (optimizador.status !== 0) {
+  console.error("\nLas capturas estan hechas, pero el optimizador FALLO.");
+  console.error("No publiques asi: la pagina serviria los WebP viejos.");
+  console.error("Ejecuta a mano:  node scripts/optimizar-capturas.mjs " + IDIOMA);
+  process.exit(1);
+}

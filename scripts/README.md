@@ -47,13 +47,42 @@ nombre y la biografía reales.
 pantalla y aborta si los encuentra. Es una red de seguridad, no el método:
 el orden de arriba es el método.
 
+### Las versiones WebP, que son las que de verdad se sirven
+
+`optimizar-capturas.mjs` saca de cada PNG dos WebP reducidos, y es lo que
+descarga quien entra. **No hay que acordarse de ejecutarlo**: `capturar.mjs`
+lo llama al terminar, para el idioma que acaba de capturar, y sale con error
+si falla. Suelto también vale:
+
+```
+node scripts/optimizar-capturas.mjs        # los dos idiomas
+node scripts/optimizar-capturas.mjs es     # solo uno
+```
+
+Por qué existe: los PNG a 2352px pesaban **1,2 MB por visita y por idioma**,
+frente a 18 kB de HTML y hoja de estilos juntos. Desde un país lejano eso es
+lo único que se nota, y no hay retoque de CSS que lo arregle — son bytes que
+viajan. Con los WebP, esa misma visita baja a unos **300 kB en una pantalla de
+densidad doble y 116 kB en una normal**.
+
+**Los PNG no se borran**: son el respaldo de quien no entienda WebP y el
+destino del enlace de «ver grande» que envuelve cada captura.
+
+Y un detalle contraintuitivo que decide los anchos, medido sobre la página
+servida y no supuesto: **las capturas de los pasos se ven MÁS GRANDES en
+pantalla estrecha** (719px a 800 de ancho, frente a 492 a 1280), porque la
+maqueta pasa a una columna. Medir solo en escritorio lleva a generarlas
+pequeñas y a que se vean borrosas justo en el móvil. De ahí 740 y 1480 para
+los pasos, y 980 y 1960 para la de la portada, que se enseña a 974.
+
 ### Detalles que costaron descubrirse
 
 - **La ventana va a 1176px de ancho**, que es exactamente lo que mide el
   armazón de la aplicación. Así no asoma el fondo de la página a los lados y
   la captura no hay que recortarla.
 - **Densidad 2×**: las capturas salen a 2352×1500 y la página las muestra a
-  unos 500px, así que se ven nítidas y se pueden abrir a tamaño real.
+  unos 500px, así que se ven nítidas y se pueden abrir a tamaño real. Pero
+  **eso NO es lo que se sirve**: ver el apartado de abajo.
 - **La caché del navegador se desactiva** por CDP. Sin eso, una segunda pasada
   fotografía la versión anterior de la página.
 - **El perfil temporal de Edge va al temporal del sistema.** Apuntarlo cerca
