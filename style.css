@@ -393,10 +393,8 @@ a.arriba:hover {
       --anim-lado: 150px;   /* entrada lateral de las mitades de cada paso */
       --anim-fondo: 240px;  /* cuanto vienen desde atras, en Z */
       --anim-giro: 6deg;    /* giro al entrar; con la perspectiva, da volumen */
-      --anim-velo: 8px;     /* desenfoque inicial: la pieza se materializa */
       --anim-desde: 5%;     /* arranque, dentro de la fase "entry" */
-      --anim-hasta: 62%;    /* final del MOVIMIENTO, dentro de la fase "cover" */
-      --anim-velo-hasta: 75%; /* final del DESENFOQUE: va por detras a proposito */
+      --anim-hasta: 62%;    /* final, dentro de la fase "cover" */
       --anim-curva: cubic-bezier(0.25, 0.46, 0.45, 0.94);
     }
 
@@ -425,19 +423,12 @@ a.arriba:hover {
 
     .step .step-text,
     .step .shot {
-      /* DOS animaciones, no una, y esa es la novedad: el movimiento y el
-         desenfoque ya no comparten recorrido. Antes iban pegados en el mismo
-         tramo y con la misma curva de salida, asi que el desenfoque se gastaba
-         casi entero en el primer trozo y no daba tiempo a verlo. Ahora la
-         pieza se posa y SIGUE enfocandose un rato despues.
-
-         Termina en "cover", no en "entry": acabando dentro de la fase de
+      /* Termina en "cover", no en "entry": acabando dentro de la fase de
          entrada la pieza quedaba ensamblada cerca del borde inferior, donde
          nadie mira, y para cuando subia a la zona de lectura ya no se movia. */
-      animation: ensamblar var(--anim-curva) both, enfocar linear both;
-      animation-timeline: view(), view();
-      animation-range: entry var(--anim-desde) cover var(--anim-hasta),
-                       entry var(--anim-desde) cover var(--anim-velo-hasta);
+      animation: ensamblar var(--anim-curva) both;
+      animation-timeline: view();
+      animation-range: entry var(--anim-desde) cover var(--anim-hasta);
     }
 
     @keyframes ensamblar {
@@ -449,13 +440,6 @@ a.arriba:hover {
       to { opacity: 1; transform: none; }
     }
 
-    /* El desenfoque, aparte y en LINEAR. Con la curva de salida del movimiento
-       se iba el 63% del velo en el primer quinto del recorrido; en linear se
-       suelta parejo y se nota hasta el final. */
-    @keyframes enfocar {
-      from { filter: blur(var(--anim-velo)); }
-      to { filter: blur(0); }
-    }
 
     /* 2 · La rejilla y el precio crecen desde el fondo, no desde un lado:
        son bloques centrados y venir de un borde los descolocaria. */
@@ -466,10 +450,9 @@ a.arriba:hover {
     .features .grid li,
     .local .wrap,
     .pricing .price-box {
-      animation: crecer var(--anim-curva) both, enfocar linear both;
-      animation-timeline: view(), view();
-      animation-range: entry calc(var(--anim-desde) - 1%) cover calc(var(--anim-hasta) - 2%),
-                       entry calc(var(--anim-desde) - 1%) cover calc(var(--anim-velo-hasta) - 2%);
+      animation: crecer var(--anim-curva) both;
+      animation-timeline: view();
+      animation-range: entry calc(var(--anim-desde) - 1%) cover calc(var(--anim-hasta) - 2%);
     }
 
     /* Escalonado de la rejilla. view() ya separa fila de fila, pero las
@@ -478,12 +461,9 @@ a.arriba:hover {
        El ciclo es de cuatro y las columnas las decide auto-fill, asi que con
        otro numero de columnas el escalonado sale en diagonal en vez de en
        barrido — sigue funcionando, solo cambia el dibujo. */
-    .features .grid li:nth-child(4n + 2) { animation-range: entry calc(var(--anim-desde) + 5%) cover calc(var(--anim-hasta) + 4%),
-                                               entry calc(var(--anim-desde) + 5%) cover calc(var(--anim-velo-hasta) + 4%); }
-    .features .grid li:nth-child(4n + 3) { animation-range: entry calc(var(--anim-desde) + 10%) cover calc(var(--anim-hasta) + 8%),
-                                               entry calc(var(--anim-desde) + 10%) cover calc(var(--anim-velo-hasta) + 8%); }
-    .features .grid li:nth-child(4n + 4) { animation-range: entry calc(var(--anim-desde) + 15%) cover calc(var(--anim-hasta) + 12%),
-                                               entry calc(var(--anim-desde) + 15%) cover calc(var(--anim-velo-hasta) + 12%); }
+    .features .grid li:nth-child(4n + 2) { animation-range: entry calc(var(--anim-desde) + 5%) cover calc(var(--anim-hasta) + 4%); }
+    .features .grid li:nth-child(4n + 3) { animation-range: entry calc(var(--anim-desde) + 10%) cover calc(var(--anim-hasta) + 8%); }
+    .features .grid li:nth-child(4n + 4) { animation-range: entry calc(var(--anim-desde) + 15%) cover calc(var(--anim-hasta) + 12%); }
 
     @keyframes crecer {
       from {
