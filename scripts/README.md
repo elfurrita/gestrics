@@ -150,3 +150,59 @@ apuntando a GitHub Releases, que es donde está alojado el instalador.
 - **El marco (cabecera, navegación y pie) está copiado a mano** en el script,
   porque el sitio no tiene plantilla compartida. Un cambio en la navegación de
   las otras páginas hay que darlo también aquí.
+
+## El vídeo de demostración
+
+`grabar-demo.mjs` graba un vídeo corto de la aplicación, sin voz y con rótulos
+dentro de la propia página, y deja los fotogramas y una lista para FFmpeg en
+una carpeta del temporal del sistema. Como las capturas, **hay que rehacerlo
+cada vez que cambie la interfaz**: un vídeo de una versión antigua enseña una
+pantalla que ya no es la que se descarga.
+
+Se prepara como las capturas, con una diferencia importante: **el backend va
+contra una carpeta de datos desechable**, no contra `%APPDATA%\gestrics\`. Así
+no se toca la base real, y sin cuenta de correo configurada nada de lo que se
+pulse puede mandar un correo de verdad.
+
+1. `node ../outreach-studio/backend/scripts/backend-aislado.cjs` (puerto 3001,
+   datos en `%TEMP%\gestrics-mirar`). Con el backend en marcha y **sin
+   contactos todavía**, marcar los centinelas, igual que el paso 4 de las
+   capturas: `node ../outreach-studio/scripts/dev-skip-first-run.mjs` y los dos
+   `PUT` de `migration_legacyTemplatesFrozen` y `translator_fiscalCountry`.
+2. Parar el backend y sembrar contra esa carpeta, con el idioma del vídeo:
+   `GESTRICS_DB=%TEMP%\gestrics-mirar\outreach-studio.db node scripts/sembrar-demo.mjs es`
+   (con `GESTRICS_APP` apuntando a la aplicación si no está al lado).
+3. Arrancar el backend aislado otra vez y el front en `http://localhost:5173`.
+4. `node scripts/grabar-demo.mjs es` — unos 70 segundos. Imprime la orden de
+   FFmpeg que monta el MP4 (1920×1080, 30 fps).
+5. **Para el otro idioma hay que volver a sembrar desde la base vacía**, no
+   añadir: los títulos de los proyectos van en el idioma del vídeo, y sembrar
+   encima duplicaría los contactos.
+6. Al terminar, **borrar la carpeta de datos, los fotogramas y el perfil
+   temporal de Edge** (`%TEMP%\gestrics-video-edge`). Este último llega a
+   pesar más de 1 GB.
+
+### Detalles que costaron descubrirse
+
+- **La franja de «Prueba gratuita / Comprar licencia» se oculta solo durante la
+  grabación**, con un observador de la página. La primera versión subía en el
+  árbol hasta el ancho completo y se llevó la aplicación entera por delante
+  (pantalla en blanco): ahora solo oculta barras de menos de 100px de alto. Y
+  excluye los elementos del propio vídeo: la pantalla final dice «14-day free
+  trial» y el ocultador la recortaba en inglés.
+- **La rueda del ratón actúa sobre lo que hay bajo el cursor**, y tras pulsar un
+  proyecto el cursor sigue sobre la lista, no sobre el panel. Se desplaza el
+  contenedor directamente, con animación suave.
+- **Un proyecto fuera de la zona visible de la lista se pulsaba a ciegas** y el
+  clic caía en el botón fijo «Nuevo proyecto». Se lleva antes al centro de la
+  lista.
+- **El cursor no va derecho al objetivo**: desvío lateral, pasada de largo y
+  corrección. El azar tiene semilla fija, así que dos grabaciones seguidas dan
+  el mismo vídeo y una escena que salga mal se puede repetir sin que cambie
+  nada más.
+- **Los fotogramas salen de `Page.startScreencast`**, no de una captura de
+  pantalla de Windows: Edge va sin ventana y no hay nada visible que grabar.
+- **Cada orden CDP tiene un límite de 20 s.** Sin él, una orden que Edge nunca
+  contesta dejaba el guion esperando para siempre y sin decir nada.
+- **La etiqueta del gráfico mensual en inglés es «COLLECTED BY MONTH»**, no «PER
+  MONTH».

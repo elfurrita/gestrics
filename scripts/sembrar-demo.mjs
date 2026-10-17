@@ -61,7 +61,10 @@ const APP = process.env.GESTRICS_APP || join(RAIZ, "..", "outreach-studio");
 const require = createRequire(join(APP, "backend/package.json"));
 const initSqlJs = require("sql.js");
 
-const BASE = join(process.env.APPDATA, "gestrics", "outreach-studio.db");
+// GESTRICS_DB apunta a otra base (la de una carpeta desechable, por ejemplo la de
+// backend-aislado.cjs de la aplicación) en vez de a la de %APPDATA%. Es lo que
+// permite sembrar la demostración para un vídeo sin tocar los datos reales.
+const BASE = process.env.GESTRICS_DB || join(process.env.APPDATA, "gestrics", "outreach-studio.db");
 const IDIOMA = (process.argv[2] || "es").toLowerCase();
 if (!["es", "en"].includes(IDIOMA)) {
   console.error('Idioma no reconocido. Usa "es" o "en".');
