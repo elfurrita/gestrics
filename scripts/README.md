@@ -170,8 +170,9 @@ pulse puede mandar un correo de verdad.
    capturas: `node ../outreach-studio/scripts/dev-skip-first-run.mjs` y los dos
    `PUT` de `migration_legacyTemplatesFrozen` y `translator_fiscalCountry`.
 2. Parar el backend y sembrar contra esa carpeta, con el idioma del vídeo:
-   `GESTRICS_DB=%TEMP%\gestrics-mirar\outreach-studio.db node scripts/sembrar-demo.mjs es`
-   (con `GESTRICS_APP` apuntando a la aplicación si no está al lado).
+   en PowerShell, `$env:GESTRICS_DB = "$env:TEMP\gestrics-mirar\outreach-studio.db"`
+   y después `node scripts/sembrar-demo.mjs es` (con `GESTRICS_APP` apuntando a
+   la aplicación si no está al lado).
 3. Arrancar el backend aislado otra vez y el front en `http://localhost:5173`.
 4. `node scripts/grabar-demo.mjs es` — unos 70 segundos. Imprime la orden de
    FFmpeg que monta el MP4 (1920×1080, 30 fps).
