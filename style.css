@@ -1053,3 +1053,49 @@ article.guia a.guia-boton:hover { background: var(--mid); }
 @media (max-width: 680px) {
   article.guia { padding: 24px 18px; }
 }
+
+
+/* ── Portada: precio bajo los botones y «para quién es» ──
+   La línea de precio va en sans y algo más visible que .cta-meta: quien duda
+   por el precio no tenía que bajar hasta el final para verlo. */
+.cta-price {
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--mid);
+  margin: 14px 0 0;
+}
+.cta-price strong { color: var(--dark); }
+
+.fit-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+.fit-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 22px 24px;
+}
+.fit-box h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  color: var(--dark);
+}
+.fit-box ul { margin: 0; padding: 0; list-style: none; }
+.fit-box li {
+  font-size: 14.5px;
+  color: var(--mid);
+  padding: 7px 0 7px 20px;
+  position: relative;
+}
+.fit-box li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 15px;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--peach);
+}
