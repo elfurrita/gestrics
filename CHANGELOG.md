@@ -11,7 +11,7 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [1.1.2] — 2026-10-12
+## [1.1.2] — 2026-10-18
 
 ### Añadido
 
@@ -161,6 +161,12 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ### Corregido
 
+- **En Mac, las facturas a clientes japoneses, chinos o indios ya no salen
+  con huecos en el nombre.** Para esos alfabetos el PDF usa una fuente del
+  sistema, y en macOS la app buscaba unas que no existen con ese nombre: el
+  nombre del cliente, dato obligatorio de la factura, salía en blanco o a
+  medias. Comprobado en un Mac de GitHub con clientes en japonés, chino,
+  coreano, hindi y tailandés. En Windows no cambia nada.
 - **La factura a un cliente de fuera de la UE sin identificador fiscal citaba
   el artículo equivocado.** Para cualquier cliente de fuera, la mención de
   «no sujeta» citaba el art. 69.Uno.1º de la Ley del IVA, que solo vale si el

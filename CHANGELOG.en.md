@@ -10,7 +10,7 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [1.1.2] — 2026-10-12
+## [1.1.2] — 2026-10-18
 
 ### Added
 
@@ -159,6 +159,12 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ### Fixed
 
+- **On Mac, invoices to Japanese, Chinese or Indian clients no longer show
+  gaps in the name.** For those scripts the PDF uses a system font, and on
+  macOS the app looked for fonts that do not exist under those names: the
+  client's name, a required part of the invoice, came out blank or partial.
+  Checked on a GitHub-hosted Mac with clients in Japanese, Chinese, Korean,
+  Hindi and Thai. Nothing changes on Windows.
 - **The invoice to a client outside the EU with no tax ID cited the wrong
   article.** For any client abroad, the "not subject" wording cited art.
   69.Uno.1º of the VAT Act, which only holds when the recipient is a business
