@@ -159,6 +159,11 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ### Fixed
 
+- **No purchased licence key could be activated.** The 1.1.2 clean-up that
+  strips the full stop or quotes picked up when copying the key from the email
+  also stripped the "==" every key ends with, and the app reported it as
+  non-existent. That ending is now kept, and stray punctuation is still
+  stripped.
 - **On Mac, invoices to Japanese, Chinese or Indian clients no longer show
   gaps in the name.** For those scripts the PDF uses a system font, and on
   macOS the app looked for fonts that do not exist under those names: the

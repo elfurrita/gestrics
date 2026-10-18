@@ -161,6 +161,11 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ### Corregido
 
+- **Ninguna clave de licencia comprada se podía activar.** La limpieza de 1.1.2
+  que quita el punto o las comillas arrastrados al copiar la clave del correo
+  quitaba también el «==» con el que terminan todas, y la aplicación la daba
+  por inexistente. Ahora ese final se conserva, y la puntuación arrastrada se
+  sigue quitando.
 - **En Mac, las facturas a clientes japoneses, chinos o indios ya no salen
   con huecos en el nombre.** Para esos alfabetos el PDF usa una fuente del
   sistema, y en macOS la app buscaba unas que no existen con ese nombre: el
