@@ -144,6 +144,7 @@ const pagina = `<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Changelog — Gestrics</title>
+<link rel="canonical" href="https://outreachstudio.app/changelog.html">
 <link rel="icon" href="icon.png">
 <link rel="stylesheet" href="style.css">
 </head>
@@ -152,8 +153,8 @@ const pagina = `<!doctype html>
   <img src="icon.png" alt="Gestrics">
   <div class="title">Gestrics<span lang="en">Changelog</span><span lang="es">Historial de cambios</span></div>
   <nav>
-    <a href="index.html" lang="en">Home</a>
-    <a href="index.html" lang="es">Inicio</a>
+    <a href="/" lang="en">Home</a>
+    <a href="/" lang="es">Inicio</a>
     <a href="terms.html" lang="en">Terms of Use</a>
     <a href="terms.html" lang="es">Términos de Uso</a>
     <a href="privacy.html" lang="en">Privacy Policy</a>
@@ -170,8 +171,8 @@ ${bloques}
   </article>
 </main>
 <footer>
-  <span lang="en">Gestrics — <a href="index.html" style="color:inherit">outreachstudio</a> · Support: <a href="mailto:contact@outreachstudio.app">contact@outreachstudio.app</a> · <a href="changelog.html">Changelog</a></span>
-  <span lang="es">Gestrics — <a href="index.html" style="color:inherit">outreachstudio</a> · Soporte: <a href="mailto:contact@outreachstudio.app">contact@outreachstudio.app</a> · <a href="changelog.html">Historial de cambios</a></span>
+  <span lang="en">Gestrics — <a href="/" style="color:inherit">outreachstudio</a> · Support: <a href="mailto:contact@outreachstudio.app">contact@outreachstudio.app</a> · <a href="changelog.html">Changelog</a></span>
+  <span lang="es">Gestrics — <a href="/" style="color:inherit">outreachstudio</a> · Soporte: <a href="mailto:contact@outreachstudio.app">contact@outreachstudio.app</a> · <a href="changelog.html">Historial de cambios</a></span>
   <a class="arriba" href="#arriba" lang="en" title="Back to top" aria-label="Back to top"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 14l6-6 6 6"/></svg></a>
   <a class="arriba" href="#arriba" lang="es" title="Volver arriba" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 14l6-6 6 6"/></svg></a>
 </footer>
