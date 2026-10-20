@@ -5,8 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Gestrics — Desktop CRM for Freelance Translators</title>
 <link rel="canonical" href="https://outreachstudio.app/">
+<link rel="alternate" hreflang="en" href="https://outreachstudio.app/">
+<link rel="alternate" hreflang="es" href="https://outreachstudio.app/es/">
+<link rel="alternate" hreflang="x-default" href="https://outreachstudio.app/">
+<script src="/idioma.js"></script>
 <meta name="description" content="Gestrics is desktop software for freelance translators: outreach, projects, CAT analysis, invoicing with per-country tax rules, payment collection and metrics. Installed and run entirely on your own computer.">
-<link rel="icon" href="icon.png">
+<link rel="icon" href="/icon.png">
 
 <!-- Vista previa al compartir el enlace. Sin esto, pegar outreachstudio.app
      en LinkedIn, ProZ o un grupo de traductores producía una tarjeta vacía:
@@ -15,6 +19,8 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://outreachstudio.app/">
 <meta property="og:site_name" content="Gestrics">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="es_ES">
 <meta property="og:title" content="Gestrics — Desktop CRM for Freelance Translators">
 <meta property="og:description" content="Outreach, projects, CAT analysis, invoicing with per-country tax rules, payment collection and metrics — installed and run entirely on your own computer.">
 <meta property="og:image" content="https://outreachstudio.app/shots/en/overview.png">
@@ -22,29 +28,26 @@
 <meta property="og:image:height" content="1500">
 <meta property="og:image:alt" content="The Gestrics project view, showing a project's status, assignment and amounts.">
 <meta name="twitter:card" content="summary_large_image">
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="/style.css">
 </head>
 <body>
 <header id="arriba">
-  <img src="icon.png" alt="Gestrics">
-  <div class="title">Gestrics<span lang="en">Desktop CRM for Freelance Translators</span><span lang="es">CRM de escritorio para traductores autónomos</span></div>
+  <img src="/icon.png" alt="Gestrics">
+  <div class="title">Gestrics<span>Desktop CRM for Freelance Translators</span></div>
   <nav>
-    <a href="/" class="active" lang="en">Home</a>
-    <a href="/" class="active" lang="es">Inicio</a>
-    <a href="terms.html" lang="en">Terms of Use</a>
-    <a href="terms.html" lang="es">Términos de Uso</a>
-    <a href="privacy.html" lang="en">Privacy Policy</a>
-    <a href="privacy.html" lang="es">Política de Privacidad</a>
+    <a href="/" class="active">Home</a>
+    <a href="/terms.html">Terms of Use</a>
+    <a href="/privacy.html">Privacy Policy</a>
   </nav>
   <div class="lang-toggle">
-    <button data-lang="en" class="active" title="English" aria-label="English"><svg class="bandera" viewBox="0 0 60 30" aria-hidden="true" focusable="false"><clipPath id="rec-gb"><path d="M0 0h60v30H0z"/></clipPath><g clip-path="url(#rec-gb)"><path d="M0 0h60v30H0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg></button>
-    <button data-lang="es" title="Español" aria-label="Español"><svg class="bandera" viewBox="0 0 60 30" aria-hidden="true" focusable="false"><path d="M0 0h60v30H0z" fill="#C60B1E"/><path d="M0 7.5h60v15H0z" fill="#FFC400"/></svg></button>
+    <a href="/" hreflang="en" data-lang="en" class="active" aria-current="page" title="English" aria-label="English"><svg class="bandera" viewBox="0 0 60 30" aria-hidden="true" focusable="false"><clipPath id="rec-gb"><path d="M0 0h60v30H0z"/></clipPath><g clip-path="url(#rec-gb)"><path d="M0 0h60v30H0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg></a>
+    <a href="/es/" hreflang="es" data-lang="es" title="Español" aria-label="Español"><svg class="bandera" viewBox="0 0 60 30" aria-hidden="true" focusable="false"><path d="M0 0h60v30H0z" fill="#C60B1E"/><path d="M0 7.5h60v15H0z" fill="#FFC400"/></svg></a>
   </div>
 </header>
 
 <div class="page">
 <!-- ══════════════════════════ ENGLISH ══════════════════════════ -->
-<div lang="en">
+<div>
 
   <section class="hero">
     <div class="wrap">
@@ -55,10 +58,10 @@
         <a class="download-cta" href="https://github.com/elfurrita/gestrics/releases/latest/download/Gestrics-1.1.2-universal.dmg">Download for Mac</a>
       </div>
       <p class="cta-price"><strong>€150, one time</strong> · 14-day free trial, no card · no subscription</p>
-      <div class="cta-meta">v1.1.2 · Windows 10/11 · macOS (Apple Silicon and Intel) · <a href="changelog.html">Changelog</a></div>
+      <div class="cta-meta">v1.1.2 · Windows 10/11 · macOS (Apple Silicon and Intel) · <a href="/changelog.html">Changelog</a></div>
       <p class="cta-note">Neither installer is signed yet, so both systems stop you the first time. Windows: <strong>More info</strong> → <strong>Run anyway</strong>. macOS: when it refuses to open, go to <strong>System Settings → Privacy &amp; Security</strong> and click <strong>Open anyway</strong>.</p>
       <figure class="shot shot-hero">
-        <a href="shots/en/overview.png" target="_blank" rel="noopener noreferrer"><picture><source type="image/webp" srcset="shots/en/overview-980.webp 980w, shots/en/overview-1960.webp 1960w" sizes="(max-width: 800px) 90vw, 974px"><img src="shots/en/overview.png" width="2352" height="1500" loading="lazy" decoding="async" alt="The Gestrics project view, with a project's assignment, invoice and notes."></picture></a>
+        <a href="/shots/en/overview.png" target="_blank" rel="noopener noreferrer"><picture><source type="image/webp" srcset="/shots/en/overview-980.webp 980w, /shots/en/overview-1960.webp 1960w" sizes="(max-width: 800px) 90vw, 974px"><img src="/shots/en/overview.png" width="2352" height="1500" loading="lazy" decoding="async" alt="The Gestrics project view, with a project's assignment, invoice and notes."></picture></a>
       </figure>
     </div>
   </section>
@@ -79,7 +82,7 @@
           </ul>
         </div>
         <figure class="shot">
-          <a href="shots/en/outreach.png" target="_blank" rel="noopener noreferrer"><picture><source type="image/webp" srcset="shots/en/outreach-740.webp 740w, shots/en/outreach-1480.webp 1480w" sizes="(max-width: 800px) 90vw, 492px"><img src="shots/en/outreach.png" width="2352" height="1500" loading="lazy" decoding="async" alt="The outreach tab: contact list, statuses and the email composer."></picture></a>
+          <a href="/shots/en/outreach.png" target="_blank" rel="noopener noreferrer"><picture><source type="image/webp" srcset="/shots/en/outreach-740.webp 740w, /shots/en/outreach-1480.webp 1480w" sizes="(max-width: 800px) 90vw, 492px"><img src="/shots/en/outreach.png" width="2352" height="1500" loading="lazy" decoding="async" alt="The outreach tab: contact list, statuses and the email composer."></picture></a>
         </figure>
       </div>
 
@@ -95,7 +98,7 @@
           </ul>
         </div>
         <figure class="shot">
-          <a href="shots/en/project.png" target="_blank" rel="noopener noreferrer"><picture><source type="image/webp" srcset="shots/en/project-740.webp 740w, shots/en/project-1480.webp 1480w" sizes="(max-width: 800px) 90vw, 492px"><img src="shots/en/project.png" width="2352" height="1500" loading="lazy" decoding="async" alt="A project card showing the assignment, CAT breakdown and glossary."></picture></a>
+          <a href="/shots/en/project.png" target="_blank" rel="noopener noreferrer"><picture><source type="image/webp" srcset="/shots/en/project-740.webp 740w, /shots/en/project-1480.webp 1480w" sizes="(max-width: 800px) 90vw, 492px"><img src="/shots/en/project.png" width="2352" height="1500" loading="lazy" decoding="async" alt="A project card showing the assignment, CAT breakdown and glossary."></picture></a>
         </figure>
       </div>
 
@@ -112,7 +115,7 @@
           </ul>
         </div>
         <figure class="shot">
-          <a href="shots/en/invoice.png" target="_blank" rel="noopener noreferrer"><picture><source type="image/webp" srcset="shots/en/invoice-740.webp 740w, shots/en/invoice-1480.webp 1480w" sizes="(max-width: 800px) 90vw, 492px"><img src="shots/en/invoice.png" width="2352" height="1500" loading="lazy" decoding="async" alt="The invoice card with its PDF, VAT and withholding lines."></picture></a>
+          <a href="/shots/en/invoice.png" target="_blank" rel="noopener noreferrer"><picture><source type="image/webp" srcset="/shots/en/invoice-740.webp 740w, /shots/en/invoice-1480.webp 1480w" sizes="(max-width: 800px) 90vw, 492px"><img src="/shots/en/invoice.png" width="2352" height="1500" loading="lazy" decoding="async" alt="The invoice card with its PDF, VAT and withholding lines."></picture></a>
         </figure>
       </div>
 
@@ -128,7 +131,7 @@
           </ul>
         </div>
         <figure class="shot">
-          <a href="shots/en/metrics.png" target="_blank" rel="noopener noreferrer"><picture><source type="image/webp" srcset="shots/en/metrics-740.webp 740w, shots/en/metrics-1480.webp 1480w" sizes="(max-width: 800px) 90vw, 492px"><img src="shots/en/metrics.png" width="2352" height="1500" loading="lazy" decoding="async" alt="The metrics tab with the collected-per-month and per-client charts."></picture></a>
+          <a href="/shots/en/metrics.png" target="_blank" rel="noopener noreferrer"><picture><source type="image/webp" srcset="/shots/en/metrics-740.webp 740w, /shots/en/metrics-1480.webp 1480w" sizes="(max-width: 800px) 90vw, 492px"><img src="/shots/en/metrics.png" width="2352" height="1500" loading="lazy" decoding="async" alt="The metrics tab with the collected-per-month and per-client charts."></picture></a>
         </figure>
       </div>
     </div>
@@ -209,182 +212,8 @@
   <section class="legal">
     <div class="wrap">
       <div class="home-links">
-        <a href="terms.html">Terms of Use<span>The rules for using the Application.</span></a>
-        <a href="privacy.html">Privacy Policy<span>What data is stored, where, and who is responsible for it.</span></a>
-      </div>
-    </div>
-  </section>
-
-</div>
-
-<!-- ══════════════════════════ ESPAÑOL ══════════════════════════ -->
-<div lang="es">
-
-  <section class="hero">
-    <div class="wrap">
-      <h1>Del primer correo a la factura cobrada</h1>
-      <p class="lede">Gestrics es el programa de escritorio donde un traductor autónomo lleva sus clientes, sus encargos, sus facturas y sus cobros. Se instala en tu ordenador y ahí se queda: sin servidor central, sin cuenta en la nube, sin suscripción.</p>
-      <div class="cta-row">
-        <a class="download-cta" href="https://github.com/elfurrita/gestrics/releases/latest/download/Gestrics.Setup.1.1.2.exe">Descargar para Windows</a>
-        <a class="download-cta" href="https://github.com/elfurrita/gestrics/releases/latest/download/Gestrics-1.1.2-universal.dmg">Descargar para Mac</a>
-      </div>
-      <p class="cta-price"><strong>150 € una sola vez</strong> · 14 días de prueba gratis, sin tarjeta · sin suscripción</p>
-      <div class="cta-meta">v1.1.2 · Windows 10/11 · macOS (Apple Silicon e Intel) · <a href="changelog.html">Historial de cambios</a></div>
-      <p class="cta-note">Ninguno de los dos instaladores está firmado todavía, así que los dos sistemas te frenan la primera vez. Windows: <strong>Más información</strong> → <strong>Ejecutar de todas formas</strong>. macOS: cuando se niegue a abrir, ve a <strong>Ajustes del Sistema → Privacidad y seguridad</strong> y pulsa <strong>Abrir igualmente</strong>.</p>
-      <figure class="shot shot-hero">
-        <a href="shots/es/overview.png" target="_blank" rel="noopener noreferrer"><picture><source type="image/webp" srcset="shots/es/overview-980.webp 980w, shots/es/overview-1960.webp 1960w" sizes="(max-width: 800px) 90vw, 974px"><img src="shots/es/overview.png" width="2352" height="1500" loading="lazy" decoding="async" alt="La pestaña de proyectos de Gestrics, con el encargo, la factura y las notas de un proyecto."></picture></a>
-      </figure>
-    </div>
-  </section>
-
-  <section class="flow">
-    <div class="wrap">
-      <h2>Cómo se ve un encargo, de principio a fin</h2>
-
-      <div class="step">
-        <div class="step-text">
-          <div class="step-n">01 · Prospección</div>
-          <h3>Buscar clientes sin perder el hilo</h3>
-          <ul>
-            <li>Contactos con estado, historial completo y avisos de seguimiento.</li>
-            <li>Plantillas de correo con variables, que se editan y se ven en una sola pantalla.</li>
-            <li>Envío por lotes con tu propio límite diario, para no quemar el buzón.</li>
-            <li>El correo sale de <strong>tu</strong> cuenta por SMTP: el cliente ve tu dirección, no la de un intermediario.</li>
-          </ul>
-        </div>
-        <figure class="shot">
-          <a href="shots/es/prospeccion.png" target="_blank" rel="noopener noreferrer"><picture><source type="image/webp" srcset="shots/es/prospeccion-740.webp 740w, shots/es/prospeccion-1480.webp 1480w" sizes="(max-width: 800px) 90vw, 492px"><img src="shots/es/prospeccion.png" width="2352" height="1500" loading="lazy" decoding="async" alt="La pestaña de prospección: lista de contactos, estados y el redactor de correo."></picture></a>
-        </figure>
-      </div>
-
-      <div class="step">
-        <div class="step-text">
-          <div class="step-n">02 · El encargo</div>
-          <h3>El proyecto, con todo lo que lleva dentro</h3>
-          <ul>
-            <li>Par de idiomas, palabras origen y tarifa — u horas, para lo que se cobra por tiempo.</li>
-            <li>Importa el análisis de <strong>Trados, memoQ o Wordfast</strong> y pon precio a cada tramo de coincidencia.</li>
-            <li>Entregables colgados del encargo, que se envían desde el propio encargo.</li>
-            <li>Un glosario por cliente, compartido por todos los proyectos que le hagas.</li>
-          </ul>
-        </div>
-        <figure class="shot">
-          <a href="shots/es/proyecto.png" target="_blank" rel="noopener noreferrer"><picture><source type="image/webp" srcset="shots/es/proyecto-740.webp 740w, shots/es/proyecto-1480.webp 1480w" sizes="(max-width: 800px) 90vw, 492px"><img src="shots/es/proyecto.png" width="2352" height="1500" loading="lazy" decoding="async" alt="La ficha de un proyecto con el encargo, el desglose CAT y el glosario."></picture></a>
-        </figure>
-      </div>
-
-      <div class="step">
-        <div class="step-text">
-          <div class="step-n">03 · La factura</div>
-          <h3>Una factura que sabe dónde facturas</h3>
-          <ul>
-            <li>IVA y retención con el nombre que tienen de verdad allí donde facturas: IRPF en España, ISR en México.</li>
-            <li><strong>75 países</strong> con perfil fiscal propio, cada uno con su identificador y su terminología.</li>
-            <li>En España, un libro de asientos donde cada entrada va encadenada por hash a la anterior, y rectificativas con serie propia.</li>
-            <li>Su PDF propio, listo para enviar por correo desde la misma pantalla.</li>
-            <li>Y te avisa cuando tu país exige despachar la factura ante la administración: ya ocurre en doce de los países que trae comprobados, y en España desde julio de 2027 con Veri*Factu.</li>
-          </ul>
-        </div>
-        <figure class="shot">
-          <a href="shots/es/factura.png" target="_blank" rel="noopener noreferrer"><picture><source type="image/webp" srcset="shots/es/factura-740.webp 740w, shots/es/factura-1480.webp 1480w" sizes="(max-width: 800px) 90vw, 492px"><img src="shots/es/factura.png" width="2352" height="1500" loading="lazy" decoding="async" alt="La tarjeta de la factura con su PDF y las líneas de IVA y retención."></picture></a>
-        </figure>
-      </div>
-
-      <div class="step">
-        <div class="step-text">
-          <div class="step-n">04 · El cobro</div>
-          <h3>Que te paguen, y saber cómo va</h3>
-          <ul>
-            <li>Un enlace de pago de Stripe dentro de la propia factura.</li>
-            <li>Recordatorios por etapas, según los días que lleve de retraso.</li>
-            <li>Facturación recurrente para clientes de iguala — siempre con tu confirmación, nunca a tus espaldas.</li>
-            <li>Métricas: cobrado por mes y por cliente, tarifa media y tiempo medio de cobro.</li>
-          </ul>
-        </div>
-        <figure class="shot">
-          <a href="shots/es/metricas.png" target="_blank" rel="noopener noreferrer"><picture><source type="image/webp" srcset="shots/es/metricas-740.webp 740w, shots/es/metricas-1480.webp 1480w" sizes="(max-width: 800px) 90vw, 492px"><img src="shots/es/metricas.png" width="2352" height="1500" loading="lazy" decoding="async" alt="La pestaña de métricas con los gráficos de cobrado por mes y por cliente."></picture></a>
-        </figure>
-      </div>
-    </div>
-  </section>
-
-  <section class="features">
-    <div class="wrap">
-      <h2>Lo que viene dentro</h2>
-      <ul class="grid">
-        <li><strong>75 perfiles fiscales</strong>El identificador y los nombres de IVA y retención de cada país.</li>
-        <li><strong>Libro de facturas</strong>Encadenado por hash, para España, con rectificativas en serie propia.</li>
-        <li><strong>Presupuestos</strong>PDF con el mismo formato que la factura, válido 30 días y con su hueco para la firma.</li>
-        <li><strong>Análisis CAT</strong>Importación de Trados, memoQ y Wordfast; precio por tramo.</li>
-        <li><strong>Glosario de cliente</strong>Términos compartidos por todos sus proyectos.</li>
-        <li><strong>Facturación recurrente</strong>Igualas mensuales, generadas solo si tú lo confirmas.</li>
-        <li><strong>Enlaces de pago Stripe</strong>Se generan desde la factura y viajan con ella.</li>
-        <li><strong>Gastos y cierre contable</strong>Diez categorías, y dos CSV —facturas y gastos— listos para tu gestoría.</li>
-        <li><strong>Control de horas</strong>Un cronómetro en marcha, o las horas a mano.</li>
-        <li><strong>Calendario de entregas</strong>El mes entero, cada encargo en su fecha y un color por estado.</li>
-        <li><strong>Copias de seguridad</strong>Un archivo con todo, restaurable desde la app.</li>
-        <li><strong>Contactos, dentro y fuera</strong>CSV, TSV, Excel y ODS.</li>
-        <li><strong>Dos idiomas</strong>Toda la interfaz en español y en inglés.</li>
-      </ul>
-    </div>
-  </section>
-
-  <section class="local">
-    <div class="wrap">
-      <h2>Tus datos no salen de tu ordenador</h2>
-      <p>No hay servidor central, ni cuenta que crear, ni copia en la nube que dependa de que yo siga aquí. Tus contactos, proyectos y facturas están en un archivo de tu propio disco. Las copias de seguridad son tuyas, a un archivo que eliges y guardas tú.</p>
-      <p>El correo sale por tu propia cuenta mediante SMTP y una contraseña de aplicación. Gestrics no envía nada en tu nombre desde ningún otro sitio.</p>
-    </div>
-  </section>
-
-  <section class="fit">
-    <div class="wrap">
-      <h2>Para quién es, y para quién no</h2>
-      <div class="fit-grid">
-        <div class="fit-box">
-          <h3>Es para ti si…</h3>
-          <ul>
-            <li>Eres traductor autónomo y trabajas por tu cuenta, con clientes directos o con agencias.</li>
-            <li>Quieres llevar clientes, encargos, facturas y cobros en un solo sitio.</li>
-            <li>Prefieres tener tus datos en tu ordenador y no en un servicio en la nube.</li>
-          </ul>
-        </div>
-        <div class="fit-box">
-          <h3>No es para ti si…</h3>
-          <ul>
-            <li>Necesitas que varias personas trabajen a la vez sobre los mismos datos: no hay servidor compartido.</li>
-            <li>Quieres usarlo desde el móvil: es solo de escritorio, para Windows y Mac.</li>
-            <li>Esperas copias de seguridad en la nube: las copias las haces tú, a un archivo que eliges.</li>
-            <li>Facturas fuera de España y necesitas todas las reglas de tu país: Gestrics trae el perfil fiscal de 75 países (identificador y nombres de los impuestos), pero el libro encadenado y las rectificativas con serie propia solo existen para España.</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="pricing">
-    <div class="wrap">
-      <div class="price-box">
-        <div class="trial-badge">14 días gratis · sin tarjeta</div>
-        <div class="price">150 €</div>
-        <div class="price-meta">Después de la prueba · Pago único · Hasta 2 equipos · Los impuestos de tu país se añaden al pagar</div>
-        <div class="price-ctas">
-          <a class="download-cta" href="https://github.com/elfurrita/gestrics/releases/latest/download/Gestrics.Setup.1.1.2.exe">Descargar para Windows</a>
-          <a class="download-cta" href="https://github.com/elfurrita/gestrics/releases/latest/download/Gestrics-1.1.2-universal.dmg">Descargar para Mac</a>
-          <a class="buy-cta" href="https://buy.stripe.com/7sYeVc0y5dXXebLf342go06" target="_blank" rel="noopener noreferrer">Comprar licencia</a>
-        </div>
-        <p class="fine"><strong>¿Dudas, o algo que no funciona?</strong> Escribe a <a href="mailto:contact@outreachstudio.app">contact@outreachstudio.app</a> — llega a quien desarrolla Gestrics, no a una cola.</p>
-        <p class="fine">La prueba dura 14 días con todas las funciones abiertas, y no pide tarjeta. Después, usar Gestrics requiere una licencia, que se activa dentro de la propia app. Es un pago único, no una suscripción: sin renovación y sin nada que cancelar. Al comprar, la clave te llega por correo en menos de un minuto — la pegas en Gestrics y ya está.</p>
-        <p class="fine">Ninguno de los dos instaladores lleva firma de desarrollador todavía, así que los dos sistemas avisan la primera vez. En Windows sale "Windows protegió tu PC": pulsa <strong>Más información</strong> y luego <strong>Ejecutar de todas formas</strong>. En macOS el bloqueo es más firme y la app directamente no se abre: ve a <strong>Ajustes del Sistema → Privacidad y seguridad</strong>, busca Gestrics abajo del todo y pulsa <strong>Abrir igualmente</strong>. Ninguno de los dos avisos significa que la app sea insegura — significa que nadie ha pagado a una autoridad certificadora para que responda por ella.</p>
-      </div>
-    </div>
-  </section>
-
-  <section class="legal">
-    <div class="wrap">
-      <div class="home-links">
-        <a href="terms.html">Términos de Uso<span>Las reglas de uso de la Aplicación.</span></a>
-        <a href="privacy.html">Política de Privacidad<span>Qué datos se guardan, dónde, y quién es responsable de ellos.</span></a>
+        <a href="/terms.html">Terms of Use<span>The rules for using the Application.</span></a>
+        <a href="/privacy.html">Privacy Policy<span>What data is stored, where, and who is responsible for it.</span></a>
       </div>
     </div>
   </section>
@@ -393,12 +222,9 @@
 </div>
 
 <footer>
-  <span lang="en">Gestrics · Support: <a href="mailto:contact@outreachstudio.app">contact@outreachstudio.app</a> · <a href="changelog.html">Changelog</a> · <a href="guia-facturacion-traductores.html">Invoicing guide for translators</a></span>
-  <span lang="es">Gestrics · Soporte: <a href="mailto:contact@outreachstudio.app">contact@outreachstudio.app</a> · <a href="changelog.html">Historial de cambios</a> · <a href="guia-facturacion-traductores.html">Guía de facturación para traductores</a></span>
-  <a class="arriba" href="#arriba" lang="en" title="Back to top" aria-label="Back to top"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 14l6-6 6 6"/></svg></a>
-  <a class="arriba" href="#arriba" lang="es" title="Volver arriba" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 14l6-6 6 6"/></svg></a>
+  <span>Gestrics · Support: <a href="mailto:contact@outreachstudio.app">contact@outreachstudio.app</a> · <a href="/changelog.html">Changelog</a> · <a href="/invoicing-guide-translators.html">Invoicing guide for translators</a></span>
+  <a class="arriba" href="#arriba" title="Back to top" aria-label="Back to top"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 14l6-6 6 6"/></svg></a>
 </footer>
-<script src="lang-toggle.js"></script>
-<script src="analitica.js"></script>
+<script src="/analitica.js"></script>
 </body>
 </html>

@@ -26,8 +26,9 @@
     document.documentElement.setAttribute("lang", lang);
     // Solo se guarda lo que la persona ELIGE con el conmutador, no el idioma
     // por defecto: si se guardara siempre, la primera visita a cualquier
-    // página dejaba escrito "en" y la guía, que abre en español, ya no podía
-    // distinguir entre "eligió inglés" y "nadie ha elegido nada".
+    // página dejaba escrito "en" y no habría forma de distinguir entre
+    // "eligió inglés" y "nadie ha elegido nada". idioma.js redirige con esta
+    // clave, así que ahí la diferencia ya no es de matiz.
     if (guardar) { try { localStorage.setItem("outreach-legal-lang", lang); } catch (e) {} }
   }
 
@@ -39,10 +40,15 @@
     });
     var saved = null;
     try { saved = localStorage.getItem("outreach-legal-lang"); } catch (e) {}
-    // Una página puede abrir en español con data-lang-defecto="es" en su
-    // <html> (la guía de facturación, cuyo público es de habla hispana). Lo
-    // que la persona ya haya elegido manda siempre sobre ese defecto.
-    var defecto = document.documentElement.getAttribute("data-lang-defecto") === "es" ? "es" : "en";
+    // Este conmutador ya solo lo usan terms.html, privacy.html y
+    // changelog.html: la portada y la guía tienen una URL por idioma y las
+    // lleva idioma.js. Lo elegido manda; si no se ha elegido nada, "?lang=es"
+    // en la dirección, que ponen los enlaces de las páginas en español para
+    // que quien viene de /es/ siga en español. Se lee y no se guarda: el
+    // punto 11 de privacy.html promete que solo se guarda lo elegido.
+    var pedido = null;
+    try { pedido = new URLSearchParams(location.search).get("lang"); } catch (e) {}
+    var defecto = pedido === "es" ? "es" : "en";
     setLang(saved === "es" || saved === "en" ? saved : defecto, false);
   });
 })();

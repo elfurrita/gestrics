@@ -1,6 +1,6 @@
 // analitica.js — la baliza de Cloudflare Web Analytics.
 //
-// El identificador vive AQUÍ y en ningún otro sitio. Las cuatro páginas
+// El identificador vive AQUÍ y en ningún otro sitio. Todas las páginas
 // cargan este archivo, así que cambiarlo o quitarlo se hace en un solo
 // lugar. Ojo con changelog.html: no se edita a mano, su marco está
 // copiado dentro de scripts/generar-changelog.mjs y de ahí sale la

@@ -15,13 +15,20 @@
   Tampoco lleva <changefreq> ni <priority>: Google los ignora desde hace años
   y ponerlos solo aparenta rigor.
 
+  Cada idioma de la portada y de la guía es su propia URL y entra aquí por
+  separado: añadir una versión en otro idioma también obliga a tocar esto.
+  Los hreflang que las emparejan van en el <head> de cada página, no aquí —
+  declararlos en dos sitios es invitar a que se contradigan.
+
   Queda fuera google36530d83c218e055.html, que es el archivo de verificación
   de Search Console y no es contenido.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://outreachstudio.app/</loc></url>
+  <url><loc>https://outreachstudio.app/es/</loc></url>
   <url><loc>https://outreachstudio.app/terms.html</loc></url>
   <url><loc>https://outreachstudio.app/privacy.html</loc></url>
   <url><loc>https://outreachstudio.app/changelog.html</loc></url>
   <url><loc>https://outreachstudio.app/guia-facturacion-traductores.html</loc></url>
+  <url><loc>https://outreachstudio.app/invoicing-guide-translators.html</loc></url>
 </urlset>

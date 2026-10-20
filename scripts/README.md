@@ -2,8 +2,9 @@
 
 ## Capturas de la portada
 
-Las cinco capturas por idioma que aparecen en `index.html` (`shots/es/`,
-`shots/en/`) no se hacen a mano: se generan con estos dos scripts, pilotando
+Las cinco capturas por idioma que aparecen en la portada (`index.html` la
+inglesa y `es/index.html` la española; `shots/en/` y `shots/es/`) no se hacen
+a mano: se generan con estos dos scripts, pilotando
 el Edge instalado por CDP. Node 24 trae `WebSocket` global, así que no hace
 falta puppeteer ni ninguna dependencia añadida.
 

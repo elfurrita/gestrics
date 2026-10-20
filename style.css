@@ -110,7 +110,8 @@ main {
   flex-shrink: 0;
 }
 
-.lang-toggle button {
+.lang-toggle button,
+.lang-toggle a {
   display: inline-flex;
   align-items: center;
   /* Sin recuadro: la bandera es el botón. Lo activo se marca con el mismo
@@ -133,12 +134,14 @@ main {
   transition: opacity 0.15s ease, filter 0.15s ease, border-color 0.15s ease;
 }
 
-.lang-toggle button:hover {
+.lang-toggle button:hover,
+.lang-toggle a:hover {
   opacity: 0.94;
   filter: saturate(1);
 }
 
-.lang-toggle button.active {
+.lang-toggle button.active,
+.lang-toggle a.active {
   opacity: 1;
   filter: none;
   border-bottom-color: var(--teal);
@@ -146,7 +149,8 @@ main {
 
 /* Foco visible: el botón ya no tiene texto, así que sin esto no habría
    ninguna pista de dónde está el cursor al navegar con teclado. */
-.lang-toggle button:focus-visible {
+.lang-toggle button:focus-visible,
+.lang-toggle a:focus-visible {
   outline: 2px solid var(--peach);
   outline-offset: 3px;
   border-radius: 2px;
@@ -257,10 +261,10 @@ article.changelog li {
   margin-bottom: 10px;
 }
 
-/* Volver arriba, en las cuatro páginas. Es un enlace de ancla, no un widget —
+/* Volver arriba, en todas las páginas. Es un enlace de ancla, no un widget —
    el navegador ya sabe hacer esto, y así funciona aunque el JavaScript no
    cargue. Empezó solo en el historial, que es el que pasa de seis mil píxeles,
-   pero las otras tres también son largas y quien llega al pie de cualquiera
+   pero las demás también son largas y quien llega al pie de cualquiera
    tiene el mismo problema.
 
    Vive dentro del <footer> a propósito: el conmutador de idioma ya recorre
@@ -956,7 +960,7 @@ footer a:hover { text-decoration: underline; }
 }
 
 
-/* ── Guía de facturación (guia-facturacion-traductores.html) ──
+/* ── Guía de facturación (guia-facturacion-traductores.html e invoicing-guide-translators.html) ──
    Reutiliza la tarjeta de las páginas legales y le añade lo que aquellas no
    usan: subtítulos h2, una tabla, una lista numerada, una lista de control y
    un cierre con botón. Todo cuelga de article.guia para no tocar el resto. */
