@@ -90,6 +90,45 @@ los pasos, y 980 y 1960 para la de la portada, que se enseña a 974.
   de la carpeta de destino dejó una vez un perfil de navegador entero dentro
   del repositorio.
 
+## El pie del sitio
+
+El pie **no se edita en las páginas**: vive en `pie.mjs` y lo reparte
+`generar-pie.mjs`.
+
+```
+node scripts/generar-pie.mjs            # lo escribe en todas las páginas
+node scripts/generar-pie.mjs --revisar  # no toca nada; sale con 1 si alguna está desfasada
+node scripts/generar-changelog.mjs      # changelog.html, que importa el mismo módulo
+```
+
+Por qué: llegó a estar copiado en **nueve** sitios —seis páginas de un idioma,
+dos bilingües y el marco del generador del historial—, así que añadir un
+enlace eran nueve ediciones a mano. Ya se había escapado una: la guía de
+tarifas entró en el pie español y no en el inglés.
+
+**No hay lista de archivos.** El script recorre la carpeta y deduce de cada
+página lo que necesita:
+
+- **Bilingüe o de un idioma**, por el conmutador: las bilingües llevan
+  `<button data-lang>`, que conmuta en la propia página; las de un idioma,
+  `<a data-lang>`, que lleva a la URL del otro idioma.
+- **El idioma de una página suelta**, por su `<html lang>`.
+
+Una página sin `<footer>` se salta en silencio — hoy, el archivo de
+verificación de Google. Y `changelog.html` también, porque lo escribe su
+propio generador con el mismo módulo.
+
+Las rutas del pie son **absolutas**: la portada española vive un nivel más
+abajo (`/es/index.html`), así que con rutas relativas el mismo pie no
+serviría para las dos.
+
+**Y la regla que condiciona el marcado**, por si algún día se rediseña: en las
+páginas bilingües el atributo `lang` NO puede ir sobre `.pie-cols`.
+`lang-toggle.js` pone `display: block` explícito al mostrar un bloque —a
+propósito, porque la red de seguridad de la CSS oculta `[lang="es"]` por
+defecto y un `""` no le ganaría—, así que aplastaría la rejilla. Va en un
+`<div lang>` que envuelve, cuyo display natural ya es `block`.
+
 ## La página del historial de cambios
 
 `changelog.html` **no se edita a mano**: la genera `generar-changelog.mjs` a

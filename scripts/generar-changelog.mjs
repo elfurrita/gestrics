@@ -21,6 +21,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { pie } from "./pie.mjs";
 
 const raiz = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 
@@ -136,8 +137,12 @@ const bloques = IDIOMAS.map(({ lang, archivo, titulo, saltar }) => {
 }).join("\n");
 
 // El marco es el mismo de terms.html y privacy.html, copiado a mano: no hay
-// plantilla compartida en el sitio, así que un cambio de cabecera, navegación
-// o pie hay que darlo también aquí.
+// plantilla compartida en el sitio, así que un cambio de cabecera o navegación
+// hay que darlo también aquí.
+//
+// EL PIE YA NO: viene de pie.mjs, el mismo módulo que reparte generar-pie.mjs
+// por las demás páginas, así que no puede divergir de ellas. Lo que sigue a
+// mano es la cabecera.
 const pagina = `<!doctype html>
 <html lang="en">
 <head>
@@ -170,58 +175,7 @@ const pagina = `<!doctype html>
 ${bloques}
   </article>
 </main>
-<footer>
-  <div lang="en">
-    <div class="pie-cols">
-      <div>
-        <span class="pie-tit">Gestrics</span>
-        <a href="/">Home</a>
-        <a href="/changelog.html">Changelog</a>
-      </div>
-      <div>
-        <span class="pie-tit">Guides</span>
-        <a href="/invoicing-guide-translators.html">Invoicing for translators</a>
-        <a href="/cat-analysis-rates-guide.html">Pricing from a CAT analysis</a>
-      </div>
-      <div>
-        <span class="pie-tit">Legal</span>
-        <a href="/terms.html">Terms of Use</a>
-        <a href="/privacy.html">Privacy Policy</a>
-      </div>
-      <div>
-        <span class="pie-tit">Contact</span>
-        <a href="mailto:contact@outreachstudio.app">contact@outreachstudio.app</a>
-      </div>
-    </div>
-    <div class="pie-firma">Gestrics — outreachstudio</div>
-  </div>
-  <div lang="es">
-    <div class="pie-cols">
-      <div>
-        <span class="pie-tit">Gestrics</span>
-        <a href="/es/">Inicio</a>
-        <a href="/changelog.html?lang=es">Historial de cambios</a>
-      </div>
-      <div>
-        <span class="pie-tit">Guías</span>
-        <a href="/guia-facturacion-traductores.html">Facturar como traductor</a>
-        <a href="/guia-tarifas-analisis-cat.html">Tarifas con el análisis TAO</a>
-      </div>
-      <div>
-        <span class="pie-tit">Legal</span>
-        <a href="/terms.html?lang=es">Términos de uso</a>
-        <a href="/privacy.html?lang=es">Política de privacidad</a>
-      </div>
-      <div>
-        <span class="pie-tit">Contacto</span>
-        <a href="mailto:contact@outreachstudio.app">contact@outreachstudio.app</a>
-      </div>
-    </div>
-    <div class="pie-firma">Gestrics — outreachstudio</div>
-  </div>
-  <a class="arriba" href="#arriba" lang="en" title="Back to top" aria-label="Back to top"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 14l6-6 6 6"/></svg></a>
-  <a class="arriba" href="#arriba" lang="es" title="Volver arriba" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 14l6-6 6 6"/></svg></a>
-</footer>
+${pie({ bilingue: true })}
 <script src="lang-toggle.js"></script>
 <script src="analitica.js"></script>
 </body>
