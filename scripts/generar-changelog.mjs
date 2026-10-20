@@ -191,7 +191,6 @@ ${bloques}
       <div>
         <span class="pie-tit">Contact</span>
         <a href="mailto:contact@outreachstudio.app">contact@outreachstudio.app</a>
-        <a href="/es/">Español</a>
       </div>
     </div>
     <div class="pie-firma">Gestrics — outreachstudio</div>
@@ -216,7 +215,6 @@ ${bloques}
       <div>
         <span class="pie-tit">Contacto</span>
         <a href="mailto:contact@outreachstudio.app">contact@outreachstudio.app</a>
-        <a href="/">English</a>
       </div>
     </div>
     <div class="pie-firma">Gestrics — outreachstudio</div>
