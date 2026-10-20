@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cómo calcular la tarifa de una traducción con el análisis de Trados, memoQ o Wordfast — Gestrics</title>
+<link rel="canonical" href="https://outreachstudio.app/guia-tarifas-analisis-cat.html">
+<link rel="alternate" hreflang="en" href="https://outreachstudio.app/cat-analysis-rates-guide.html">
+<link rel="alternate" hreflang="es" href="https://outreachstudio.app/guia-tarifas-analisis-cat.html">
+<link rel="alternate" hreflang="x-default" href="https://outreachstudio.app/guia-tarifas-analisis-cat.html">
+<script src="/idioma.js"></script>
+<meta name="description" content="Para traductores autónomos: qué significa cada tramo del análisis de una herramienta TAO (contexto, repeticiones, 100 %, coincidencias parciales, palabras nuevas), cómo se calcula el recuento ponderado y qué revisar antes de aceptar la tabla de descuentos de una agencia.">
+<link rel="icon" href="/icon.png">
+
+<!-- La guía de tarifas en español, que es la de su público y por eso también
+     la x-default, como la de facturación. La versión en inglés está en
+     cat-analysis-rates-guide.html. Lo que dice de cada programa está medido
+     con informes reales o generados por el propio programa (ver
+     importCatAnalysis.js, importMemoqAnalysis.js e importWordfastAnalysis.js
+     en el repositorio de la aplicación), no sacado de su documentación. -->
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://outreachstudio.app/guia-tarifas-analisis-cat.html">
+<meta property="og:site_name" content="Gestrics">
+<meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:title" content="Cómo calcular la tarifa de una traducción con el análisis de Trados, memoQ o Wordfast">
+<meta property="og:description" content="Qué significa cada tramo del análisis, cómo se calcula el recuento ponderado y qué revisar antes de aceptar la tabla de descuentos de una agencia.">
+<meta property="og:image" content="https://outreachstudio.app/shots/es/proyecto.png">
+<meta property="og:image:width" content="2352">
+<meta property="og:image:height" content="1500">
+<meta property="og:image:alt" content="La ficha de un proyecto con el encargo, el desglose CAT y el glosario.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header id="arriba">
+  <img src="/icon.png" alt="Gestrics">
+  <div class="title">Gestrics<span>Guía</span></div>
+  <nav>
+    <a href="/es/">Inicio</a>
+    <a href="/guia-tarifas-analisis-cat.html" class="active">Guía de tarifas</a>
+    <a href="/terms.html?lang=es">Términos de Uso</a>
+    <a href="/privacy.html?lang=es">Política de Privacidad</a>
+  </nav>
+  <div class="lang-toggle">
+    <a href="/cat-analysis-rates-guide.html" hreflang="en" data-lang="en" title="English" aria-label="English"><svg class="bandera" viewBox="0 0 60 30" aria-hidden="true" focusable="false"><clipPath id="rec-gb"><path d="M0 0h60v30H0z"/></clipPath><g clip-path="url(#rec-gb)"><path d="M0 0h60v30H0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg></a>
+    <a href="/guia-tarifas-analisis-cat.html" hreflang="es" data-lang="es" class="active" aria-current="page" title="Español" aria-label="Español"><svg class="bandera" viewBox="0 0 60 30" aria-hidden="true" focusable="false"><path d="M0 0h60v30H0z" fill="#C60B1E"/><path d="M0 7.5h60v15H0z" fill="#FFC400"/></svg></a>
+  </div>
+</header>
+<main>
+  <article class="guia">
+    <div>
+      <h1>Cómo calcular la tarifa de una traducción con el análisis de Trados, memoQ o Wordfast</h1>
+
+      <p>Cuando un encargo llega con un análisis de la herramienta TAO, el precio ya no sale de multiplicar todas las palabras por tu tarifa. Sale del <strong>recuento ponderado</strong>: cada tramo de coincidencia con la memoria de traducción se paga a un porcentaje distinto. Esta guía explica qué significa cada tramo, cómo lo llama cada programa, cómo se hace la cuenta y qué conviene revisar antes de aceptar la tabla de descuentos de una agencia.</p>
+
+      <h2>1. Qué es un análisis</h2>
+      <p>La herramienta TAO divide el texto de origen en segmentos y compara cada uno con la memoria de traducción del proyecto. Según lo que encuentre, el segmento cae en un tramo: sin coincidencia, coincidencia parcial (<em>fuzzy</em>) en una de varias franjas de porcentaje, coincidencia exacta, coincidencia de contexto o repetición dentro del propio encargo. El informe de análisis suma las <strong>palabras de origen</strong> de cada tramo.</p>
+      <p>Dos consecuencias prácticas:</p>
+      <ul>
+        <li>El análisis depende de la memoria contra la que se lanza. El mismo texto da otro reparto con otra memoria, y la memoria suele ser la de la agencia o el cliente, no la tuya.</li>
+        <li>El porcentaje de una coincidencia parcial mide cuánto se parece el texto del segmento al de la memoria, no cuánto trabajo da. Una coincidencia del 85 % puede necesitar cambiar una cifra o reescribir media frase.</li>
+      </ul>
+
+      <h2>2. Los tramos y cómo los llama cada programa</h2>
+      <p>Los tres programas reparten las palabras en los mismos grandes tramos, con nombres distintos. Las franjas de coincidencia parcial que traen por defecto son <strong>95-99 %, 85-94 %, 75-84 % y 50-74 %</strong>; se pueden configurar, así que un informe puede traer otras. Por debajo de la franja más baja, el segmento cuenta como sin coincidencia.</p>
+      <div class="tabla-guia">
+        <table>
+          <thead>
+            <tr><th>Tramo</th><th>Trados Studio</th><th>memoQ</th><th>Wordfast Pro</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><strong>Coincidencia de contexto</strong>: exacta y, además, con el mismo contexto</td><td>Coincidencia de contexto (<em>Context Match</em>)</td><td>101%</td><td>Context</td></tr>
+            <tr><td><strong>Repeticiones</strong>: segmentos que se repiten dentro del encargo; la primera aparición cuenta en su tramo y las demás aquí</td><td>Repeticiones; y, si se pide, Repeticiones entre archivos</td><td>Repetitions</td><td>Repetitions</td></tr>
+            <tr><td><strong>Coincidencia exacta</strong></td><td>100%</td><td>100%</td><td>100%</td></tr>
+            <tr><td><strong>Coincidencias parciales</strong></td><td>95% - 99%, 85% - 94%…</td><td>95%-99%, 85%-94%…</td><td>95%-99%, 85%-94%…</td></tr>
+            <tr><td><strong>Sin coincidencia</strong>: palabras nuevas, a tarifa completa</td><td>Nuevas/AT</td><td>No match</td><td>No match</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Los nombres de Trados son los de su interfaz en español; los de memoQ y Wordfast, los de su interfaz en inglés. Además, cada programa trae filas propias que conviene saber leer:</p>
+      <ul>
+        <li><strong>Trados — PerfectMatch</strong>: segmentos que coinciden con una versión bilingüe anterior del mismo documento. La tabla de descuentos debería decir a qué porcentaje se pagan.</li>
+        <li><strong>Trados — Bloqueado</strong>: segmentos bloqueados, que solo salen si el análisis se lanzó pidiéndolos aparte. Si se pagan o no, lo decide el cliente.</li>
+        <li><strong>Trados — coincidencias parciales internas</strong>: segmentos parecidos a otros del propio encargo, que todavía no están en la memoria. Solo aparecen si se activan en el análisis; mira en el informe si vienen aparte o dentro de las palabras nuevas.</li>
+        <li><strong>memoQ — X-translated</strong>: segmentos pretraducidos con X-translate a partir de una versión bilingüe anterior del mismo documento. La tabla de descuentos debería decir a qué porcentaje se pagan.</li>
+        <li><strong>memoQ — Fragments</strong>: palabras que memoQ cubre ensamblando trozos de la memoria o de la base terminológica. No son coincidencias de segmento completo, así que no hay una forma obvia de pagarlas: decídelo con el cliente.</li>
+        <li><strong>Wordfast — Ignored</strong>: segmentos que se excluyeron del análisis.</li>
+        <li><strong>Wordfast — Leveraged, Internal Fuzzies y Fuzzy Repetitions</strong>: no son tramos, son <strong>subtotales</strong> de los demás. <em>Leveraged</em> suma el contexto, el 100 %, las coincidencias parciales y las repeticiones parciales, y estas últimas ya están dentro de <em>Repetitions</em>. Sumar esas filas al resto cuenta las mismas palabras dos o tres veces.</li>
+      </ul>
+
+      <h2>3. El recuento ponderado</h2>
+      <p>Cada tramo se paga a un porcentaje de la tarifa completa. Las palabras de cada tramo, multiplicadas por su porcentaje, dan las <strong>palabras ponderadas</strong>; la suma de todas, por la tarifa por palabra, da el precio:</p>
+      <p><strong>precio = Σ (palabras del tramo × porcentaje del tramo) × tarifa por palabra</strong></p>
+      <p>Un ejemplo con un encargo de 5.000 palabras, a 0,09 € por palabra de origen y con la tabla de descuentos del apartado siguiente:</p>
+      <div class="tabla-guia compacta">
+        <table>
+          <thead>
+            <tr><th>Tramo</th><th>Palabras</th><th>Se paga al</th><th>Palabras ponderadas</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Contexto</td><td>300</td><td>0 %</td><td>0</td></tr>
+            <tr><td>Repeticiones</td><td>450</td><td>20 %</td><td>90</td></tr>
+            <tr><td>100 %</td><td>600</td><td>20 %</td><td>120</td></tr>
+            <tr><td>95-99 %</td><td>250</td><td>30 %</td><td>75</td></tr>
+            <tr><td>85-94 %</td><td>400</td><td>60 %</td><td>240</td></tr>
+            <tr><td>75-84 %</td><td>300</td><td>60 %</td><td>180</td></tr>
+            <tr><td>50-74 %</td><td>500</td><td>100 %</td><td>500</td></tr>
+            <tr><td>Sin coincidencia</td><td>2.200</td><td>100 %</td><td>2.200</td></tr>
+            <tr><td><strong>Total</strong></td><td><strong>5.000</strong></td><td></td><td><strong>3.405</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>3.405 palabras ponderadas × 0,09 € = <strong>306,45 €</strong>. Sin descuentos, las 5.000 palabras habrían sido 450,00 €: la tabla rebaja el encargo en 143,55 €, casi un 32 %. Por eso la tabla de descuentos pesa tanto como la tarifa.</p>
+
+      <h2>4. La tabla de descuentos</h2>
+      <p>No hay ninguna tabla oficial ni de referencia obligatoria: cada agencia aplica la suya, y un traductor que trabaja con clientes directos puede proponer la propia. La del ejemplo anterior es la que trae Gestrics por defecto, y es solo un punto de partida:</p>
+      <div class="tabla-guia compacta">
+        <table>
+          <thead>
+            <tr><th>Tramo</th><th>Se paga al</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Contexto</td><td>0 %</td></tr>
+            <tr><td>Repeticiones</td><td>20 %</td></tr>
+            <tr><td>100 %</td><td>20 %</td></tr>
+            <tr><td>95-99 %</td><td>30 %</td></tr>
+            <tr><td>85-94 %</td><td>60 %</td></tr>
+            <tr><td>75-84 %</td><td>60 %</td></tr>
+            <tr><td>50-74 %</td><td>100 %</td></tr>
+            <tr><td>Sin coincidencia</td><td>100 %</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Lo que importa al comparar tablas no es cada porcentaje suelto, sino el resultado sobre el reparto real de tus encargos: la misma tabla es generosa con un texto casi nuevo y muy dura con una actualización llena de repeticiones.</p>
+
+      <h2>5. Qué revisar antes de aceptar la tabla de una agencia</h2>
+      <ul class="lista-control">
+        <li><strong>Si el 100 % y las repeticiones se pagan.</strong> Aunque la memoria proponga la traducción, hay que leerla en su sitio y comprobar que encaja. Un 0 % en esos tramos es trabajo sin pagar.</li>
+        <li><strong>Qué se espera del contexto.</strong> Si se paga al 0 %, pregunta si hay que revisarlo. Si hay que revisarlo, es tiempo de trabajo y tiene que tener precio.</li>
+        <li><strong>El informe, no solo la cifra.</strong> Pide el archivo del análisis: con él puedes comprobar el reparto tramo a tramo y que los tramos sumen el total. Con Wordfast, comprueba que nadie ha sumado los subtotales.</li>
+        <li><strong>La memoria con la que se analizó.</strong> Si es antigua o de calidad irregular, un 100 % puede necesitar más corrección que una coincidencia parcial. Conviene saberlo antes de aceptar.</li>
+        <li><strong>Las filas que no son tramos.</strong> Bloqueado (Trados), Fragments (memoQ) o Ignored (Wordfast): aclara si se pagan y a qué porcentaje.</li>
+        <li><strong>Un mínimo por encargo.</strong> En un encargo de pocas palabras, el recuento ponderado puede quedarse por debajo de lo que cuesta gestionarlo. Una tarifa mínima por encargo lo evita.</li>
+      </ul>
+
+      <div class="guia-cta">
+        <p>Elaborado por Eduardo Furrazola Valladares, traductor y autor de Gestrics, un programa de escritorio para traductores autónomos. Gestrics importa el informe de análisis tal como lo exportan Trados, memoQ y Wordfast, aplica tu tabla de descuentos y deja listo el presupuesto en PDF. Se queda en tu ordenador.</p>
+        <p><a class="guia-boton" href="/es/">Pruébalo 14 días, sin tarjeta</a></p>
+      </div>
+    </div>
+
+  </article>
+</main>
+<footer>
+  <span>Gestrics — <a href="/es/" style="color:inherit">outreachstudio</a> · Soporte: <a href="mailto:contact@outreachstudio.app">contact@outreachstudio.app</a> · <a href="/changelog.html?lang=es">Historial de cambios</a> · <a href="/guia-facturacion-traductores.html">Guía de facturación</a></span>
+  <a class="arriba" href="#arriba" title="Volver arriba" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 14l6-6 6 6"/></svg></a>
+</footer>
+<script src="/analitica.js"></script>
+</body>
+</html>

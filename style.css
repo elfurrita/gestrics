@@ -960,7 +960,9 @@ footer a:hover { text-decoration: underline; }
 }
 
 
-/* ── Guía de facturación (guia-facturacion-traductores.html e invoicing-guide-translators.html) ──
+/* ── Las guías: facturación (guia-facturacion-traductores.html e
+   invoicing-guide-translators.html) y tarifas (guia-tarifas-analisis-cat.html
+   y cat-analysis-rates-guide.html) ──
    Reutiliza la tarjeta de las páginas legales y le añade lo que aquellas no
    usan: subtítulos h2, una tabla, una lista numerada, una lista de control y
    un cierre con botón. Todo cuelga de article.guia para no tocar el resto. */
@@ -993,6 +995,16 @@ article.guia table {
   width: 100%;
   min-width: 560px;
   font-size: 13.5px;
+}
+/* Las tablas cortas (cifras, dos o cuatro columnas estrechas) caben en el
+   móvil sin el mínimo de 560px, que es para las de texto largo: con él, la
+   tabla de descuentos de la guía de tarifas se desplazaba de lado a 375px
+   teniendo sitio de sobra. */
+article.guia .tabla-guia.compacta table { min-width: 0; }
+@media (max-width: 480px) {
+  article.guia .tabla-guia.compacta table { font-size: 12.5px; }
+  article.guia .tabla-guia.compacta th,
+  article.guia .tabla-guia.compacta td { padding: 8px 6px; }
 }
 article.guia th,
 article.guia td {
