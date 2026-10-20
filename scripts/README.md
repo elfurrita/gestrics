@@ -115,8 +115,18 @@ página lo que necesita:
 - **El idioma de una página suelta**, por su `<html lang>`.
 
 Una página sin `<footer>` se salta en silencio — hoy, el archivo de
-verificación de Google. Y `changelog.html` también, porque lo escribe su
-propio generador con el mismo módulo.
+verificación de Google.
+
+`changelog.html` es el caso aparte: **se comprueba pero no se escribe**, porque
+lo escribe su propio generador con el mismo módulo. Comprobarlo importa, y no
+es un detalle: la primera versión se lo saltaba del todo, y entonces
+`--revisar` daba el sitio por bueno con el historial llevando el pie viejo.
+Ahora lo nombra y sale con 1.
+
+Antes de escribir nada, el guion comprueba que **cada enlace del pie lleve a
+un archivo que existe**, y aborta sin tocar ninguna página si alguno no está.
+Un destino renombrado no avisa de otra forma: la página se sigue sirviendo y
+el enlace solo devuelve 404 cuando alguien lo pulsa.
 
 Las rutas del pie son **absolutas**: la portada española vive un nivel más
 abajo (`/es/index.html`), así que con rutas relativas el mismo pie no
