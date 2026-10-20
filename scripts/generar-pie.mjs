@@ -26,22 +26,33 @@ import { fileURLToPath } from "node:url";
 import { pie, COLUMNAS } from "./pie.mjs";
 
 const RAIZ = join(dirname(fileURLToPath(import.meta.url)), "..");
-const SOLO_REVISAR = process.argv.includes("--revisar");
+const ARGS = process.argv.slice(2);
+const SOLO_REVISAR = ARGS.includes("--revisar");
 
-// Recorre la raíz y un nivel de subcarpetas, que es toda la profundidad que
-// tiene el sitio (`es/`). Se saltan las de trabajo.
+// Una errata NO puede convertir una comprobacion en una reescritura. Escribir
+// "--revisa" ejecutaba el modo de escritura y rehacia las ocho paginas sin
+// decir nada; quien lo tecleaba creia estar comprobando.
+const DESCONOCIDOS = ARGS.filter(a => a !== "--revisar");
+if (DESCONOCIDOS.length) {
+  console.error("No entiendo: " + DESCONOCIDOS.join(" "));
+  console.error("Uso:  node scripts/generar-pie.mjs [--revisar]");
+  process.exit(1);
+}
+
+// Recorre la carpeta entera. Se saltan las de trabajo y las ocultas.
 const IGNORAR = new Set([".git", "scripts", "shots", "node_modules"]);
 
-function paginas(carpeta = RAIZ, prof = 0) {
+// Sin tope de profundidad a proposito. La primera version solo bajaba un nivel
+// —el que hace falta hoy, por `es/`— y una pagina en `es/guias/` se quedaba
+// fuera SIN DECIR NADA: el guion informaba de "9 al dia" como si todo
+// estuviera cubierto. Comprobado poniendo una ahi.
+function paginas(carpeta = RAIZ) {
   const salida = [];
   for (const entrada of readdirSync(carpeta)) {
-    if (IGNORAR.has(entrada)) continue;
+    if (IGNORAR.has(entrada) || entrada.startsWith(".")) continue;
     const ruta = join(carpeta, entrada);
-    if (statSync(ruta).isDirectory()) {
-      if (prof < 1) salida.push(...paginas(ruta, prof + 1));
-    } else if (entrada.endsWith(".html")) {
-      salida.push(ruta);
-    }
+    if (statSync(ruta).isDirectory()) salida.push(...paginas(ruta));
+    else if (entrada.endsWith(".html")) salida.push(ruta);
   }
   return salida;
 }
@@ -94,6 +105,15 @@ for (const ruta of paginas()) {
 
   const bilingue = /<button[^>]*data-lang=/.test(t);
   const lang = (t.match(/<html[^>]*\slang="([a-z]{2})"/) || [])[1] || "en";
+
+  // Sin esto, una página en un idioma que pie.mjs no conoce reventaba con un
+  // volcado de pila que no decía ni qué página ni qué idioma.
+  if (!COLUMNAS[lang]) {
+    console.error(`ABORTA: ${nombre} declara lang="${lang}" y pie.mjs no tiene columnas para ese idioma.`);
+    console.error(`Idiomas definidos: ${Object.keys(COLUMNAS).join(", ")}. Añádelo en scripts/pie.mjs.`);
+    process.exit(1);
+  }
+
   const nuevo = pie({ lang, bilingue });
   const coincide = encontrados[0] === nuevo;
 
