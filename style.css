@@ -504,6 +504,66 @@ footer {
   color: var(--light);
 }
 
+/* El pie pasa de una linea de enlaces separados por puntos a columnas. Esa
+   linea se habia quedado corta: con las dos guias, el historial y el correo
+   ya eran cuatro enlaces en fila, y lo legal ni siquiera estaba — vivia solo
+   en la navegacion de arriba, donde nadie lo busca al terminar de leer.
+
+   OJO EN LAS PAGINAS BILINGUES (terms, privacy, changelog): el atributo lang
+   NO puede ir en .pie-cols. lang-toggle.js pone display:block EXPLICITO al
+   mostrar un bloque, asi que se cargaria la rejilla. Va en un <div lang> que
+   envuelve, cuyo display natural ya es block, y la rejilla queda dentro. */
+.pie-cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 26px 32px;
+  padding-top: 28px;
+  border-top: 1px solid var(--border);
+}
+
+.pie-cols > div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+}
+
+.pie-cols .pie-tit {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--mid);
+}
+
+.pie-cols a {
+  color: var(--light);
+  text-decoration: none;
+  line-height: 1.35;
+  transition: color 0.15s ease;
+}
+
+.pie-cols a:hover { color: var(--dark); text-decoration: underline; }
+
+.pie-firma {
+  margin-top: 26px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+/* auto-fit solo deja repartos limpios en los extremos. Medido: con cuatro
+   columnas de 190 y hueco de 32 hacen falta 904px, asi que entre 666 y 903
+   caben TRES y la cuarta se queda sola. Se salta ese tramo a proposito —de
+   cuatro a dos y de dos a una—, que un pie con una columna colgando parece
+   un descuido. */
+@media (max-width: 920px) {
+  .pie-cols { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 430px) {
+  .pie-cols { grid-template-columns: 1fr; }
+}
+
 .download-box {
   background: var(--bg);
   border: 1px solid var(--border);
