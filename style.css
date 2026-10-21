@@ -411,7 +411,6 @@ a.arriba:hover {
        desplazable y ademas forzaria el otro eje. */
     .flow,
     .features,
-    .local,
     .pricing { overflow-x: clip; }
 
     /* Sin perspectiva, un translate en Z no se ve: se queda en un escalado
@@ -448,11 +447,9 @@ a.arriba:hover {
     /* 2 · La rejilla y el precio crecen desde el fondo, no desde un lado:
        son bloques centrados y venir de un borde los descolocaria. */
     .features .grid li { --escala: 0.8; }
-    .local .wrap,
-    .pricing .price-box { --escala: 0.9; }  /* bloques grandes: mas contenidos */
+    .pricing .price-box { --escala: 0.9; }  /* bloque grande: mas contenido */
 
     .features .grid li,
-    .local .wrap,
     .pricing .price-box {
       animation: crecer var(--anim-curva) both;
       animation-timeline: view();
@@ -638,33 +635,6 @@ footer {
   color: var(--light);
   margin-top: 10px;
 }
-
-.home-links {
-  display: grid;
-  gap: 14px;
-  margin-top: 28px;
-}
-
-.home-links a {
-  display: block;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 18px 20px;
-  text-decoration: none;
-  color: var(--dark);
-  font-weight: 600;
-}
-
-.home-links a span {
-  display: block;
-  font-weight: 400;
-  color: var(--mid);
-  font-size: 13px;
-  margin-top: 4px;
-}
-
-.home-links a:hover { border-color: var(--teal); }
 
 
 /* ───────────────────────── Portada ─────────────────────────
@@ -862,14 +832,6 @@ footer {
   margin-bottom: 5px;
 }
 
-/* ── Tus datos ── */
-
-.local p {
-  font-size: 15.5px;
-  color: var(--mid);
-  max-width: 46em;
-}
-
 /* ── Precio ── */
 
 .price-box {
@@ -942,9 +904,6 @@ footer a {
 
 .price-box .fine a:hover,
 footer a:hover { text-decoration: underline; }
-
-.legal { padding-top: 40px; }
-.legal .home-links { margin-top: 0; }
 
 /* ── Pantallas estrechas ──
    El recorrido pasa a una columna, y la captura debajo del texto SIEMPRE:
@@ -1142,36 +1101,3 @@ article.guia a.guia-boton:hover { background: var(--mid); }
 }
 .cta-price strong { color: var(--dark); }
 
-.fit-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 16px;
-}
-.fit-box {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 22px 24px;
-}
-.fit-box h3 {
-  margin: 0 0 8px;
-  font-size: 16px;
-  color: var(--dark);
-}
-.fit-box ul { margin: 0; padding: 0; list-style: none; }
-.fit-box li {
-  font-size: 14.5px;
-  color: var(--mid);
-  padding: 7px 0 7px 20px;
-  position: relative;
-}
-.fit-box li::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 15px;
-  width: 7px;
-  height: 7px;
-  border-radius: 2px;
-  background: var(--peach);
-}
