@@ -561,15 +561,6 @@ footer {
   .pie-cols { grid-template-columns: 1fr; }
 }
 
-.download-box {
-  background: var(--bg);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 24px;
-  margin: 24px 0;
-  text-align: center;
-}
-
 .download-cta {
   display: inline-block;
   background: var(--teal);
@@ -582,38 +573,6 @@ footer {
 }
 
 .download-cta:hover { opacity: 0.9; }
-
-.download-meta {
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--light);
-  margin-top: 10px;
-}
-
-.download-meta a {
-  color: var(--teal);
-  text-decoration: none;
-}
-
-.download-meta a:hover { text-decoration: underline; }
-
-.download-note {
-  font-size: 13px;
-  color: var(--mid);
-  text-align: left;
-  margin: 18px 0 0;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-}
-
-.license-note {
-  font-size: 13px;
-  color: var(--mid);
-  text-align: left;
-  margin: 18px 0 14px;
-  padding-top: 16px;
-  border-top: 1px solid var(--border);
-}
 
 .buy-cta {
   display: inline-block;
@@ -628,13 +587,6 @@ footer {
 }
 
 .buy-cta:hover { background: var(--teal); color: #fff; }
-
-.buy-meta {
-  font-family: var(--mono);
-  font-size: 12px;
-  color: var(--light);
-  margin-top: 10px;
-}
 
 
 /* ───────────────────────── Portada ─────────────────────────
@@ -990,13 +942,6 @@ article.guia h2 {
   color: var(--dark);
   margin: 32px 0 10px;
 }
-article.guia .aviso {
-  background: var(--bg);
-  border-left: 3px solid var(--peach);
-  border-radius: 0 6px 6px 0;
-  padding: 12px 16px;
-  margin: 0 0 20px;
-}
 article.guia ol { padding-left: 22px; }
 article.guia li { margin-bottom: 6px; }
 
@@ -1061,7 +1006,6 @@ article.guia .lista-control li::before {
   border: 1.5px solid var(--light);
   border-radius: 3px;
 }
-article.guia .fuentes li { font-size: 13.5px; }
 article.guia a { color: var(--teal); }
 
 article.guia .guia-cta {
