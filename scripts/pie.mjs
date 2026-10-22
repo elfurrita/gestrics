@@ -23,14 +23,16 @@ export const COLUMNAS = {
   en: [
     ["Gestrics", [["/", "Home"], ["/changelog.html", "Changelog"]]],
     ["Guides", [["/invoicing-guide-translators.html", "Invoicing for translators"],
-                ["/cat-analysis-rates-guide.html", "Pricing from a CAT analysis"]]],
+                ["/cat-analysis-rates-guide.html", "Pricing from a CAT analysis"],
+                ["/unpaid-translation-invoices-guide.html", "Unpaid invoices"]]],
     ["Legal", [["/terms.html", "Terms of Use"], ["/privacy.html", "Privacy Policy"]]],
     ["Contact", [[`mailto:${CORREO}`, CORREO]]],
   ],
   es: [
     ["Gestrics", [["/es/", "Inicio"], ["/changelog.html?lang=es", "Historial de cambios"]]],
     ["Guías", [["/guia-facturacion-traductores.html", "Facturar como traductor"],
-               ["/guia-tarifas-analisis-cat.html", "Tarifas con el análisis TAO"]]],
+               ["/guia-tarifas-analisis-cat.html", "Tarifas con el análisis TAO"],
+               ["/guia-impagos-traductores.html", "Facturas impagadas"]]],
     ["Legal", [["/terms.html?lang=es", "Términos de uso"],
                ["/privacy.html?lang=es", "Política de privacidad"]]],
     ["Contacto", [[`mailto:${CORREO}`, CORREO]]],
