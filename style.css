@@ -933,8 +933,10 @@ footer a:hover { text-decoration: underline; }
 
 /* ── Las guías: facturación (guia-facturacion-traductores.html e
    invoicing-guide-translators.html), tarifas (guia-tarifas-analisis-cat.html
-   y cat-analysis-rates-guide.html) e impagos (guia-impagos-traductores.html y
-   unpaid-translation-invoices-guide.html) ──
+   y cat-analysis-rates-guide.html), impagos (guia-impagos-traductores.html y
+   unpaid-translation-invoices-guide.html) y gastos deducibles
+   (guia-gastos-deducibles-traductores.html y
+   deductible-expenses-translators-guide.html) ──
    Reutiliza la tarjeta de las páginas legales y le añade lo que aquellas no
    usan: subtítulos h2, una tabla, una lista numerada, una lista de control y
    un cierre con botón. Todo cuelga de article.guia para no tocar el resto. */
