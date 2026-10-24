@@ -11,7 +11,7 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [1.1.2] — 2026-10-18
+## [1.1.2] — 2026-10-24
 
 ### Añadido
 
@@ -140,6 +140,11 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ### Cambiado
 
+- **La web se abre en el idioma de la aplicación.** Con la interfaz en
+  español, Ayuda › outreachstudio.app y el botón de la franja de versión nueva
+  llevaban a la portada inglesa, y Ayuda › Términos de uso abría los términos
+  en inglés; ahora llevan a la portada española, que desde el 20-10-2026 tiene
+  su propia dirección, y a los términos en español.
 - **Los PDF se llaman en inglés, como el documento**: la factura,
   «Invoice-2026-001.pdf»; la rectificativa, «Rectificative-Invoice-R-2026-001.pdf»;
   el presupuesto, «Quote-12.pdf». Se llamaban «Factura-…» y «presupuesto-…»

@@ -10,7 +10,7 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [1.1.2] — 2026-10-18
+## [1.1.2] — 2026-10-24
 
 ### Added
 
@@ -138,6 +138,11 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ### Changed
 
+- **The website opens in the app's language.** With the interface in
+  Spanish, Help › outreachstudio.app and the new-version banner's button led
+  to the English home page, and Help › Terms of Use opened the terms in
+  English; they now lead to the Spanish home page, which has had its own
+  address since 2026-10-20, and to the terms in Spanish.
 - **PDFs are named in English, like the document**: the invoice
   "Invoice-2026-001.pdf", the corrective invoice
   "Rectificative-Invoice-R-2026-001.pdf", the quote "Quote-12.pdf". They were
