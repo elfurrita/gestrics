@@ -55,12 +55,12 @@
       <p>The CAT tool splits the source text into segments and compares each one with the project's translation memory. Depending on what it finds, the segment falls into a band: no match, a fuzzy match in one of several percentage ranges, an exact match, a context match, or a repetition within the job itself. The analysis report adds up the <strong>source words</strong> in each band.</p>
       <p>Two practical consequences:</p>
       <ul>
-        <li>The analysis depends on the memory it is run against. The same text gives a different breakdown with a different memory, and the memory is usually the agency's or the client's, not yours.</li>
-        <li>A fuzzy match percentage measures how similar the segment's text is to the one in memory, not how much work it takes. An 85% match may need one figure changed or half a sentence rewritten.</li>
+        <li>The analysis depends on the memory it is run against. The same text gives a different breakdown with a different memory; if the agency runs the analysis, it runs it against its memory, not yours.</li>
+        <li>A fuzzy match percentage measures how similar the segment's text is to the one in memory, not how much work it takes.</li>
       </ul>
 
       <h2>2. The bands and what each program calls them</h2>
-      <p>All three programs split the words into the same broad bands, under different names. The fuzzy match ranges they ship with are <strong>95–99%, 85–94%, 75–84% and 50–74%</strong>; they can be configured, so a report may come with others. Below the lowest range, the segment counts as no match.</p>
+      <p>All three programs split the words into the same broad bands, under different names. The fuzzy match ranges they ship with are <strong>95–99%, 85–94%, 75–84% and 50–74%</strong>; they can be configured, so a report may come with others. In Trados and memoQ, below the lowest range the segment counts as no match.</p>
       <div class="tabla-guia">
         <table>
           <thead>
@@ -68,21 +68,21 @@
           </thead>
           <tbody>
             <tr><td><strong>Context match</strong>: exact, and in the same context</td><td>Context Match</td><td>101%</td><td>Context</td></tr>
-            <tr><td><strong>Repetitions</strong>: segments repeated within the job; the first occurrence counts in its own band and the rest here</td><td>Repetitions; and, if requested, Cross-file Repetitions</td><td>Repetitions</td><td>Repetitions</td></tr>
+            <tr><td><strong>Repetitions</strong>: segments repeated within the job; the first occurrence counts in its own band and the rest here</td><td>Repetitions; and Cross-file Repetitions, if that option is enabled</td><td>Repetitions</td><td>Repetitions</td></tr>
             <tr><td><strong>Exact match</strong></td><td>100%</td><td>100%</td><td>100%</td></tr>
             <tr><td><strong>Fuzzy matches</strong></td><td>95% - 99%, 85% - 94%…</td><td>95%-99%, 85%-94%…</td><td>95%-99%, 85%-94%…</td></tr>
-            <tr><td><strong>No match</strong>: new words, at the full rate</td><td>New/AT</td><td>No match</td><td>No match</td></tr>
+            <tr><td><strong>No match</strong>: new words</td><td>New/AT</td><td>No match</td><td>No match</td></tr>
           </tbody>
         </table>
       </div>
-      <p>The names are the ones in each program's English interface. Each program also has rows of its own that are worth knowing how to read:</p>
+      <p>The names are the ones in each program's English interface. If machine translation was used in Trados, the New/AT row counts the words translated automatically. Each program also has rows of its own that are worth knowing how to read:</p>
       <ul>
-        <li><strong>Trados — PerfectMatch</strong>: segments that match an earlier bilingual version of the same document. The discount grid should say at what percentage they are paid.</li>
-        <li><strong>Trados — Locked</strong>: locked segments, which only appear if the analysis was run asking for them separately. Whether they are paid is the client's call.</li>
-        <li><strong>Trados — internal fuzzy matches</strong>: segments similar to others in the same job that are not in the memory yet. They only appear if enabled in the analysis; check in the report whether they come separately or inside the new words.</li>
-        <li><strong>memoQ — X-translated</strong>: segments pre-translated with X-translate from an earlier bilingual version of the same document. The discount grid should say at what percentage they are paid.</li>
-        <li><strong>memoQ — Fragments</strong>: words memoQ covers by assembling pieces from the memory or the termbase. They are not whole-segment matches, so there is no obvious way to pay for them: agree it with the client.</li>
-        <li><strong>Wordfast — Ignored</strong>: segments that were excluded from the analysis.</li>
+        <li><strong>Trados — PerfectMatch</strong>: a form of context match that compares not against the memory but against the bilingual files of an earlier version of the same document. The discount grid should say at what percentage these matches are paid.</li>
+        <li><strong>Trados — Locked</strong>: locked segments, which only appear if the analysis was run asking for them separately; that row then also takes in PerfectMatches and locked 100% and context matches, which no longer appear in their own. Whether they are paid is the client's call.</li>
+        <li><strong>Trados — internal fuzzy matches</strong>: what would be leveraged by translating the job from start to finish, saving each segment to the memory on confirming it, because some segments resemble earlier ones in the same job. They only appear if that option is enabled in the analysis; check in the report whether they come separately or inside the new words.</li>
+        <li><strong>memoQ — X-translated</strong>: X-Translate is the memoQ feature that copies the translations from the previous version of a document to the new one; memoQ also calls the double context match (102%) XLT. The discount grid should say at what percentage these segments are paid.</li>
+        <li><strong>memoQ — Fragments</strong>: segments for which memoQ has fragment-assembled matches. There is no obvious way to pay for them: it is worth agreeing on this with the client.</li>
+        <li><strong>Wordfast — Ignored</strong>: segments the report counts separately as ignored.</li>
         <li><strong>Wordfast — Leveraged, Internal Fuzzies and Fuzzy Repetitions</strong>: these are not bands but <strong>subtotals</strong> of the others. <em>Leveraged</em> adds up the context, 100%, fuzzy matches and fuzzy repetitions, and the fuzzy repetitions are already inside <em>Repetitions</em>. Adding those rows to the rest counts the same words two or three times.</li>
       </ul>
 
@@ -108,10 +108,10 @@
           </tbody>
         </table>
       </div>
-      <p>3,405 weighted words × €0.09 = <strong>€306.45</strong>. Without discounts, the 5,000 words would have come to €450.00: the grid takes €143.55 off the job, almost 32%. That is why the discount grid matters as much as the rate.</p>
+      <p>3,405 weighted words × €0.09 = <strong>€306.45</strong>. Without discounts, the 5,000 words would have come to €450.00: the grid takes €143.55 off the job, almost 32%. That is why the discount grid deserves the same care as the rate.</p>
 
       <h2>4. The discount grid</h2>
-      <p>There is no official or mandatory reference grid: each agency applies its own, and a translator working with direct clients can propose theirs. The one in the example above is the one Gestrics ships with, and it is only a starting point:</p>
+      <p>Each agency can apply its own grid, and a translator working with direct clients can propose theirs. The one in the example above is the one Gestrics ships with, and it is only a starting point:</p>
       <div class="tabla-guia compacta">
         <table>
           <thead>
@@ -129,11 +129,11 @@
           </tbody>
         </table>
       </div>
-      <p>What matters when comparing grids is not each percentage on its own but the result on the real breakdown of your jobs: the same grid is generous with an almost entirely new text and very harsh with an update full of repetitions.</p>
+      <p>What matters when comparing grids is not each percentage on its own but the result on the real breakdown of your jobs: the same grid barely lowers the price of an almost entirely new text and greatly lowers that of an update full of repetitions.</p>
 
       <h2>5. What to check before accepting an agency's grid</h2>
       <ul class="lista-control">
-        <li><strong>Whether 100% matches and repetitions are paid.</strong> Even when the memory proposes the translation, it has to be read in place and checked to fit. 0% on those bands is unpaid work.</li>
+        <li><strong>Whether 100% matches and repetitions are paid.</strong> Even when the memory proposes the translation, if you have to read it in place and check that it fits, that is work: paying it at 0% means not being paid for it.</li>
         <li><strong>What is expected of context matches.</strong> If they are paid at 0%, ask whether they have to be reviewed. If they do, that is working time and it needs a price.</li>
         <li><strong>The report, not just the figure.</strong> Ask for the analysis file: with it you can check the breakdown band by band and that the bands add up to the total. With Wordfast, check that nobody has added up the subtotals.</li>
         <li><strong>The memory the analysis was run against.</strong> If it is old or of uneven quality, a 100% match may need more correction than a fuzzy one. Worth knowing before you accept.</li>
@@ -142,7 +142,7 @@
       </ul>
 
       <div class="guia-cta">
-        <p>Written by Eduardo Furrazola Valladares, translator and author of Gestrics, desktop software for freelance translators. Gestrics imports the analysis report as Trados, memoQ and Wordfast export it, applies your discount grid and gets the quote ready as a PDF. It stays on your computer.</p>
+        <p>Written by Eduardo Furrazola Valladares, translator and author of Gestrics, desktop software for freelance translators. Gestrics imports the analysis report from Trados (as XML, Excel, HTML or MHT), memoQ (as CSV or HTML) and Wordfast (as CSV, HTML or XLS), applies your discount grid and gets the quote ready as a PDF. It stays on your computer.</p>
         <p><a class="guia-boton" href="/">Try it free for 14 days, no card</a></p>
       </div>
     </div>

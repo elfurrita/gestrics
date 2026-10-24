@@ -58,12 +58,12 @@
       <p>La herramienta TAO divide el texto de origen en segmentos y compara cada uno con la memoria de traducción del proyecto. Según lo que encuentre, el segmento cae en un tramo: sin coincidencia, coincidencia parcial (<em>fuzzy</em>) en una de varias franjas de porcentaje, coincidencia exacta, coincidencia de contexto o repetición dentro del propio encargo. El informe de análisis suma las <strong>palabras de origen</strong> de cada tramo.</p>
       <p>Dos consecuencias prácticas:</p>
       <ul>
-        <li>El análisis depende de la memoria contra la que se lanza. El mismo texto da otro reparto con otra memoria, y la memoria suele ser la de la agencia o el cliente, no la tuya.</li>
-        <li>El porcentaje de una coincidencia parcial mide cuánto se parece el texto del segmento al de la memoria, no cuánto trabajo da. Una coincidencia del 85 % puede necesitar cambiar una cifra o reescribir media frase.</li>
+        <li>El análisis depende de la memoria contra la que se lanza. El mismo texto da otro reparto con otra memoria; si el análisis lo hace la agencia, lo hace con su memoria, no con la tuya.</li>
+        <li>El porcentaje de una coincidencia parcial mide cuánto se parece el texto del segmento al de la memoria, no cuánto trabajo da.</li>
       </ul>
 
       <h2>2. Los tramos y cómo los llama cada programa</h2>
-      <p>Los tres programas reparten las palabras en los mismos grandes tramos, con nombres distintos. Las franjas de coincidencia parcial que traen por defecto son <strong>95-99 %, 85-94 %, 75-84 % y 50-74 %</strong>; se pueden configurar, así que un informe puede traer otras. Por debajo de la franja más baja, el segmento cuenta como sin coincidencia.</p>
+      <p>Los tres programas reparten las palabras en los mismos grandes tramos, con nombres distintos. Las franjas de coincidencia parcial que traen por defecto son <strong>95-99 %, 85-94 %, 75-84 % y 50-74 %</strong>; se pueden configurar, así que un informe puede traer otras. En Trados y en memoQ, por debajo de la franja más baja el segmento cuenta como sin coincidencia.</p>
       <div class="tabla-guia">
         <table>
           <thead>
@@ -71,21 +71,21 @@
           </thead>
           <tbody>
             <tr><td><strong>Coincidencia de contexto</strong>: exacta y, además, con el mismo contexto</td><td>Coincidencia de contexto (<em>Context Match</em>)</td><td>101%</td><td>Context</td></tr>
-            <tr><td><strong>Repeticiones</strong>: segmentos que se repiten dentro del encargo; la primera aparición cuenta en su tramo y las demás aquí</td><td>Repeticiones; y, si se pide, Repeticiones entre archivos</td><td>Repetitions</td><td>Repetitions</td></tr>
+            <tr><td><strong>Repeticiones</strong>: segmentos que se repiten dentro del encargo; la primera aparición cuenta en su tramo y las demás aquí</td><td>Repeticiones; y Repeticiones entre archivos, si esa opción está activada</td><td>Repetitions</td><td>Repetitions</td></tr>
             <tr><td><strong>Coincidencia exacta</strong></td><td>100%</td><td>100%</td><td>100%</td></tr>
             <tr><td><strong>Coincidencias parciales</strong></td><td>95% - 99%, 85% - 94%…</td><td>95%-99%, 85%-94%…</td><td>95%-99%, 85%-94%…</td></tr>
-            <tr><td><strong>Sin coincidencia</strong>: palabras nuevas, a tarifa completa</td><td>Nuevas/AT</td><td>No match</td><td>No match</td></tr>
+            <tr><td><strong>Sin coincidencia</strong>: palabras nuevas</td><td>Nuevas/AT</td><td>No match</td><td>No match</td></tr>
           </tbody>
         </table>
       </div>
-      <p>Los nombres de Trados son los de su interfaz en español; los de memoQ y Wordfast, los de su interfaz en inglés. Además, cada programa trae filas propias que conviene saber leer:</p>
+      <p>Los nombres de Trados son los de su interfaz en español; los de memoQ y Wordfast, los de su interfaz en inglés. Si en Trados se usó traducción automática, la fila Nuevas/AT cuenta las palabras traducidas automáticamente. Además, cada programa trae filas propias que conviene saber leer:</p>
       <ul>
-        <li><strong>Trados — PerfectMatch</strong>: segmentos que coinciden con una versión bilingüe anterior del mismo documento. La tabla de descuentos debería decir a qué porcentaje se pagan.</li>
-        <li><strong>Trados — Bloqueado</strong>: segmentos bloqueados, que solo salen si el análisis se lanzó pidiéndolos aparte. Si se pagan o no, lo decide el cliente.</li>
-        <li><strong>Trados — coincidencias parciales internas</strong>: segmentos parecidos a otros del propio encargo, que todavía no están en la memoria. Solo aparecen si se activan en el análisis; mira en el informe si vienen aparte o dentro de las palabras nuevas.</li>
-        <li><strong>memoQ — X-translated</strong>: segmentos pretraducidos con X-translate a partir de una versión bilingüe anterior del mismo documento. La tabla de descuentos debería decir a qué porcentaje se pagan.</li>
-        <li><strong>memoQ — Fragments</strong>: palabras que memoQ cubre ensamblando trozos de la memoria o de la base terminológica. No son coincidencias de segmento completo, así que no hay una forma obvia de pagarlas: decídelo con el cliente.</li>
-        <li><strong>Wordfast — Ignored</strong>: segmentos que se excluyeron del análisis.</li>
+        <li><strong>Trados — PerfectMatch</strong>: una forma de coincidencia de contexto que no compara con la memoria, sino con los archivos bilingües de una versión anterior del mismo documento. La tabla de descuentos debería decir a qué porcentaje se pagan esas coincidencias.</li>
+        <li><strong>Trados — Bloqueado</strong>: segmentos bloqueados, que solo salen si el análisis se lanzó pidiéndolos aparte; entonces esa fila recoge también los PerfectMatch y los 100 % y de contexto bloqueados, que dejan de salir en la suya. Si se pagan o no, lo decide el cliente.</li>
+        <li><strong>Trados — coincidencias parciales internas</strong>: lo que se aprovecharía si se tradujera el encargo de principio a fin, guardando cada segmento en la memoria al confirmarlo, porque unos segmentos se parecen a otros anteriores del mismo encargo. Solo aparecen si se activa esa opción en el análisis; mira en el informe si vienen aparte o dentro de las palabras nuevas.</li>
+        <li><strong>memoQ — X-translated</strong>: X-Translate es la función de memoQ que copia las traducciones de la versión anterior de un documento a la nueva; memoQ llama también XLT a la coincidencia de doble contexto (102 %). La tabla de descuentos debería decir a qué porcentaje se pagan esos segmentos.</li>
+        <li><strong>memoQ — Fragments</strong>: segmentos para los que memoQ tiene coincidencias ensambladas a partir de fragmentos. No hay una forma obvia de pagarlos: conviene acordarlo con el cliente.</li>
+        <li><strong>Wordfast — Ignored</strong>: segmentos que el informe cuenta aparte como ignorados.</li>
         <li><strong>Wordfast — Leveraged, Internal Fuzzies y Fuzzy Repetitions</strong>: no son tramos, son <strong>subtotales</strong> de los demás. <em>Leveraged</em> suma el contexto, el 100 %, las coincidencias parciales y las repeticiones parciales, y estas últimas ya están dentro de <em>Repetitions</em>. Sumar esas filas al resto cuenta las mismas palabras dos o tres veces.</li>
       </ul>
 
@@ -111,10 +111,10 @@
           </tbody>
         </table>
       </div>
-      <p>3.405 palabras ponderadas × 0,09 € = <strong>306,45 €</strong>. Sin descuentos, las 5.000 palabras habrían sido 450,00 €: la tabla rebaja el encargo en 143,55 €, casi un 32 %. Por eso la tabla de descuentos pesa tanto como la tarifa.</p>
+      <p>3.405 palabras ponderadas × 0,09 € = <strong>306,45 €</strong>. Sin descuentos, las 5.000 palabras habrían sido 450,00 €: la tabla rebaja el encargo en 143,55 €, casi un 32 %. Por eso conviene revisar la tabla de descuentos con el mismo cuidado que la tarifa.</p>
 
       <h2>4. La tabla de descuentos</h2>
-      <p>No hay ninguna tabla oficial ni de referencia obligatoria: cada agencia aplica la suya, y un traductor que trabaja con clientes directos puede proponer la propia. La del ejemplo anterior es la que trae Gestrics por defecto, y es solo un punto de partida:</p>
+      <p>Cada agencia puede aplicar su propia tabla, y un traductor que trabaja con clientes directos puede proponer la suya. La del ejemplo anterior es la que trae Gestrics por defecto, y es solo un punto de partida:</p>
       <div class="tabla-guia compacta">
         <table>
           <thead>
@@ -132,11 +132,11 @@
           </tbody>
         </table>
       </div>
-      <p>Lo que importa al comparar tablas no es cada porcentaje suelto, sino el resultado sobre el reparto real de tus encargos: la misma tabla es generosa con un texto casi nuevo y muy dura con una actualización llena de repeticiones.</p>
+      <p>Lo que importa al comparar tablas no es cada porcentaje suelto, sino el resultado sobre el reparto real de tus encargos: la misma tabla apenas rebaja el precio de un texto casi nuevo y rebaja mucho el de una actualización llena de repeticiones.</p>
 
       <h2>5. Qué revisar antes de aceptar la tabla de una agencia</h2>
       <ul class="lista-control">
-        <li><strong>Si el 100 % y las repeticiones se pagan.</strong> Aunque la memoria proponga la traducción, hay que leerla en su sitio y comprobar que encaja. Un 0 % en esos tramos es trabajo sin pagar.</li>
+        <li><strong>Si el 100 % y las repeticiones se pagan.</strong> Aunque la memoria proponga la traducción, si tienes que leerla en su sitio y comprobar que encaja, eso es trabajo: pagarlo al 0 % es no cobrarlo.</li>
         <li><strong>Qué se espera del contexto.</strong> Si se paga al 0 %, pregunta si hay que revisarlo. Si hay que revisarlo, es tiempo de trabajo y tiene que tener precio.</li>
         <li><strong>El informe, no solo la cifra.</strong> Pide el archivo del análisis: con él puedes comprobar el reparto tramo a tramo y que los tramos sumen el total. Con Wordfast, comprueba que nadie ha sumado los subtotales.</li>
         <li><strong>La memoria con la que se analizó.</strong> Si es antigua o de calidad irregular, un 100 % puede necesitar más corrección que una coincidencia parcial. Conviene saberlo antes de aceptar.</li>
@@ -145,7 +145,7 @@
       </ul>
 
       <div class="guia-cta">
-        <p>Elaborado por Eduardo Furrazola Valladares, traductor y autor de Gestrics, un programa de escritorio para traductores autónomos. Gestrics importa el informe de análisis tal como lo exportan Trados, memoQ y Wordfast, aplica tu tabla de descuentos y deja listo el presupuesto en PDF. Se queda en tu ordenador.</p>
+        <p>Elaborado por Eduardo Furrazola Valladares, traductor y autor de Gestrics, un programa de escritorio para traductores autónomos. Gestrics importa el informe de análisis de Trados (en XML, Excel, HTML o MHT), de memoQ (en CSV o HTML) y de Wordfast (en CSV, HTML o XLS), aplica tu tabla de descuentos y deja listo el presupuesto en PDF. Se queda en tu ordenador.</p>
         <p><a class="guia-boton" href="/es/">Pruébalo 14 días, sin tarjeta</a></p>
       </div>
     </div>
