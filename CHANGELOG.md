@@ -11,10 +11,43 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [1.1.2] — 2026-10-24
+## [1.1.2] — 2026-10-26
 
 ### Añadido
 
+- **El buscador de contactos mira también dentro de las notas.** Una nota que
+  no se puede encontrar es casi una nota que no escribiste: «paga a 60 días» o
+  «el contacto es Marta, extensión 204» no sirven de nada a los seis meses si
+  hay que abrir las fichas una por una. El buscador ya miraba nombre, empresa,
+  correo, país, especialidad e idiomas; ahora mira también lo que hayas
+  apuntado, ignorando tildes y mayúsculas como en el resto. El asunto de los
+  correos enviados queda fuera a propósito: lo pone la plantilla y es idéntico
+  en toda la agenda, así que buscar por él devolvería la lista entera.
+
+- **El historial de un contacto admite notas con fecha, y deja de ser solo un
+  registro de envíos.** La aplicación sabía lo que sale —correos,
+  recordatorios, presupuestos, entregas— y nada de lo que pasa después: una
+  llamada, lo que te dijo la agencia, que pidió tarifas. Eso acababa, con
+  suerte, en el campo «Notas» de la ficha, que es un texto suelto sin fecha
+  donde lo nuevo pisa a lo viejo. Ahora la pestaña Historial tiene un campo
+  para apuntar, y cada nota lleva su fecha y su hora y se intercala con los
+  envíos en la misma línea de tiempo. De un envío se ve el asunto, y si no
+  cabe entero —el de un presupuesto acaba en el importe— se lee pasando el
+  ratón por encima. La nota que acabas de apuntar aparece siempre a la vista,
+  aunque estuvieras leyendo lo de hace meses. Las notas se pueden borrar, con una
+  confirmación que te enseña cuál (una ficha con varias notas tiene varias
+  equis seguidas, y no hay deshacer); los envíos no, porque son el registro de algo que la otra
+  parte ya tiene. Apuntar una nota **no** adelanta ni retrasa los avisos de
+  seguimiento ni de reprospección: esos siguen contando desde el último
+  correo enviado. Y cambiar el correo del contacto, que borra los
+  envíos y devuelve la ficha a Pendiente, **respeta las notas**: «paga a 60
+  días» es cosa de la agencia y sigue siendo verdad con otra persona al
+  otro lado — igual que los presupuestos, las entregas y los recordatorios
+  de cobro, que son el rastro de un encargo real y no prospección. Y a
+  quien respondió, está negociando o ya es cliente no se le reinicia nada:
+  la ficha ya no vuelve a Pendiente para que el siguiente «Enviar a
+  pendientes» le mande el correo en frío con un presupuesto encima de la
+  mesa.
 - **La factura nueva propone las condiciones de la anterior al mismo
   cliente.** El diálogo de emisión arrancaba siempre con los impuestos a 0 y
   el vencimiento a 30 días: a una agencia que paga a 60 había que corregir la
@@ -140,6 +173,17 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ### Cambiado
 
+- **El historial se abre a toda la pantalla mientras lo miras.** La línea de
+  tiempo vivía en una ventanita de 110 píxeles al pie de la ficha: con seis o
+  siete apuntes había que desplazarla para leerla entera, que es justo lo que
+  no se hace antes de llamar a una agencia. Al pulsar «Historial», el panel
+  sube ahora hasta ocupar la columna entera y la lista se queda con todo ese
+  espacio; al sacar el ratón del panel vuelve a su sitio, sin tener que pulsar
+  nada. Pulsar «Historial» otra vez lo abre de nuevo. El paso entre Detalles e
+  Historial también se anima: antes el contenido cambiaba de golpe y el pie
+  daba un salto de altura.
+- **El campo de la nota pide «Agrega una nota», y su botón dice «Agregar».**
+  Antes ponía «Apunta una llamada, lo que te dijeron…» y «Apuntar».
 - **La web se abre en el idioma de la aplicación.** Con la interfaz en
   español, Ayuda › outreachstudio.app y el botón de la franja de versión nueva
   llevaban a la portada inglesa, y Ayuda › Términos de uso abría los términos
@@ -165,6 +209,122 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
   nombre en inglés.
 
 ### Corregido
+
+- **Los CSV y los TSV exportados salían con las tildes rotas al abrirlos en
+  Excel.** «Agencia Niño» llegaba como «Agencia NiÃ±o», y «Número factura»
+  como «NÃºmero factura»: Excel en Windows no da por hecho que un archivo de
+  texto esté en UTF-8, así que lo abría con la codificación del sistema. Les
+  faltaba a los cuatro: la exportación de contactos a CSV y a TSV, y los CSV de
+  facturas y de gastos que se le mandan al asesor fiscal. Ahora los cuatro
+  llevan delante la marca que Excel busca. Las exportaciones a Excel y a
+  OpenDocument no lo necesitaban, porque esos formatos declaran su
+  codificación por dentro. Lo que el CSV sigue sin poder arreglar es el
+  separador: un Windows en español espera punto y coma, así que al abrirlo con
+  doble clic las columnas siguen cayendo todas en la primera — para eso está
+  la exportación a Excel.
+- **Escribir en una plantilla hacía desaparecer la ficha del contacto.** Al
+  teclear la primera letra en el editor, la barra de abajo —Detalles,
+  Historial, el botón de enviar— se iba entera de la pantalla, y no volvía
+  hasta deshacer los cambios o reiniciar la aplicación. Se escondía a
+  propósito, para dejarle al editor la altura que hacía falta para leer lo que
+  se estaba escribiendo, pero el editor hace tiempo que tiene una altura fija:
+  medido, mide lo mismo con la barra puesta que sin ella, así que se pagaba la
+  ficha entera por nada. Y es justo cuando más falta hace: para ver las
+  etiquetas rellenas con datos de verdad hay que tener un contacto elegido.
+  Lo que el escondite sí evitaba era mandar un correo con la plantilla a medio
+  escribir —sale siempre la versión guardada, no lo que hay en el editor—, y
+  eso ahora lo dice la propia pregunta de «¿Enviar?». También al enviar a
+  pendientes, que nunca se escondió y mandaba la versión guardada sin
+  advertirlo.
+- **Pulsar Intro dos veces seguidas apuntaba la nota dos veces.** Una tecla
+  que se repite o un doble toque creaban dos entradas idénticas en el
+  historial, con un milisegundo de diferencia; dos clics rápidos en «Agregar»,
+  lo mismo. El cerrojo que debía impedirlo no llegaba a tiempo.
+- **Una línea estropeada en el historial dejaba la aplicación inservible.** Si
+  el historial de un contacto traía una entrada corrupta —solo es posible
+  importando una hoja con la columna «history» editada a mano—, abrir su ficha
+  no fallaba en esa pestaña: tumbaba la aplicación entera con «Error
+  inesperado». Ahora esa línea se ignora y el resto del historial se ve con
+  normalidad; el dato sigue guardado y viaja en la copia de seguridad. Y
+  borrar una nota sana que tuviera una de esas líneas por delante tampoco
+  falla ya. Lo mismo valía, y era peor, cuando la línea sí era una entrada
+  pero su texto o su asunto no eran texto: bastaba con SELECCIONAR al
+  contacto —sin abrir siquiera la pestaña— para quedarse sin aplicación.
+  Ahora se pinta lo que es texto y lo demás se calla, y una fecha ilegible ya
+  no sale como «Invalid Date», en inglés y dos veces por línea, dentro de un
+  historial en español. Y esa misma línea dejaba MUDO el botón «Enviar a pendientes»: el
+  recuento del límite diario recorre el historial de todos los contactos, así
+  que bastaba una entrada rota en cualquiera de ellos para que pulsar el botón
+  no hiciera absolutamente nada —ni lote, ni aviso, ni error.
+
+- **Una nota que no llegaba a guardarse parecía guardada.** Con el servidor
+  caído, apuntar algo en el historial lo dejaba pintado en la línea de tiempo y
+  vaciaba el campo: el texto desaparecía de la pantalla, la nota parecía
+  guardada y solo un aviso pasajero decía que había fallado. Al recargar no
+  estaba. Ahora, si el guardado falla, la entrada se retira y lo tecleado se
+  queda en el campo para reintentarlo. Vale para cualquier cambio de la ficha,
+  no solo para las notas. Y al retirarla se retira **solo lo que ese guardado
+  había añadido**: si mientras tanto habías apuntado otra nota —o salía un
+  correo de la tanda—, eso se queda donde está en vez de desaparecer de la
+  pantalla con lo demás.
+
+- **Un envío en lote podía deshacer lo que hicieras mientras enviaba.** La
+  tanda guardaba una foto de los contactos al empezar y escribía con ella al
+  llegarle el turno a cada uno: con 50 agencias a 8 segundos de intervalo, al
+  último se le escribía encima su estado de casi siete minutos antes. Todo lo
+  que le hubiera pasado entretanto —una nota apuntada, un presupuesto enviado
+  desde Proyectos, una corrección en su ficha— desaparecía sin error y sin
+  rastro al llegarle el turno. Lo mismo pasaba, en ventanas más cortas, con
+  los recordatorios de cobro, las entregas y los presupuestos. Ahora cada
+  escritura se compone contra el contacto del momento, no contra la copia de
+  quien la pidió.
+
+- **Una hoja con fechas europeas movía la cadencia meses, sin avisar.** Las
+  columnas «último contacto» y «primer contacto» se importaban tal cual, y el
+  resto de la aplicación cuenta con AAAA-MM-DD. Un `05/09/2026` —el 5 de
+  septiembre en media Europa— se leía como **9 de mayo**: cuatro meses
+  corrida, con pinta de dato bueno y sin un solo aviso. Y de esa fecha salen
+  los avisos de seguimiento (10 días) y de reprospección (90), así que la
+  aplicación acababa mandándote a reprospectar una agencia a la que
+  escribiste el mes pasado. Con el día por encima de 12 (`25/09/2026`) la
+  ficha enseñaba directamente «Invalid Date». **Desde un .xlsx las fechas se
+  leen bien**, sea cual sea el formato con que la hoja las enseñe: el archivo
+  sabe que esa celda es una fecha y eso es lo que se usa. Desde un CSV no hay
+  forma de saberlo —ahí una fecha es texto suelto—, así que solo entra
+  AAAA-MM-DD; lo ambiguo no se adivina (05/09 es el 5 de septiembre aquí y el
+  9 de mayo en Estados Unidos) y la importación lo dice al terminar, pidiendo
+  ese formato. Ninguna fecha ilegible vuelve a enseñarse como «Invalid Date»
+  en ninguna pantalla.
+- **Una hoja con columna «estado» dejaba a esos contactos en tierra de
+  nadie.** La importación respetaba el país pero no el estado: lo que
+  trajera la columna entraba tal cual. Un contacto importado como «Nuevo» o
+  «Contactado» se pintaba en la lista como **Pendiente** —icono incluido, sin
+  forma de distinguirlo de uno de verdad—, su ficha decía «Estado:
+  NuevoStatus», no contaba en ningún número del embudo, no salía con ningún
+  filtro salvo «Todos los estados», y **«Enviar a pendientes» no lo cogía**.
+  Con trescientas agencias importadas así, el botón seguía diciendo que
+  tenías una pendiente y a las otras no se les escribía nunca. Ahora lo que
+  no sea uno de los estados de la aplicación entra como Pendiente, y la
+  importación lo dice al terminar.
+- **El historial llamaba «Seguimiento» a correos que eran de prospección, y
+  eso apagaba los avisos.** La aplicación decidía dos veces y con criterios
+  distintos: qué plantilla mandar lo miraba por los diez días que tiene que
+  llevar un contacto sin respuesta, y cómo apuntarlo en la línea de tiempo lo
+  miraba por otra regla —«ya está en Enviado»— que se cumple desde el primer
+  día. Resultado: pulsar «Enviar ahora» sobre alguien a quien escribiste hace
+  tres días mandaba el correo en frío y lo apuntaba como seguimiento. Lo que
+  no se veía es que también subía el contador de seguimientos, y ese contador
+  es el que apaga el aviso a los dos y abre la reprospección a los noventa
+  días: insistir dos veces a mano bastaba para que la aplicación dejara de
+  recordarte el seguimiento que nunca habías mandado. Ahora el tipo lo decide
+  la plantilla que de verdad sale, y el contador solo sube cuando lo que sale
+  es un seguimiento.
+- **Guardar la ficha de un contacto podía borrarle el historial.** El lápiz
+  abre el formulario sin cerrar el pie de la ficha, así que los dos se ven a
+  la vez; el formulario se quedaba con una copia del contacto de cuando se
+  abrió y la devolvía entera al guardar. Cualquier cosa anotada en el
+  historial mientras tanto desaparecía sin aviso. Ahora el formulario solo
+  guarda los campos que de verdad edita.
 
 - **Ninguna clave de licencia comprada se podía activar.** La limpieza de 1.1.2
   que quita el punto o las comillas arrastrados al copiar la clave del correo

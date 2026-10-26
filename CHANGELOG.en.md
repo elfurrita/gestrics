@@ -10,10 +10,43 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [1.1.2] — 2026-10-24
+## [1.1.2] — 2026-10-26
 
 ### Added
 
+- **The contact search now looks inside your notes too.** A note you cannot
+  find is almost a note you never wrote: "pays at 60 days" or "the contact is
+  Marta, extension 204" are no use six months later if you have to open the
+  records one by one. The search already covered name, company, email,
+  country, specialty and language pair; it now covers what you jotted down as
+  well, ignoring accents and case as everywhere else. The subject line of sent
+  emails is deliberately left out: it comes from the template and is identical
+  across the whole list, so searching by it would return everything.
+
+- **A contact's history takes dated notes, and stops being just a send log.**
+  The app knew what goes out —emails, reminders, quotes, deliveries— and
+  nothing about what happens next: a phone call, what the agency told you,
+  that they asked for rates. That ended up, at best, in the contact's "Notes"
+  field, a loose piece of text with no date where the new overwrites the old.
+  The History tab now has a field to jot things down, and every note carries
+  its date and time and sits among the sends on the same timeline. A send
+  shows its subject, and when it does not fit —a quote's subject ends in the
+  amount— you can read it by hovering over it. A note you have just jotted
+  down always lands in view, even if you were reading something from months
+  back. Notes can
+  be deleted, with a confirmation that shows you which one (a record with
+  several notes has several little crosses in a row, and there is no undo);
+  sends cannot, because they are the record of
+  something the other side already has. Adding a note does **not** bring the
+  follow-up or re-engagement alerts forward or push them back: those still
+  count from the last email sent. And changing the contact's email address,
+  which clears the sends and puts the record back to Pending, **keeps the
+  notes**: "pays at 60 days" is about the agency and stays true with someone
+  else at the other end — and so are quotes, deliveries and payment
+  reminders, which are the trace of a real job, not prospecting. Nothing is
+  reset for anyone who replied, is negotiating or is already a client: the
+  record no longer goes back to Pending so the next "Send to pending" can
+  cold-email them with a quote already on the table.
 - **A new invoice suggests the terms of the last one to the same client.**
   The invoice dialog always opened with taxes at 0 and the due date 30 days
   out: for an agency that pays at 60 days the date had to be fixed on every
@@ -138,6 +171,16 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ### Changed
 
+- **The history opens full height while you read it.** The timeline lived in a
+  110-pixel window at the foot of the record: with six or seven entries you
+  had to scroll it to read the lot, which is exactly what nobody does before
+  calling an agency. Clicking "History" now raises the panel until it fills
+  the whole column, and the list takes all of that space; moving the mouse off
+  the panel puts it back, with nothing to click. Clicking "History" again
+  opens it once more. Moving between Details and History is animated too:
+  before, the content swapped at once and the foot jumped in height.
+- **The note field now reads "Add a note", and its button says "Add".**
+  It used to read "Note a call, what they told you…" and "Add note".
 - **The website opens in the app's language.** With the interface in
   Spanish, Help › outreachstudio.app and the new-version banner's button led
   to the English home page, and Help › Terms of Use opened the terms in
@@ -163,6 +206,113 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
   is stored — and printed on the invoice — is still the English name.
 
 ### Fixed
+
+- **Exported CSV and TSV files came out with broken accents when opened in
+  Excel.** "Agencia Niño" arrived as "Agencia NiÃ±o", and "Número factura" as
+  "NÃºmero factura": Excel on Windows does not assume a text file is UTF-8, so
+  it opened them with the system's own encoding. All four were affected: the
+  contact export to CSV and to TSV, and the invoice and expense CSVs you send
+  your accountant. All four now carry the marker Excel looks for. The Excel
+  and OpenDocument exports did not need it, because those formats declare
+  their encoding internally. What CSV still cannot fix is the separator: a
+  Spanish Windows expects semicolons, so opening one by double-click still
+  drops every column into the first — that is what the Excel export is for.
+- **Typing in a template made the contact's record disappear.** The moment you
+  typed the first letter in the editor, the bar at the bottom —Details,
+  History, the send button— left the screen entirely, and did not come back
+  until you undid the changes or restarted the app. It was hidden on purpose,
+  to give the editor the height needed to read what you were writing, but the
+  editor has had a fixed height for a while now: measured, it is the same size
+  with the bar and without it, so the whole record was being paid for nothing.
+  And that is exactly when it is needed most: seeing the placeholders filled
+  with real data requires a contact to be selected. What hiding it did prevent
+  was sending an email with a half-written template —what goes out is always
+  the saved version, not what is in the editor— and the "Send?" prompt now
+  says so itself. Also when sending to pending contacts, which was never
+  hidden and sent the saved version without saying a word.
+- **Pressing Enter twice in a row jotted the note twice.** A repeating key or
+  a double tap created two identical history entries a millisecond apart; two
+  quick clicks on "Add" did the same. The lock meant to prevent it did
+  not take effect in time.
+- **One broken line in a history made the app unusable.** If a contact's
+  history carried a corrupt entry —only possible by importing a sheet with the
+  "history" column edited by hand— opening its record did not just fail in
+  that tab: it took down the whole app with "Unexpected error". That line is
+  now skipped and the rest of the history shows normally; the data is still
+  stored and still travels in the backup. And deleting a healthy note that
+  had one of those lines above it no longer fails either. The same went, and
+  worse, for a line that was a proper entry but whose text or subject was not
+  text: merely SELECTING the contact —without even opening the tab— was
+  enough to lose the app. Only text is drawn now and the rest stays quiet,
+  and an unreadable date no longer shows as "Invalid Date" twice per line.
+  That same line also
+  left the "Send to pending" button MUTE: the daily-limit count walks every
+  contact's history, so one broken entry in any of them was enough for the
+  button to do nothing at all —no batch, no warning, no error.
+
+- **A note that failed to save looked saved.** With the server down, jotting
+  something in the history left it drawn on the timeline and cleared the field:
+  the text vanished from the screen, the note looked saved, and only a
+  short-lived warning said it had failed. On reload it was gone. Now, if the
+  save fails, the entry is withdrawn and what you typed stays in the field so
+  you can retry. This applies to any change to the record, not just notes. And
+  withdrawing it removes **only what that save had added**: if you jotted
+  another note meanwhile —or the batch sent an email— that stays put instead
+  of vanishing from the screen along with it.
+
+- **A batch send could undo whatever you did while it was sending.** The
+  run took a snapshot of the contacts when it started and wrote from it as
+  each one's turn came: with 50 agencies at 8-second intervals, the last one
+  was written with its state from nearly seven minutes earlier. Anything that
+  had happened to it meanwhile —a note jotted down, a quote sent from
+  Projects, a correction to its record— vanished with no error and no trace
+  when its turn arrived. The same happened, in shorter windows, with payment
+  reminders, deliveries and quotes. Every write is now composed against the
+  contact as it is at that moment, not against the caller's copy.
+
+- **A sheet with European dates shifted the cadence by months, silently.**
+  The "last contact" and "first contact" columns were imported as-is, while
+  the rest of the app expects YYYY-MM-DD. A `05/09/2026` —5 September across
+  much of Europe— was read as **9 May**: four months out, looking like good
+  data, with no warning at all. Those dates drive the follow-up (10 days) and
+  re-prospecting (90 days) reminders, so the app ended up telling you to
+  re-prospect an agency you wrote to last month. With a day above 12
+  (`25/09/2026`) the record simply read "Invalid Date". **From an .xlsx the
+  dates now come through correctly**, whatever format the sheet displays them
+  in: the file knows that cell is a date, and that is what gets used. From a
+  CSV there is no way to tell —a date there is just text— so only YYYY-MM-DD
+  comes in; what is ambiguous is not guessed (05/09 is 5 September here and 9
+  May in the United States) and the import says so when it finishes, asking
+  for that format. No unreadable date shows as "Invalid Date" anywhere
+  again.
+- **A sheet with a "status" column left those contacts in limbo.** The import
+  normalised the country but not the status: whatever the column held went in
+  as-is. A contact imported as "Nuevo" or "New lead" was drawn in the list as
+  **Pending** —icon and all, indistinguishable from a real one—, its record
+  read "Status: NuevoStatus", it counted in no funnel figure, it showed under
+  no filter but "All statuses", and **"Send to pending" did not pick it up**.
+  With three hundred agencies imported that way, the button still said you
+  had one pending and the rest were never written to. Anything that is not
+  one of the app's own statuses now comes in as Pending, and the import says
+  so when it finishes.
+- **The history called prospecting emails "Follow-up", and that switched the
+  reminders off.** The app decided twice, by different rules: which template
+  to send went by the ten days a contact has to have gone without replying,
+  while how to record it went by another rule —"already in Sent"— that holds
+  from day one. So clicking "Send now" on someone you wrote to three days ago
+  sent the cold email and recorded it as a follow-up. What you could not see
+  is that it also raised the follow-up count, and that count is what switches
+  the reminder off at two and opens re-prospecting at ninety days: insisting
+  twice by hand was enough for the app to stop reminding you about the
+  follow-up you never sent. The type now comes from the template that
+  actually goes out, and the count only rises when what goes out is a
+  follow-up.
+- **Saving a contact's form could wipe its history.** The pencil opens the
+  form without closing the record's footer, so both are visible at once; the
+  form kept a copy of the contact from the moment it opened and wrote the
+  whole thing back on save. Anything recorded in the history meanwhile
+  vanished with no warning. The form now saves only the fields it actually
+  edits.
 
 - **No purchased licence key could be activated.** The 1.1.2 clean-up that
   strips the full stop or quotes picked up when copying the key from the email
