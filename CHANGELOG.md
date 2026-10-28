@@ -11,9 +11,34 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [1.1.2] — 2026-10-26
+## [1.1.2] — 2026-10-28
 
 ### Añadido
+
+- **Métricas dice lo que sale la hora con cada cliente.** La tarifa por
+  palabra es lo que se acuerda, no lo que se saca: una agencia a 0,11 €/palabra
+  con material enrevesado y tres rondas de revisión puede pagar la mitad por
+  hora que otra a 0,09 con textos limpios. Ahora, debajo de la tarifa media por
+  cliente, hay una tabla con las horas dedicadas y el ingreso por hora de cada
+  uno, y una tarjeta arriba con el global — que dice
+  además sobre cuántos encargos está hablando, porque el cronómetro se usa
+  cuando se acuerda. Solo cuenta encargos ya entregados, facturados o cobrados
+  (un presupuesto no es dinero), y cuenta la base imponible, no el total con
+  impuestos. Divisas distintas nunca se mezclan en la misma cifra. Las filas
+  van ordenadas por horas medidas y no por la cifra: con el cronómetro es fácil
+  acabar con un encargo de 500 € y tres minutos apuntados, y ordenar por el
+  euro por hora pondría ese —10.000 €/h— el primero de la lista.
+
+- **El cronómetro, en todos los encargos.** Antes solo aparecía en los que se
+  cobran por horas, que es donde el tiempo decide el importe. Eso dejaba sin
+  medir justo los encargos por palabra —casi todos— y sin ellos no hay forma de
+  saber lo que sale la hora. Medir el tiempo de un encargo por palabra no le
+  cambia el precio ni lo convierte en un encargo por horas: solo se apunta el
+  tiempo, y lo que sale la hora se calcula en Métricas. Y por eso tampoco se
+  congela al facturarlo: si te acuerdas el martes de las dos horas del viernes,
+  se apuntan igual, y el euro por hora de ese cliente queda bien. En los
+  encargos que se cobran por horas no, claro: ahí el tiempo es el importe y la
+  factura ya está emitida.
 
 - **El buscador de contactos mira también dentro de las notas.** Una nota que
   no se puede encontrar es casi una nota que no escribiste: «paga a 60 días» o
@@ -173,6 +198,35 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ### Cambiado
 
+- **A quien ya te contestó, «Enviar ahora» le ofrece el primer
+  seguimiento.** Con un contacto en «Respondido», en negociación o cliente
+  activo, el editor abría la plantilla de prospección, y «Enviar ahora» le
+  proponía el correo de presentación a alguien con quien ya habías hablado.
+  Ahora abre el primer seguimiento; si le toca algo de la cadencia, sigue
+  abriendo eso, y a los demás contactos, la prospección como antes.
+- **La tanda dice que sale con las plantillas de cuando empezó.** Corregir
+  una errata a mitad de tanda y ver «Guardado» hacía creer que el resto
+  saldría corregido, y no: sale lo que confirmaste. Ahora lo dice bajo la
+  barra de progreso; para mandar la versión nueva, cancela y vuelve a
+  lanzarla.
+- **El segundo seguimiento y la reprospección ya no repiten correos.** Había
+  una sola plantilla de seguimiento para los dos toques, así que la misma
+  agencia recibía el mismo texto, palabra por palabra, a los 10 días y a los
+  20. Y la reprospección de los 90 días le reenviaba el correo en frío original
+  a quien no había contestado o había dicho que no. Ahora el desplegable de
+  Plantilla tiene cuatro: Prospección, Primer seguimiento, Segundo seguimiento
+  y Reprospección, y cada contacto recibe la que le toca, también en las tandas
+  (una tanda de seguimientos mezcla primeros y segundos, y cada uno sale con la
+  suya). Las dos nuevas traen texto propio: el segundo seguimiento ofrece una
+  muestra y deja la puerta abierta, y la reprospección recuerda el primer
+  contacto. Mientras no les escribas un asunto, salen con el del primer
+  seguimiento y el de la prospección, y el campo vacío dice cuál; así no hace
+  falta escribir dos asuntos más para seguir enviando.
+- **La pregunta de enviar dice qué correo sale.** Con cuatro plantillas, la
+  que se ve en el editor puede no ser la que le toca a ese contacto: basta con
+  cambiar el desplegable para mirar otra después de elegirlo. «Enviar ahora»
+  pregunta ahora «¿Enviar «Reprospección» a …?», y la tanda dice con qué
+  plantillas sale (en una de seguimientos suelen ser dos).
 - **El historial se abre a toda la pantalla mientras lo miras.** La línea de
   tiempo vivía en una ventanita de 110 píxeles al pie de la ficha: con seis o
   siete apuntes había que desplazarla para leerla entera, que es justo lo que
@@ -209,6 +263,121 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
   nombre en inglés.
 
 ### Corregido
+
+- **Las preguntas de enviar no decían qué adjuntos salían.** Los adjuntos de
+  Prospección se guardan y viajan en todos los envíos, también en los de
+  días después. Una factura adjuntada para un cliente y olvidada salía en la
+  siguiente tanda a todas las agencias, con los datos de ese cliente. Ahora
+  «Enviar ahora» y la tanda los nombran antes de confirmar.
+- **«Enviar ahora» no avisaba de los datos que faltan.** La tanda ya decía
+  «un contacto no tiene empresa, su correo saldrá con huecos»; el envío
+  suelto no, y una plantilla con `{{empresa}}` salía con «… for .» sin
+  avisar. Ahora la pregunta lo dice.
+- **Un contacto marcado «Enviado» a mano no recibía nunca el seguimiento.**
+  Quien escribía a una agencia desde su correo, o se presentaba en su
+  portal, y la marcaba «Enviado» en la ficha la dejaba sin fecha de
+  contacto: la aplicación no le pedía el seguimiento, no salía en la
+  campana ni en ninguna tanda. Igual con una hoja importada que dice
+  «Enviado» sin fecha, y con «Rechazado» y la reprospección. Ahora, sin
+  otra fecha, cuenta desde el momento en que se marca o se importa.
+- **Guardar la ficha de un contacto podía devolverlo a «Pendiente» y
+  repetirle el correo en frío.** El formulario «Editar» guardaba el estado
+  que tenía el contacto al abrirse. Con la ficha abierta para corregir un
+  teléfono mientras corría la tanda, la tanda le escribía y Guardar lo
+  devolvía a «Pendiente»: el siguiente «Enviar a pendientes» le mandaba
+  otra vez el primer correo. Ahora el estado del formulario solo se guarda
+  si lo cambiaste en él.
+- **«Enviar ahora» podía mandar un segundo correo a quien la tanda acababa
+  de escribir.** Con el diálogo de confirmación abierto mientras la tanda
+  le escribía, al confirmar salía otro correo; y pulsarlo mientras le salía
+  el de la tanda, lo mismo. Ahora no se envía si ya le está saliendo uno, y
+  tras confirmar se vuelve a mirar el contacto, como hace la tanda.
+- **Marcar «Respondido» mientras salía un correo no servía.** Al terminar
+  el envío, el contacto volvía a «Enviado» y a los diez días tocaba
+  seguimiento a quien ya había contestado. Ahora se queda el estado que le
+  pusiste.
+- **Una errata en una plantilla le hacía olvidar al contacto qué correo le
+  tocaba.** Enviar con una variable inexistente (un `{{nombe}}`) dejaba al
+  contacto en «Error de envío» sin apuntar qué toque había fallado. Corregida
+  la errata, el reintento ya no salía como seguimiento sino con la plantilla
+  abierta, que al volver a elegirlo es la de prospección: el correo en frío
+  otra vez. Ahora el aviso sale igual, pero el contacto se queda como estaba,
+  como ya pasaba con el asunto vacío.
+- **Un fallo de la cuenta de correo marcaba en error a toda la tanda.** Con
+  la contraseña revocada o sin conexión, la tanda seguía y dejaba cada
+  contacto en «Error de envío», uno cada pocos segundos, por algo que no era
+  de ninguno. Ahora se para al primer fallo de la cuenta, no toca al contacto
+  y avisa de que los que faltan se quedan como estaban; al arreglar la cuenta, la
+  siguiente tanda los coge con su correo de siempre.
+- **Importar una lista de agencias sin personas no importaba nada.** Una hoja
+  con solo la agencia y el email acababa en «Ningún contacto importado — no
+  se pudieron guardar», sin decir por qué. Ahora, sin columna de nombre, se
+  usa el de la empresa («Hi Lingua Partners,») y la pantalla lo dice; sin
+  nombre ni empresa, no deja importar, y una fila suelta sin ninguno se cuenta
+  como «sin nombre».
+- **El aviso de cambiar el email aconsejaba quedarse con la errata.** Decía
+  que, si solo estabas corrigiendo una errata, cancelaras y dejaras el correo
+  como estaba. Pero lo enviado a una dirección mal escrita no llegó: reiniciar
+  la ficha y mandarle el primer correo a la dirección buena es lo correcto, y
+  cancelar dejaba la dirección rota y los seguimientos saliendo hacia ella.
+  Ahora lo dice así, y el recuento ya no pone «sus 1 envío(s)».
+- **Cerrar la aplicación justo después de guardar algo lo perdía.** La base
+  de datos se escribe en disco con un segundo de retraso, y al cerrar la
+  aplicación el servidor interno se detenía de golpe, sin terminar esa
+  escritura: un contacto dado de alta medio segundo antes de cerrar no estaba
+  al volver a abrir. Si era el último envío de una tanda, la siguiente tanda
+  se lo habría repetido. Ahora la aplicación espera a que todo esté guardado
+  antes de cerrarse.
+- **Cerrar la aplicación mientras salía un correo lo dejaba sin apuntar.** El
+  correo salía, pero la ficha no se enteraba, y la siguiente tanda se lo
+  habría repetido a ese contacto. Ahora, si se cierra con un correo saliendo,
+  la aplicación avisa, cancela el resto de la tanda, espera a que ese correo
+  quede apuntado y se cierra sola. Sin ningún correo saliendo, cierra al
+  momento.
+- **«Queda 1 envío del límite diario»**, no «Quedan 1 envíos».
+- **La tanda escribía a quien había cambiado mientras salía.** La lista se
+  sacaba al pulsar el botón y se recorría tal cual durante minutos. A una
+  agencia marcada «Respondido» a mitad de la tanda le llegaba igual el
+  seguimiento (y el envío le quitaba el «Respondido»), y a otra a la que se
+  le corregía el email se le escribía a la dirección vieja. Ahora cada
+  contacto se vuelve a mirar justo antes de su envío: si se borró, cambió de
+  email o ya no le toca ese correo, se queda fuera y se dice.
+- **Escribirle a un cliente activo lo devolvía a la prospección.** Tras
+  cualquier envío el contacto pasaba a «Enviado», también un cliente activo o
+  alguien en negociación, y a los diez días la aplicación pedía mandarle un
+  seguimiento. Ahora conservan su estado, salga bien o mal el envío.
+- **Un contacto pendiente podía recibir otra cosa que el primer correo** si
+  traía fecha de último contacto (una hoja puede decir «Pendiente» y una
+  fecha). Ahora a un pendiente solo le sale la prospección.
+- **Importar una hoja con agencias ya escritas las dejaba como pendientes.**
+  El estado solo se reconocía escrito como lo guarda la aplicación por dentro
+  («sent»), y la hoja de un traductor dice «Enviado»: esas filas entraban como
+  Pendiente, y el siguiente «Enviar a pendientes» les repetía el correo en frío.
+  Ahora se reconoce también la palabra que se ve en pantalla, en español y en
+  inglés, con o sin tildes. Y una fila sin estado pero con fecha de último
+  contacto entra como Enviado, así que la cadencia sigue desde ahí.
+- **«Enviar a pendientes» podía mandar un seguimiento como primer correo.** A
+  los pendientes les salía la plantilla abierta en el editor, y esa plantilla
+  cambia sola al pinchar un contacto: bastaba con mirar a alguien a quien le
+  tocaba seguimiento y pulsar «Enviar a pendientes» para que a contactos
+  nuevos les llegara el seguimiento, apuntado además como tal. Ahora, a quien
+  nunca se le ha escrito solo le sale el correo de prospección.
+- **Reintentar un seguimiento fallido mandaba otra vez el correo en frío.**
+  Si un envío falla por algo de ese correo (el servidor rechaza la dirección
+  o el mensaje), el contacto queda en «Error de envío», y «Enviar a
+  pendientes» lo reintentaba con la plantilla de prospección: el seguimiento
+  que había fallado se convertía en el primer correo otra vez. Ahora se
+  reintenta lo que falló: el primer correo, el primer seguimiento, el
+  segundo o la reprospección. (Los fallos de la cuenta, como una contraseña
+  caducada o la conexión caída, ya no marcan al contacto: ver más arriba.)
+
+- **Apuntar tiempo en un encargo por palabra le reescribía el precio.** Un
+  encargo de 10.000 palabras a 0,11 € (1.100,00 €) se quedaba en 3,08 € en
+  cuanto se le registraban 28 horas, porque el importe se recalculaba como
+  horas × tarifa; y además pasaba a contar como un encargo «por horas» para el
+  resto de la aplicación. No se llegaba desde la pantalla —el cronómetro solo
+  salía en los encargos por horas— pero sí desde la API, y ahora que el
+  cronómetro está en todos, era el camino normal.
 
 - **Los CSV y los TSV exportados salían con las tildes rotas al abrirlos en
   Excel.** «Agencia Niño» llegaba como «Agencia NiÃ±o», y «Número factura»

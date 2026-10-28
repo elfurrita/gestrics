@@ -10,9 +10,34 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [1.1.2] — 2026-10-26
+## [1.1.2] — 2026-10-28
 
 ### Added
+
+- **Metrics now tells you what each client really pays per hour.** The
+  per-word rate is what you agree on, not what you take home: an agency at
+  €0.11/word with awkward material and three rounds of revision can pay you
+  half per hour than one at €0.09 with clean text. Below the average rate by
+  client there is now a table with the hours spent and the income per hour for
+  each one, and a card at the top with the overall figure —
+  which also says how many jobs it is talking about, because the timer gets
+  used when you remember to. It only counts jobs already delivered, invoiced or
+  paid (a quote is not money), and it counts the taxable base, not the total
+  with taxes. Different currencies are never mixed into one figure. Rows are
+  ordered by hours tracked rather than by the figure itself: with a timer it is
+  easy to end up with a €500 job and three minutes logged, and ordering by
+  income per hour would put that one —€10,000/h— at the top of the list.
+
+- **The timer, on every job.** It used to appear only on jobs charged by the
+  hour, where time decides the amount. That left exactly the per-word jobs
+  —nearly all of them— with no way to measure, and without them there is no way
+  to know what an hour is worth. Tracking time on a per-word job does not
+  change its price or turn it into an hourly job: the time is simply recorded,
+  and what the hour is worth is worked out in Metrics. That is also why it is
+  not frozen when you invoice: if on Tuesday you remember Friday's two hours,
+  you can still log them, and that client's income per hour stays right. Not so
+  on jobs charged by the hour: there the time is the amount, and the invoice is
+  already out.
 
 - **The contact search now looks inside your notes too.** A note you cannot
   find is almost a note you never wrote: "pays at 60 days" or "the contact is
@@ -171,6 +196,35 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ### Changed
 
+- **For someone who already replied, "Send now" offers the first
+  follow-up.** With a contact that had responded, was in negotiation or was
+  an active client, the editor opened the prospecting template, and "Send
+  now" offered the introduction email to someone you had already been
+  talking to. It now opens the first follow-up; if something in the cadence
+  is due, it still opens that, and for everyone else it is prospecting as
+  before.
+- **The batch says it sends the templates as they were when it started.**
+  Fixing a typo mid-batch and seeing "Saved" suggested the rest would go out
+  fixed, and it didn't: what you confirmed goes out. It now says so under
+  the progress bar; to send the new version, cancel and start it again.
+- **The second follow-up and re-engagement no longer repeat emails.** There
+  was a single follow-up template for both touches, so the same agency got
+  the same text, word for word, at 10 days and at 20. And the 90-day
+  re-engagement resent the original cold email to people who hadn't replied
+  or had said no. The Template menu now has four: Prospecting, First
+  follow-up, Second follow-up and Re-engagement, and each contact gets the one
+  that's due, in batches too (a follow-up batch mixes first and second
+  follow-ups, and each goes out with its own). The two new ones come with
+  their own text: the second follow-up offers a sample and leaves the door
+  open, and re-engagement mentions the first contact. Until you give them a
+  subject, they use the first follow-up's and the prospecting one's, and the
+  empty field says which, so you don't have to write two more subjects to
+  keep sending.
+- **The send question says which email goes out.** With four templates, the
+  one showing in the editor may not be the one that contact is due: changing
+  the menu to look at another after picking them is enough. "Send now" now
+  asks "Send “Re-engagement” to …?", and a batch says which templates it uses
+  (a follow-up batch usually has two).
 - **The history opens full height while you read it.** The timeline lived in a
   110-pixel window at the foot of the record: with six or seven entries you
   had to scroll it to read the lot, which is exactly what nobody does before
@@ -206,6 +260,120 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
   is stored — and printed on the invoice — is still the English name.
 
 ### Fixed
+
+- **The send questions didn't say which attachments went out.** Prospecting
+  attachments are kept and go with every send, including those days later.
+  An invoice attached for one client and forgotten went out in the next
+  batch to every agency, with that client's details. "Send now" and the
+  batch now name them before you confirm.
+- **"Send now" didn't warn about missing details.** The batch already said
+  "one contact has no company, their email will have gaps"; a single send
+  didn't, and a template with `{{empresa}}` went out with "… for ." without
+  a word. The question now says so.
+- **A contact marked "Sent" by hand never got a follow-up.** Emailing an
+  agency from your own mailbox, or applying through its portal, and marking
+  it "Sent" left it with no contact date: the app never asked for the
+  follow-up, and it showed up neither in the bell nor in any batch. The same
+  with an imported sheet that says "Sent" with no date, and with "Rejected"
+  and re-engagement. With no other date, it now counts from when it is
+  marked or imported.
+- **Saving a contact's details could put it back to "Pending" and repeat
+  the cold email.** The "Edit" form saved the status the contact had when
+  it was opened. With the form open to fix a phone number while a batch
+  ran, the batch emailed the contact and Save put it back to "Pending": the
+  next "Send to pending" sent the first email again. The form's status is
+  now only saved if you changed it there.
+- **"Send now" could send a second email to someone the batch had just
+  emailed.** With the confirmation open while the batch emailed that
+  contact, confirming sent another email; clicking it while the batch's
+  email was going out did the same. It now won't send while an email to
+  them is on its way, and after you confirm it checks the contact again,
+  as the batch does.
+- **Marking a contact "Responded" while an email was going out didn't
+  stick.** Once the send finished, the contact went back to "Sent", and ten
+  days later a follow-up was due for someone who had already replied. The
+  status you set now stays.
+- **A typo in a template made the contact forget which email was due.**
+  Sending with a placeholder that doesn't exist (a `{{nmae}}`) left the
+  contact as "Send failed" without logging which touch had failed. Once the
+  typo was fixed, the retry no longer went out as a follow-up but with the
+  open template, which on selecting the contact again is the prospecting
+  one: the cold email all over again. The warning still shows, but the
+  contact now stays as it was, as it already did with an empty subject.
+- **An email-account failure marked the whole batch as failed.** With the app
+  password revoked or no connection, the batch carried on and left each
+  contact as "Send failed", one every few seconds, for something that was
+  none of theirs. It now stops at the first account failure, leaves the
+  contact alone and says the rest are left as they were; once the account is
+  fixed, the next batch picks them up with their usual email.
+- **Importing a list of agencies without people imported nothing.** A sheet
+  with just the agency and the email ended in "No contacts imported — could
+  not be saved", without saying why. With no name column, the company name
+  is now used ("Hi Lingua Partners,") and the screen says so; with neither
+  name nor company it won't import, and a stray row with neither is counted
+  as "with no name".
+- **The change-email warning advised keeping the typo.** It said that if you
+  were only fixing a typo you should cancel and leave the address as it was.
+  But what was sent to a misspelt address never arrived: resetting the record
+  and sending the first email to the right address is correct, and cancelling
+  left the broken address with follow-ups still going to it. It now says so,
+  and the count no longer reads "its 1 logged send(s)".
+- **Closing the app right after saving something lost it.** The database is
+  written to disk a second later, and closing the app stopped the internal
+  server abruptly, before that write: a contact added half a second before
+  closing was gone when the app reopened. If it was the last send of a batch,
+  the next batch would have repeated it. The app now waits until everything
+  is saved before closing.
+- **Closing the app while an email was going out left it unlogged.** The
+  email went out but the record never knew, and the next batch would have
+  sent it to that contact again. Now, if you close with an email going out,
+  the app says so, cancels the rest of the batch, waits until that email is
+  logged and then closes on its own. With no email going out, it closes at
+  once.
+- **"1 send left of the daily limit"**, not "1 sends left".
+- **A batch emailed people who had changed while it was sending.** The list
+  was taken when the button was clicked and gone through as it was, for
+  minutes. An agency marked "Responded" mid-batch still got the follow-up
+  (and the send took away its "Responded"), and one whose email was corrected
+  got written to at the old address. Each contact is now looked at again just
+  before its email: if it was deleted, changed its email or is no longer due
+  that email, it's left out and the log says so.
+- **Emailing an active client put them back into prospecting.** After any
+  send the contact became "Sent", active clients and negotiations included,
+  and ten days later the app asked you to send them a follow-up. They now
+  keep their status, whether the send works or fails.
+- **A pending contact could get something other than the first email** if it
+  had a last-contact date (a sheet can say "Pending" and carry a date). A
+  pending contact now only ever gets the prospecting email.
+- **Importing a sheet of agencies you'd already written to left them pending.**
+  The status was only recognised as the app stores it internally ("sent",
+  "activeClient"), so a sheet using the on-screen words ("Active client",
+  "Send failed", or the Spanish "Enviado") brought those rows in as Pending,
+  and the next "Send to pending" repeated the cold email. The on-screen word
+  is now recognised too, in English and Spanish, with or without accents.
+  And a row with no status but a last-contact date comes in as Sent, so the
+  cadence carries on from there.
+- **"Send to pending" could send a follow-up as the first email.** Pending
+  contacts got whichever template was open in the editor, and that template
+  switches on its own when you click a contact: looking at someone due for a
+  follow-up and then clicking "Send to pending" sent the follow-up to new
+  contacts, and logged it as one. Now anyone you've never written to only
+  gets the prospecting email.
+- **Retrying a failed follow-up sent the cold email again.** When a send
+  fails because of that email (the server rejects the address or the
+  message), the contact is left as "Send failed", and "Send to pending"
+  retried it with the prospecting template: the follow-up that had failed
+  turned into the first email again. Now it retries what failed: the first
+  email, the first follow-up, the second, or re-engagement. (Account
+  failures, such as an expired password or a dropped connection, no longer
+  mark the contact: see above.)
+
+- **Tracking time on a per-word job rewrote its price.** A 10,000-word job at
+  €0.11 (€1,100.00) dropped to €3.08 as soon as 28 hours were logged against
+  it, because the amount was recalculated as hours × rate; and the job then
+  counted as an hourly one for the rest of the app. It could not be reached
+  from the screen —the timer only showed on hourly jobs— but it could from the
+  API, and now that the timer is on every job, that was the normal route.
 
 - **Exported CSV and TSV files came out with broken accents when opened in
   Excel.** "Agencia Niño" arrived as "Agencia NiÃ±o", and "Número factura" as
