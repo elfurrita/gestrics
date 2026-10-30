@@ -1,4 +1,5 @@
-// Genera changelog.html a partir de CHANGELOG.md y CHANGELOG.en.md.
+// Genera changelog.html (inglés) y es/changelog.html (español) a partir de
+// CHANGELOG.en.md y CHANGELOG.md.
 //
 // La portada enlazaba antes al archivo renderizado en GitHub. Se dejó de
 // hacer a propósito: esa página lleva al repositorio, y de ahí a la de
@@ -98,7 +99,7 @@ function convertir(md, saltar) {
 
     if (t === "" || t === "---") { cerrarTodo(); continue; }
     if (t.startsWith("# ")) { cerrarTodo(); continue; }            // el h1 lo pone el marco
-    if (saltar.test(t)) { cerrarTodo(); continue; }                // "ver la otra versión": lo hace el conmutador
+    if (saltar.test(t)) { cerrarTodo(); continue; }                // "ver la otra versión": lo hacen las banderas
 
     // Definiciones de referencia del final del archivo:
     //   [1.1.0]: https://github.com/.../releases/tag/v1.1.0
@@ -128,59 +129,87 @@ function convertir(md, saltar) {
   return salida.join("\n      ");
 }
 
-const bloques = IDIOMAS.map(({ lang, archivo, titulo, saltar }) => {
-  const md = fs.readFileSync(path.join(raiz, archivo), "utf8");
-  return `    <div lang="${lang}">
-      <h1>${titulo}</h1>
-      ${convertir(md, saltar)}
-    </div>`;
-}).join("\n");
+// UNA PÁGINA POR IDIOMA, como la portada y las guías: changelog.html en inglés
+// y es/changelog.html en español. Antes era una sola página con los dos
+// bloques tras un conmutador, y los enlaces en español llevaban a
+// changelog.html?lang=es. Google trató esa dirección como página propia
+// (Search Console, 2026-10-30: «Seleccionada por Google como canónica: URL
+// inspeccionada», aunque la página declaraba changelog.html), porque al
+// cargarla veía el texto en español y en la otra en inglés. Con dos URL
+// enlazadas por hreflang las señales dejan de contradecirse. La dirección
+// vieja con ?lang=es la redirige idioma.js a la nueva.
+const SITIO = "https://outreachstudio.app";
+const BANDERA = {
+  en: '<svg class="bandera" viewBox="0 0 60 30" aria-hidden="true" focusable="false"><clipPath id="rec-gb"><path d="M0 0h60v30H0z"/></clipPath><g clip-path="url(#rec-gb)"><path d="M0 0h60v30H0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg>',
+  es: '<svg class="bandera" viewBox="0 0 60 30" aria-hidden="true" focusable="false"><path d="M0 0h60v30H0z" fill="#C60B1E"/><path d="M0 7.5h60v15H0z" fill="#FFC400"/></svg>',
+};
+const MARCO = {
+  en: {
+    archivo: "changelog.html", url: "/changelog.html", titulo: "Changelog",
+    descripcion: "Changes you can see when using Gestrics, version by version.",
+    nav: [["/", "Home"], ["/terms.html", "Terms of Use"], ["/privacy.html", "Privacy Policy"]],
+    nombreIdioma: "English",
+  },
+  es: {
+    archivo: "es/changelog.html", url: "/es/changelog.html", titulo: "Historial de cambios",
+    descripcion: "Cambios visibles de Gestrics, versión a versión.",
+    nav: [["/es/", "Inicio"], ["/terms.html?lang=es", "Términos de Uso"], ["/privacy.html?lang=es", "Política de Privacidad"]],
+    nombreIdioma: "Español",
+  },
+};
 
-// El marco es el mismo de terms.html y privacy.html, copiado a mano: no hay
-// plantilla compartida en el sitio, así que un cambio de cabecera o navegación
-// hay que darlo también aquí.
-//
-// EL PIE YA NO: viene de pie.mjs, el mismo módulo que reparte generar-pie.mjs
-// por las demás páginas, así que no puede divergir de ellas. Lo que sigue a
-// mano es la cabecera.
-const pagina = `<!doctype html>
-<html lang="en">
+// Todas las rutas son absolutas: la española vive un nivel más abajo.
+// La x-default es la inglesa, como en la portada.
+function pagina({ lang, archivo, saltar }) {
+  const m = MARCO[lang];
+  const md = fs.readFileSync(path.join(raiz, archivo), "utf8");
+  const banderas = ["en", "es"].map((l) =>
+    `    <a href="${MARCO[l].url}" hreflang="${l}" data-lang="${l}"${l === lang ? ' class="active" aria-current="page"' : ""} title="${MARCO[l].nombreIdioma}" aria-label="${MARCO[l].nombreIdioma}">${BANDERA[l]}</a>`
+  ).join("\n");
+  return `<!doctype html>
+<html lang="${lang}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Changelog — Gestrics</title>
-<link rel="canonical" href="https://outreachstudio.app/changelog.html">
-<link rel="icon" href="icon.png">
-<link rel="stylesheet" href="style.css">
+<title>${m.titulo} — Gestrics</title>
+<link rel="canonical" href="${SITIO}${m.url}">
+<link rel="alternate" hreflang="en" href="${SITIO}${MARCO.en.url}">
+<link rel="alternate" hreflang="es" href="${SITIO}${MARCO.es.url}">
+<link rel="alternate" hreflang="x-default" href="${SITIO}${MARCO.en.url}">
+<script src="/idioma.js"></script>
+<meta name="description" content="${m.descripcion}">
+<link rel="icon" href="/icon.png">
+<link rel="stylesheet" href="/style.css">
 </head>
 <body>
 <header id="arriba">
-  <img src="icon.png" alt="Gestrics">
-  <div class="title">Gestrics<span lang="en">Changelog</span><span lang="es">Historial de cambios</span></div>
+  <img src="/icon.png" alt="Gestrics">
+  <div class="title">Gestrics<span>${m.titulo}</span></div>
   <nav>
-    <a href="/" lang="en">Home</a>
-    <a href="/es/" lang="es">Inicio</a>
-    <a href="terms.html" lang="en">Terms of Use</a>
-    <a href="terms.html?lang=es" lang="es">Términos de Uso</a>
-    <a href="privacy.html" lang="en">Privacy Policy</a>
-    <a href="privacy.html?lang=es" lang="es">Política de Privacidad</a>
+${m.nav.map(([href, texto]) => `    <a href="${href}">${texto}</a>`).join("\n")}
   </nav>
   <div class="lang-toggle">
-    <button data-lang="en" class="active" title="English" aria-label="English"><svg class="bandera" viewBox="0 0 60 30" aria-hidden="true" focusable="false"><clipPath id="rec-gb"><path d="M0 0h60v30H0z"/></clipPath><g clip-path="url(#rec-gb)"><path d="M0 0h60v30H0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg></button>
-    <button data-lang="es" title="Español" aria-label="Español"><svg class="bandera" viewBox="0 0 60 30" aria-hidden="true" focusable="false"><path d="M0 0h60v30H0z" fill="#C60B1E"/><path d="M0 7.5h60v15H0z" fill="#FFC400"/></svg></button>
+${banderas}
   </div>
 </header>
 <main>
   <article class="changelog">
-${bloques}
+    <div>
+      <h1>${m.titulo}</h1>
+      ${convertir(md, saltar)}
+    </div>
   </article>
 </main>
-${pie({ bilingue: true })}
-<script src="lang-toggle.js"></script>
-<script src="analitica.js"></script>
+${pie({ lang })}
+<script src="/analitica.js"></script>
 </body>
 </html>
 `;
+}
 
-fs.writeFileSync(path.join(raiz, "changelog.html"), pagina);
-console.log("changelog.html generado — " + pagina.split("\n").length + " líneas");
+fs.mkdirSync(path.join(raiz, "es"), { recursive: true });
+for (const idioma of IDIOMAS) {
+  const html = pagina(idioma);
+  fs.writeFileSync(path.join(raiz, MARCO[idioma.lang].archivo), html);
+  console.log(`${MARCO[idioma.lang].archivo} generado — ${html.split("\n").length} líneas`);
+}

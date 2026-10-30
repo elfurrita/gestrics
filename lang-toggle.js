@@ -40,9 +40,9 @@
     });
     var saved = null;
     try { saved = localStorage.getItem("outreach-legal-lang"); } catch (e) {}
-    // Este conmutador ya solo lo usan terms.html, privacy.html y
-    // changelog.html: la portada y la guía tienen una URL por idioma y las
-    // lleva idioma.js. Lo elegido manda; si no se ha elegido nada, "?lang=es"
+    // Este conmutador ya solo lo usan terms.html y privacy.html: la portada,
+    // las guías y el historial tienen una URL por idioma y las lleva
+    // idioma.js. Lo elegido manda; si no se ha elegido nada, "?lang=es"
     // en la dirección, que ponen los enlaces de las páginas en español para
     // que quien viene de /es/ siga en español. Se lee y no se guarda: el
     // punto 11 de privacy.html promete que solo se guarda lo elegido.

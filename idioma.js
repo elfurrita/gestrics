@@ -1,5 +1,5 @@
 // idioma.js — el idioma de quien visita, en las páginas que tienen una URL
-// por idioma (la portada y la guía).
+// por idioma (la portada, las guías y el historial).
 //
 // Esas páginas ya no conmutan el texto en sitio: cada idioma es otra URL,
 // porque Google indexa un solo idioma por URL y con los dos juntos la mitad
@@ -18,9 +18,14 @@
 //   que se elige con el conmutador. Dos: si la visita redirigiera, quien
 //   entró una vez en la portada inglesa (a la que lleva el aviso de versión
 //   nueva de la app) acabaría en la guía inglesa al abrir un enlace a la
-//   española. Para que terms.html, privacy.html y changelog.html abran en
+//   española. Para que terms.html y privacy.html abran en
 //   español a quien viene de /es/, los enlaces de las páginas en español
 //   llevan "?lang=es", que lang-toggle.js lee sin guardarlo.
+// - Si no hay nada elegido, un "?lang=" en la dirección también lleva a la
+//   versión de ese idioma, y tampoco se guarda. Es para las direcciones
+//   viejas: el historial en español fue changelog.html?lang=es hasta el
+//   2026-10-30, Google la indexó como página propia, y quien llegue por ella
+//   tiene que acabar en es/changelog.html y no en el historial inglés.
 //
 // A Google no le afecta nada de esto, porque no guarda nada entre visitas.
 (function () {
@@ -28,6 +33,10 @@
   var actual = document.documentElement.getAttribute("lang");
   try {
     var elegido = localStorage.getItem(ELEGIDO);
+    if (elegido !== "es" && elegido !== "en") {
+      elegido = null;
+      try { elegido = new URLSearchParams(location.search).get("lang"); } catch (e) {}
+    }
     if ((elegido === "es" || elegido === "en") && elegido !== actual) {
       var alt = document.querySelector('link[rel="alternate"][hreflang="' + elegido + '"]');
       // Solo la ruta: el href lleva el dominio de producción, y así la

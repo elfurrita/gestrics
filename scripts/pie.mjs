@@ -30,7 +30,7 @@ export const COLUMNAS = {
     ["Contact", [[`mailto:${CORREO}`, CORREO]]],
   ],
   es: [
-    ["Gestrics", [["/es/", "Inicio"], ["/changelog.html?lang=es", "Historial de cambios"]]],
+    ["Gestrics", [["/es/", "Inicio"], ["/es/changelog.html", "Historial de cambios"]]],
     ["Guías", [["/guia-facturacion-traductores.html", "Facturar como traductor"],
                ["/guia-impagos-traductores.html", "Facturas impagadas"],
                ["/guia-gastos-deducibles-traductores.html", "Gastos deducibles"],

@@ -506,7 +506,7 @@ footer {
    ya eran cuatro enlaces en fila, y lo legal ni siquiera estaba — vivia solo
    en la navegacion de arriba, donde nadie lo busca al terminar de leer.
 
-   OJO EN LAS PAGINAS BILINGUES (terms, privacy, changelog): el atributo lang
+   OJO EN LAS PAGINAS BILINGUES (terms y privacy): el atributo lang
    NO puede ir en .pie-cols. lang-toggle.js pone display:block EXPLICITO al
    mostrar un bloque, asi que se cargaria la rejilla. Va en un <div lang> que
    envuelve, cuyo display natural ya es block, y la rejilla queda dentro. */

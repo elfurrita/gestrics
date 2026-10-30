@@ -117,12 +117,13 @@ for (const ruta of paginas()) {
   const nuevo = pie({ lang, bilingue });
   const coincide = encontrados[0] === nuevo;
 
-  // changelog.html SÍ se comprueba, pero no se escribe: lo escribe su propio
+  // Las dos páginas del historial (changelog.html y es/changelog.html) SÍ se
+  // comprueban, pero no se escriben: las escribe su propio
   // generador con este mismo módulo. Saltárselo del todo era un agujero —
   // --revisar daba por bueno el sitio entero con el historial desfasado.
-  if (nombre === "changelog.html") {
+  if (nombre === "changelog.html" || nombre === "es/changelog.html") {
     if (coincide) alDia++;
-    else { historialDesfasado = true; console.log(`  ${nombre}  (bilingüe, lo escribe su generador)`); }
+    else { historialDesfasado = true; console.log(`  ${nombre}  (${lang}, lo escribe su generador)`); }
     continue;
   }
 
@@ -139,7 +140,7 @@ for (const ruta of paginas()) {
 console.log(`\n${alDia} al día, ${cambiadas} ${SOLO_REVISAR ? "desfasada(s)" : "reescrita(s)"}, ${sinPie} sin <footer>.`);
 
 if (historialDesfasado) {
-  console.log("changelog.html tiene el pie viejo. Ejecuta: node scripts/generar-changelog.mjs");
+  console.log("El historial tiene el pie viejo. Ejecuta: node scripts/generar-changelog.mjs");
 }
 
 if (SOLO_REVISAR && (cambiadas || historialDesfasado)) {

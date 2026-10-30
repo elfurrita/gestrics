@@ -117,8 +117,9 @@ página lo que necesita:
 Una página sin `<footer>` se salta en silencio — hoy, el archivo de
 verificación de Google.
 
-`changelog.html` es el caso aparte: **se comprueba pero no se escribe**, porque
-lo escribe su propio generador con el mismo módulo. Comprobarlo importa, y no
+Las dos páginas del historial (`changelog.html` y `es/changelog.html`) son el
+caso aparte: **se comprueban pero no se escriben**, porque las escribe su
+propio generador con el mismo módulo. Comprobarlo importa, y no
 es un detalle: la primera versión se lo saltaba del todo, y entonces
 `--revisar` daba el sitio por bueno con el historial llevando el pie viejo.
 Ahora lo nombra y sale con 1.
@@ -141,9 +142,12 @@ defecto y un `""` no le ganaría—, así que aplastaría la rejilla. Va en un
 
 ## La página del historial de cambios
 
-`changelog.html` **no se edita a mano**: la genera `generar-changelog.mjs` a
-partir de `CHANGELOG.md` y `CHANGELOG.en.md`, que vienen del repositorio de la
-aplicación.
+`changelog.html` (inglés) y `es/changelog.html` (español) **no se editan a
+mano**: las genera `generar-changelog.mjs` a partir de `CHANGELOG.en.md` y
+`CHANGELOG.md`, que vienen del repositorio de la aplicación. Hasta el
+2026-10-30 eran una sola página bilingüe y el español vivía en
+`changelog.html?lang=es`; Google indexó esa dirección como página propia, y
+por eso ahora hay una URL por idioma. `idioma.js` redirige la vieja.
 
 El ciclo completo, cada vez que la aplicación publica una versión:
 
