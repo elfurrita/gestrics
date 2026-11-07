@@ -10,6 +10,128 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
+## [1.1.3] — 2026-11-07
+
+### Changed
+
+- **Once the template is saved, its save button is a floppy disk with a
+  check.** It used to turn into a bare check mark, which on first sight
+  didn't say what was done.
+
+### Fixed
+
+- **An hourly job with no hours logged was invoiced at 0.00.** It happened when
+  the timer was forgotten (estimated hours don't count): the invoice used up its
+  number and wasn't left pending payment. The dialog now says the hours are
+  missing and won't issue it until they're logged; if the timer is still running,
+  it asks you to stop it before you click, not after. A pro bono invoice, at a
+  rate of 0, can still be issued.
+- **Switching a job with time already logged to "Hourly" left it at 0 hours.**
+  A per-word revision with 3 h on the timer ended up at 0.00 with those 3 h
+  listed right below. They now count as soon as the type is chosen, and the form
+  rounds hours to two decimals (20 minutes no longer show as 0.3333333333333333).
+- **Pasting the Stripe publishable key (pk_…) showed the warning in Spanish**
+  even with the interface in English. It now follows the interface language, and
+  the key is also recognised when pasted with a leading space.
+- **Connecting Stripe while offline said the key was invalid**, and creating a
+  payment link said "Stripe said: fetch failed". Both now say Stripe couldn't be
+  reached, and if Stripe doesn't answer they give up after 10 seconds instead of
+  spinning for minutes. The pasted key is also trimmed: a space or line break
+  picked up when copying it was saved as is.
+- **After correcting a client's last invoice, the next one proposed too long a
+  payment term.** It counted from the original issue date instead of the
+  corrective invoice: an invoice of 1 October corrected on 10 November at 30 days
+  proposed 70. It now proposes the corrective invoice's term, and a cancelled
+  invoice no longer counts as the last one.
+- **"Mark all as read" silenced alerts that hadn't arrived yet.** Next month's
+  recurring fee and the second payment reminder were born already read, without
+  lighting up the red badge. The same went for a delivery or an invoice falling
+  due again after its date was changed. Each of those alerts now counts as new.
+  And the new month's fee now shows up even if the app has stayed open since the
+  previous month: before, it didn't appear until a restart.
+- **Two timers could keep running at once without warning.** If you invoiced a
+  per-word job with its timer running and started another, the app didn't say
+  the first one was still counting, and that extra time lowered its hourly rate
+  in Metrics. The usual warning now appears and stops it before starting.
+- **The recurring invoice came out without your payment terms.** It said "Bank
+  transfer" and asked for the invoice number on the transfer even if you were
+  paid by PayPal. It now carries the same terms as a regular invoice, the ones in
+  your profile, and falls due within the period they state ("within 60 days",
+  60 days); if they state none, 30 days as before.
+- **A long invoice came out on three, four or more pages, several holding a single
+  line.** It happened with a CAT analysis of several categories plus the VAT note,
+  payment terms or the Stripe link: every line that didn't fit opened a page of
+  its own, and "Pay online:" could end up on one page and the link on another. It
+  now comes out on two: the totals with their notes, and the whole payment block,
+  each kept on one page. And with a client whose address is long and a two-line
+  project title, the totals no longer jump to the second page leaving half the
+  first one empty: they stay with their table. Without an IBAN or BIC (paid by
+  PayPal), "Payment terms" no longer sits alone at the foot of the first page
+  with the terms on the second. An invoice that fits on one page looks the same
+  as before.
+- **With six attachments, a batch left every contact in "Send error".** An email
+  takes five files, but a sixth could be added without warning; each contact then
+  turned red with an error in their history, for something that wasn't about them.
+  The sixth file is now refused, and the app says so. And if the attachments are
+  what fails, as in a restored backup with more than five, the batch doesn't go
+  out and contacts stay as they were.
+- **A backup over 50 MB could be made but not restored.** A few large deliverables
+  were enough: the file downloaded without trouble, and restoring it gave an error
+  and recovered nothing. It now restores in full up to the most that can be
+  exported, about 500 MB. Above that the backup isn't generated and the app says
+  so; in one case, the button did nothing and gave no warning.
+- **A Keygen outage locked paying users out of the app.** The 7-day grace period
+  only covered having no network: if the license server answered with an error,
+  the activation screen appeared even if the license had been checked the day
+  before. And if it didn't answer at all, the app sat on "Loading" for 5 minutes.
+  A server error now counts the same as being offline, and so do 10 seconds with
+  no answer. An expired or suspended license still locks the app.
+- **Restoring a backup on a new computer lost the profile, the templates and the
+  attachments.** The dates in a backup older than 14 days ended the trial as soon
+  as the contacts and invoices were in, and whatever is restored after them was
+  refused: activating the licence brought back the setup wizard, an empty profile
+  and the factory templates. The whole backup now goes in, and the trial stays
+  over until you activate.
+- **Archiving a project whose invoice was still unpaid made the invoice
+  disappear.** It left "Pending", was never treated as overdue and the bell
+  never offered a reminder, even though the client still owed it. And
+  archiving is what the app itself suggests when you try to delete an
+  invoiced project. Archiving now only takes it off the list: its invoice
+  stays pending, falls overdue, asks for reminders and is listed in the
+  reminder that groups the client's other overdue invoices. The bell
+  notification takes you to it with the "Archived" filter on. Along the way,
+  an invoice voided with a corrective invoice no longer counts as pending.
+- **Editing a revision or post-editing project applied today's percentage.**
+  The form took the weight from Settings, not the one the project had. After
+  changing it in Settings, adding the PO to an already invoiced revision was
+  refused ("the amount was frozen in the invoice"), and on one not yet
+  invoiced, correcting just the title silently changed its price. It now
+  keeps its own; the one in Settings applies to new projects and when you
+  change the type.
+- **An invoiced revision or post-editing job didn't let you correct the word
+  count.** "It was 3,000 words, not 5,000" had no way out: the correction
+  dialog only offered the rate, as with a CAT analysis. It now asks for the
+  words and recalculates with the percentage it was invoiced at.
+- **A corrective invoice inherited the original invoice's reminders.** If the
+  original had already had its second reminder, the bell stayed quiet 7 and
+  14 days after the new due date, and the first thing it offered was the
+  final notice. The corrective invoice now starts its reminders from the
+  first one.
+- **The issue and correction dialogs sometimes showed a total that wasn't the
+  invoice's.** With 21% VAT and 15% withholding, in almost one base in four
+  the dialog said a cent different (€10.56: €11.19 in the dialog, €11.20 on
+  the invoice), and its own lines didn't add up. The same went for the
+  "you'll have to refund" of an already paid corrective invoice. They now do
+  the same sums as the invoice.
+- **Opening Gestrics twice left a process with no window.** The app takes a
+  few seconds to open, and a second click on the icon started another copy
+  that sat waiting with no window, after rewriting the database. A second
+  click no longer opens another copy. And if Gestrics can't start, it says so
+  and closes instead of staying hidden.
+- **A sender name with quotes arrived garbled.** With «Traducciones "El
+  Faro" SL» as the sender name, the client saw «TraduccionesEl Faro SL». It
+  now arrives as written.
+
 ## [1.1.2] — 2026-10-28
 
 ### Added
