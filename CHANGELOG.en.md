@@ -10,7 +10,24 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [1.1.3] — 2026-11-07
+## [1.1.3] — 2026-11-10
+
+### Added
+
+- **One CAT rate grid per client, instead of a single one.** The percentage of
+  your rate paid for each match category is set by the agency, not by you, and
+  each one has its own — and one per tool: in Sunyu Transphere's vendor portal
+  the same 85-94 % is worth 50 % in Trados and memoQ, 60 % in XTM and 40 % in
+  Phrase. With a single grid, quoting for an agency meant rewriting yours
+  before importing the analysis and putting it back afterwards. Settings now
+  holds as many as you need, each with its name; every client has theirs and
+  their projects start from it, and you can switch it on the project before
+  saving — which is the normal case when the same agency sends jobs in
+  different tools — even with the analysis already imported: picking another
+  one applies its percentages. Nothing already quoted moves on its own: the
+  percentages are frozen inside the project's breakdown, along with the name of
+  the grid they came from, so editing, renaming or deleting one in Settings
+  changes no amount.
 
 ### Changed
 
@@ -20,6 +37,49 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ### Fixed
 
+- **Trados analyses couldn't be imported.** Since 1.1.1, picking the "Analyze
+  Files" report — as XML, Excel, HTML or MHT — didn't open the import window
+  and showed a file-reading error instead. memoQ and Wordfast reports were not
+  affected.
+- **When importing an analysis, some rows were left unbilled.** memoQ fragments
+  came up unassigned and out of the amount; they are now suggested as "no
+  match", and you can change the row before confirming. In a spreadsheet with
+  one row per category, "Leveraged match", "Machine translation", "Fragments",
+  the 0-49 % bands, "101 %" and "X translated" are now recognised too.
+- **"Perfect match" was suggested as a 100 % match.** In those spreadsheets it
+  was charged as an exact match; it now goes with the context matches, as it
+  already did when reading a Trados report.
+- **Resending a translation named "Factura-…" or "Invoice-…" sent it as if it
+  were your invoice.** It happened to anyone translating their clients'
+  invoices: when resending the corrected version, the dialog came up as "Send
+  invoice", went to the client's billing email with the invoice template, didn't
+  let you add the new version, and what was sent wasn't kept in Deliverables.
+  Now "Send deliverables" is always a delivery and "Send invoice" always the
+  invoice, whatever the files are called.
+- **"Net profit" counted VAT as profit.** It took expenses away from the total
+  collected, with VAT included and withholding taken off: a 1,000 € invoice at
+  20 % and a 120 € expense with 20 € of VAT gave 1,080 € instead of 900 €. It's
+  now the amount collected before tax minus expenses before tax, in Metrics and
+  in the header, and the card says so. An expense with no VAT entered counts in
+  full. "Total billed" and "Expenses" are still the totals.
+- **The accounting export listed a cancelled invoice as awaiting payment.** In
+  the invoice CSV and Excel files, the original came out "Pending" with its
+  amount, and so did the corrective invoice at 0. Both now say "Cancelled".
+- **In a currency without decimals, such as the yen, the invoice stored half a
+  yen.** 3,001 words at ¥12.5 were left with a net amount of ¥37,512.5 and a
+  total of ¥37,513, so the accounting export didn't add up; and the lines of a
+  CAT breakdown, on the invoice, the quote and its email, added up to one yen
+  more than the net amount. The net amount and the lines are now whole yen.
+- **A recurring invoice for a month already over didn't say when the service was
+  provided.** Only the month appeared on the line, and the "Operation date"
+  column of the accounting export came out empty. An October invoice issued in
+  November now prints its service date (31 October) and carries it to the export.
+  The current month's invoice is unchanged.
+- **In the Americas, the follow-up for an imported contact came a day early.** A
+  sheet whose "Last contact" held only the day (30 Oct) put the agency under
+  "Needs follow-up" on the afternoon of 8 Nov in Mexico, on day nine. That day
+  now counts as a local calendar day: the follow-up comes on day 10, and
+  re-prospecting on day 90.
 - **An hourly job with no hours logged was invoiced at 0.00.** It happened when
   the timer was forgotten (estimated hours don't count): the invoice used up its
   number and wasn't left pending payment. The dialog now says the hours are
@@ -38,11 +98,12 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
   reached, and if Stripe doesn't answer they give up after 10 seconds instead of
   spinning for minutes. The pasted key is also trimmed: a space or line break
   picked up when copying it was saved as is.
-- **After correcting a client's last invoice, the next one proposed too long a
-  payment term.** It counted from the original issue date instead of the
-  corrective invoice: an invoice of 1 October corrected on 10 November at 30 days
-  proposed 70. It now proposes the corrective invoice's term, and a cancelled
-  invoice no longer counts as the last one.
+- **After correcting a client's last invoice, the next one proposed the wrong
+  payment term.** An invoice of 1 October corrected on 10 November with its due
+  date moved to 30 days proposed 70, and a 30-day invoice corrected on day eight
+  without touching the due date proposed 23. The term is now counted from when
+  the due date was set: the issue date, or the corrective invoice if it moved it.
+  And a cancelled invoice no longer counts as the last one.
 - **"Mark all as read" silenced alerts that hadn't arrived yet.** Next month's
   recurring fee and the second payment reminder were born already read, without
   lighting up the red badge. The same went for a delivery or an invoice falling

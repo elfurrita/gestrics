@@ -11,7 +11,24 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [1.1.3] — 2026-11-07
+## [1.1.3] — 2026-11-10
+
+### Añadido
+
+- **Un tarifario de coincidencias CAT por cliente, en vez de uno solo.** El
+  porcentaje de la tarifa que se paga por cada categoría lo pone la agencia, no
+  el traductor, y cada una tiene el suyo —y uno por herramienta: en el portal de
+  proveedores de Sunyu Transphere, el mismo 85-94 % vale el 50 % en Trados y en
+  memoQ, el 60 % en XTM y el 40 % en Phrase—. Con un único tarifario,
+  presupuestar para una agencia obligaba a reescribir el tuyo antes de importar
+  el análisis y a devolverlo después. Ahora Configuración guarda los que hagan
+  falta, cada uno con su nombre; cada cliente tiene el suyo y sus proyectos
+  nacen con él, y en el proyecto se cambia antes de guardar —que es lo normal
+  cuando la misma agencia manda encargos en herramientas distintas—, también
+  con el análisis ya importado: elegir otro aplica sus porcentajes. Lo ya
+  presupuestado no se mueve solo: los porcentajes quedan congelados dentro del
+  desglose del proyecto, con el nombre del tarifario con el que se hizo, así
+  que editar, renombrar o borrar uno en Configuración no cambia ningún importe.
 
 ### Cambiado
 
@@ -21,6 +38,49 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ### Corregido
 
+- **El análisis de Trados no se importaba.** Desde la 1.1.1, al elegir el
+  informe de «Analizar archivos» —en XML, Excel, HTML o MHT— la ventana de
+  importación no se abría y salía un error de lectura del archivo. Los de memoQ
+  y Wordfast no estaban afectados.
+- **Al importar un análisis, algunas filas se quedaban sin cobrar.** Los
+  fragmentos de memoQ salían sin asignar y fuera del importe; ahora se proponen
+  como «sin coincidencia», y la fila se puede cambiar antes de confirmar. En una
+  hoja de cálculo con una fila por categoría se reconocen además «Leveraged
+  match», «Machine translation», «Fragments», las bandas de 0-49 %, «101 %» y
+  «X translated».
+- **«Perfect match» se proponía como un 100 %.** En esas hojas de cálculo se
+  cobraba como coincidencia exacta; ahora va con las de contexto, igual que al
+  leer el informe de Trados.
+- **Reenviar una traducción llamada «Factura-…» o «Invoice-…» la mandaba como si
+  fuera tu factura.** Le pasa a quien traduce facturas de sus clientes: al
+  reenviar la versión corregida, el diálogo salía como «Enviar factura», iba al
+  email de facturación del cliente con la plantilla de la factura, no dejaba
+  añadir la versión nueva y lo enviado no quedaba guardado en Entregables. Ahora
+  «Enviar entregables» es siempre una entrega y «Enviar factura», siempre la
+  factura, se llamen como se llamen los archivos.
+- **El «Beneficio neto» contaba el IVA como beneficio.** Restaba los gastos al
+  total cobrado, con el IVA dentro y la retención fuera: una factura de 1.000 €
+  al 20 % y un gasto de 120 € con 20 € de IVA daban 1.080 € en vez de 900 €.
+  Ahora es la base cobrada menos la base de los gastos, en Métricas y en la
+  cabecera, y la tarjeta lo dice. Un gasto sin el IVA apuntado cuenta entero.
+  «Total facturado» y «Gastos» siguen siendo los totales.
+- **La exportación contable daba una factura anulada por pendiente de cobro.**
+  En el CSV y en el Excel de facturas, la original salía «Pendiente» con su
+  importe y la rectificativa a 0 también. Ahora las dos salen «Anulada».
+- **En una divisa sin decimales, como el yen, la factura guardaba medio yen.**
+  3.001 palabras a 12,5 ¥ quedaban con una base de 37.512,5 ¥ y un total de
+  37.513 ¥, así que la exportación contable no sumaba; y las líneas de un
+  desglose CAT, en la factura, el presupuesto y su correo, sumaban un yen más
+  que la base. Ahora la base y las líneas van en yenes enteros.
+- **La cuota recurrente de un mes ya cerrado no decía cuándo se prestó el
+  servicio.** Solo constaba el mes en la línea, y la columna «Fecha de operación»
+  de la exportación contable salía vacía. Ahora la factura de octubre emitida en
+  noviembre imprime su fecha de servicio (31 de octubre) y la lleva a la
+  exportación. La del mes en curso sigue igual.
+- **En América, el seguimiento de un contacto importado salía un día antes.**
+  Una hoja con «Último contacto» solo con el día (30-oct) ponía a la agencia en
+  «Necesita seguimiento» el 8-nov por la tarde en México, al noveno día. Ahora ese día cuenta como día del calendario local: el seguimiento llega
+  el día 10, y volver a prospectar, el 90.
 - **Un encargo por horas sin ninguna registrada se facturaba por 0,00.** Pasaba al
   olvidar el cronómetro (las horas estimadas no cuentan): la factura gastaba su
   número y no quedaba pendiente de cobro. Ahora el diálogo dice que faltan las
@@ -39,11 +99,12 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
   pudo contactar con Stripe, y si Stripe no contesta se rinden a los 10 segundos
   en vez de quedarse minutos pensando. Y la clave se recorta al pegarla: un
   espacio o un salto de línea arrastrado al copiarla se guardaba tal cual.
-- **Tras rectificar la última factura a un cliente, la siguiente proponía un plazo
-  de más.** Lo contaba desde la emisión original y no desde la rectificativa: una
-  factura del 1 de octubre rectificada el 10 de noviembre a 30 días proponía 70.
-  Ahora propone el plazo de la rectificativa, y una factura anulada ya no cuenta
-  como la última.
+- **Tras rectificar la última factura a un cliente, la siguiente proponía otro
+  plazo.** Una factura del 1 de octubre rectificada el 10 de noviembre con el
+  vencimiento movido a 30 días proponía 70, y una a 30 días corregida al octavo
+  día sin tocar el vencimiento proponía 23. Ahora el plazo se cuenta desde que
+  se fijó el vencimiento: la emisión, o la rectificativa si lo movió. Y una
+  factura anulada ya no cuenta como la última.
 - **«Marcar todo como leído» silenciaba avisos que aún no habían llegado.** La
   cuota recurrente del mes siguiente y el segundo recordatorio de cobro nacían
   ya leídos, sin encender el globo rojo. Lo mismo una entrega o una factura que
