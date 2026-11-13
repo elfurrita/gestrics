@@ -56,7 +56,7 @@
       <form id="calculadora" class="calculadora" onsubmit="return false" novalidate>
         <p class="calc-aviso">Example values: replace them with yours.</p>
         <div class="calc-campos">
-          <label>What you want to earn a year, before income tax (€)<input name="objetivo" type="text" inputmode="decimal" value="24,000"></label>
+          <label>What you want to earn a year, after expenses and the contribution, before income tax (€)<input name="objetivo" type="text" inputmode="decimal" value="24,000"></label>
           <label>Business expenses a year, excluding the self-employed contribution (€)<input name="gastos" type="text" inputmode="decimal" value="3,000"></label>
           <label>Working weeks a year<input name="semanas" type="text" inputmode="decimal" value="46"></label>
           <label>Hours you bill a week<input name="horas" type="text" inputmode="decimal" value="25"></label>
@@ -69,7 +69,7 @@
 
       <h2>1. What your rate has to cover</h2>
       <ul>
-        <li><strong>What you want to earn</strong> a year, before income tax.</li>
+        <li><strong>What you want to earn</strong> a year, after your expenses and self-employed contribution, and before income tax.</li>
         <li><strong>Your business expenses</strong>: licences, equipment, accountant, training… The <a href="/deductible-expenses-translators-guide.html">deductible expenses guide</a> explains what can be deducted, and how.</li>
         <li><strong>Your self-employed contribution</strong>, which depends on your income. The calculator looks it up in the 2026 table.</li>
       </ul>
@@ -77,7 +77,7 @@
 
       <h2>2. The self-employed contribution in 2026</h2>
       <p><strong>How the bracket is chosen.</strong> Self-employed people contribute according to the annual income obtained from their economic activities (General Social Security Act, art. 308.1). During the year, you choose your monthly contribution base according to your forecast of the monthly average of your annual net income (art. 308.1.a, rule 1). For the adjustment, when the business is under direct assessment, the computable income is net income increased by the owner's social security contributions; a 7% deduction for generic expenses is applied to it, and the resulting amount is spread proportionally over the period being adjusted (art. 308.1.c, rules 1 to 3).</p>
-      <p><strong>The 2026 table.</strong> Each bracket of monthly net income has a minimum and a maximum base (Order PJC/297/2026, art. 18.1), and you can opt for any base in the tables (General Social Security Act, art. 308.1.a, rule 3). The monthly contribution is obtained by applying the contribution rates to the base (art. 308.1.b). The last column is the result of applying 31.5% to the minimum base:</p>
+      <p><strong>The 2026 table.</strong> In the adjustment, the bracket is not looked up with plain net income but with the computable income from the previous paragraph: net income plus the contribution, with the 7% deduction. Each bracket of monthly net income has a minimum and a maximum base (Order PJC/297/2026, art. 18.1), and you can opt for any base in the tables (General Social Security Act, art. 308.1.a, rule 3). The monthly contribution is obtained by applying the contribution rates to the base (art. 308.1.b). The last column is the result of applying 31.5% to the minimum base and rounding to the cent; if each item is rounded separately, three brackets change by one cent (minimum bases of €849.67, €1,143.79 and €1,356.21):</p>
       <div class="tabla-guia compacta">
         <table>
           <thead>
@@ -123,6 +123,7 @@
         <li>VAT: the rate is excluding VAT.</li>
         <li>The reduced contribution for people starting out.</li>
         <li>A contribution base other than the minimum of the bracket.</li>
+        <li>Under simplified direct assessment, net income is calculated by also deducting provisions and hard-to-justify expenses, 5% up to €2,000 a year (IRPF Regulation, art. 30.2). The calculator does not deduct it, so if you use that method it may place you in a higher bracket than yours.</li>
         <li>Pluriactividad (contributing at the same time for employment with someone else), the self-employed person's relatives included in the scheme, and company partners or directors, which have their own rules (General Social Security Act, arts. 305.2, 308.1 and 313).</li>
       </ul>
 
@@ -137,6 +138,7 @@
             <tr><td><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296" rel="noopener">Order PJC/297/2026, 2026 contribution rules</a></td><td>18 and 37 (initial text, effective from 01-01-2026)</td></tr>
             <tr><td><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724" rel="noopener">Royal Legislative Decree 8/2015, General Social Security Act</a></td><td>305 (01-04-2023), 308 and 313 (01-01-2023)</td></tr>
             <tr><td><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2007-13409" rel="noopener">Act 20/2007, Self-Employment Statute</a></td><td>38 ter (01-01-2023)</td></tr>
+            <tr><td><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820" rel="noopener">Royal Decree 439/2007, IRPF Regulation</a></td><td>30 (12-07-2015)</td></tr>
           </tbody>
         </table>
       </div>

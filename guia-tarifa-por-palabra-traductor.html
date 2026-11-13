@@ -58,7 +58,7 @@
       <form id="calculadora" class="calculadora" onsubmit="return false" novalidate>
         <p class="calc-aviso">Valores de ejemplo: cámbialos por los tuyos.</p>
         <div class="calc-campos">
-          <label>Lo que quieres ganar al año, antes del IRPF (€)<input name="objetivo" type="text" inputmode="decimal" value="24.000"></label>
+          <label>Lo que quieres ganar al año, ya pagados los gastos y la cuota, antes del IRPF (€)<input name="objetivo" type="text" inputmode="decimal" value="24.000"></label>
           <label>Gastos de la actividad al año, sin la cuota de autónomos (€)<input name="gastos" type="text" inputmode="decimal" value="3.000"></label>
           <label>Semanas de trabajo al año<input name="semanas" type="text" inputmode="decimal" value="46"></label>
           <label>Horas que facturas a la semana<input name="horas" type="text" inputmode="decimal" value="25"></label>
@@ -71,7 +71,7 @@
 
       <h2>1. Qué tiene que cubrir tu tarifa</h2>
       <ul>
-        <li><strong>Lo que quieres ganar</strong> al año, antes del IRPF.</li>
+        <li><strong>Lo que quieres ganar</strong> al año, ya pagados los gastos y la cuota de autónomos, y antes del IRPF.</li>
         <li><strong>Los gastos de la actividad</strong>: licencias, equipo, gestoría, formación… Qué se puede deducir, y cómo, lo explica la <a href="/guia-gastos-deducibles-traductores.html">guía de gastos deducibles</a>.</li>
         <li><strong>La cuota de autónomos</strong>, que depende de tus rendimientos. La calculadora la busca sola en la tabla de 2026.</li>
       </ul>
@@ -79,7 +79,7 @@
 
       <h2>2. La cuota de autónomos en 2026</h2>
       <p><strong>Cómo se elige el tramo.</strong> Los autónomos cotizan en función de los rendimientos anuales obtenidos en sus actividades económicas (Ley General de la Seguridad Social, art. 308.1). Durante el año, eliges la base de cotización mensual en función de tu previsión del promedio mensual de tus rendimientos netos anuales (art. 308.1.a, regla 1.ª). Para la regularización, cuando la actividad está en estimación directa, el rendimiento computable es el rendimiento neto, incrementado en el importe de las cuotas de la Seguridad Social del titular; a él se aplica una deducción por gastos genéricos del 7&nbsp;%, y el importe resultante se distribuye proporcionalmente en el periodo que se regulariza (art. 308.1.c, reglas 1.ª a 3.ª).</p>
-      <p><strong>La tabla de 2026.</strong> Cada tramo de rendimientos netos mensuales tiene una base mínima y una base máxima (Orden PJC/297/2026, art. 18.1), y puedes optar por cualquier base de las tablas (Ley General de la Seguridad Social, art. 308.1.a, regla 3.ª). La cuota mensual se obtiene aplicando los tipos de cotización a la base (art. 308.1.b). La última columna es lo que sale de aplicar el 31,5&nbsp;% a la base mínima:</p>
+      <p><strong>La tabla de 2026.</strong> En la regularización, el tramo no se busca con el rendimiento neto a secas, sino con el rendimiento computable del párrafo anterior: el rendimiento neto más la cuota, con la deducción del 7&nbsp;%. Cada tramo de rendimientos netos mensuales tiene una base mínima y una base máxima (Orden PJC/297/2026, art. 18.1), y puedes optar por cualquier base de las tablas (Ley General de la Seguridad Social, art. 308.1.a, regla 3.ª). La cuota mensual se obtiene aplicando los tipos de cotización a la base (art. 308.1.b). La última columna es lo que sale de aplicar el 31,5&nbsp;% a la base mínima y redondear a céntimos; si se redondea cada concepto por separado, tres tramos cambian en un céntimo (849,67, 1.143,79 y 1.356,21&nbsp;€ de base):</p>
       <div class="tabla-guia compacta">
         <table>
           <thead>
@@ -125,11 +125,12 @@
         <li>El IVA: la tarifa es sin IVA.</li>
         <li>La cuota reducida de quien empieza.</li>
         <li>Una base de cotización distinta de la mínima del tramo.</li>
+        <li>En estimación directa simplificada, el rendimiento neto se calcula restando además las provisiones y los gastos de difícil justificación, un 5&nbsp;% con un máximo de 2.000&nbsp;€ al año (Reglamento del IRPF, art. 30.2.ª). La calculadora no lo resta, así que, si estás en esa modalidad, puede situarte en un tramo más alto que el tuyo.</li>
         <li>La pluriactividad (cotizar a la vez por un trabajo por cuenta ajena), los familiares del autónomo incluidos en el régimen y los socios o administradores de sociedades, que tienen reglas propias (Ley General de la Seguridad Social, arts. 305.2, 308.1 y 313).</li>
       </ul>
 
       <h2>Fuentes y vigencia</h2>
-      <p>Todos los artículos se leyeron en el BOE el 2026-11-12 y se volvieron a leer el 2026-11-13, en su texto vigente.</p>
+      <p>Todos los artículos se leyeron en el BOE el 12-11-2026 y se volvieron a leer el 13-11-2026, en su texto vigente.</p>
       <div class="tabla-guia">
         <table>
           <thead>
@@ -139,6 +140,7 @@
             <tr><td><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296" rel="noopener">Orden PJC/297/2026, normas de cotización de 2026</a></td><td>18 y 37 (texto inicial, con efectos desde el 01-01-2026)</td></tr>
             <tr><td><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724" rel="noopener">Real Decreto Legislativo 8/2015, Ley General de la Seguridad Social</a></td><td>305 (01-04-2023), 308 y 313 (01-01-2023)</td></tr>
             <tr><td><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2007-13409" rel="noopener">Ley 20/2007, Estatuto del Trabajo Autónomo</a></td><td>38 ter (01-01-2023)</td></tr>
+            <tr><td><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2007-6820" rel="noopener">Real Decreto 439/2007, Reglamento del IRPF</a></td><td>30 (12-07-2015)</td></tr>
           </tbody>
         </table>
       </div>
