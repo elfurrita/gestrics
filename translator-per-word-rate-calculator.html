@@ -1,0 +1,183 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Per-word rate calculator for freelance translators in Spain</title>
+<link rel="canonical" href="https://outreachstudio.app/translator-per-word-rate-calculator.html">
+<link rel="alternate" hreflang="en" href="https://outreachstudio.app/translator-per-word-rate-calculator.html">
+<link rel="alternate" hreflang="es" href="https://outreachstudio.app/guia-tarifa-por-palabra-traductor.html">
+<link rel="alternate" hreflang="x-default" href="https://outreachstudio.app/guia-tarifa-por-palabra-traductor.html">
+<script src="/idioma.js"></script>
+<meta name="description" content="Work out your minimum rate per word and per hour from what you want to earn, your expenses and your 2026 self-employed contribution in Spain.">
+<link rel="icon" href="/icon.png">
+
+<!-- La guía de la tarifa por palabra en inglés. La española
+     (guia-tarifa-por-palabra-traductor.html) es la x-default. Dice lo mismo,
+     con las mismas fuentes y la misma calculadora-tarifa.js: si se toca una
+     cifra, tocar las dos. -->
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://outreachstudio.app/translator-per-word-rate-calculator.html">
+<meta property="og:site_name" content="Gestrics">
+<meta property="og:locale" content="en_GB">
+<meta property="og:locale:alternate" content="es_ES">
+<meta property="og:title" content="Per-word rate calculator for freelance translators in Spain">
+<meta property="og:description" content="Your minimum rate per word and per hour from what you want to earn, your expenses and your 2026 self-employed contribution.">
+<meta property="og:image" content="https://outreachstudio.app/shots/en/metrics.png">
+<meta property="og:image:width" content="2352">
+<meta property="og:image:height" content="1500">
+<meta property="og:image:alt" content="The metrics tab with the collected-per-month and per-client charts.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header id="arriba">
+  <img src="/icon.png" alt="Gestrics">
+  <div class="title">Gestrics<span>Guide</span></div>
+  <nav>
+    <a href="/">Home</a>
+    <a href="/translator-per-word-rate-calculator.html" class="active">Calculator</a>
+    <a href="/terms.html">Terms of Use</a>
+    <a href="/privacy.html">Privacy Policy</a>
+  </nav>
+  <div class="lang-toggle">
+    <a href="/translator-per-word-rate-calculator.html" hreflang="en" data-lang="en" class="active" aria-current="page" title="English" aria-label="English"><svg class="bandera" viewBox="0 0 60 30" aria-hidden="true" focusable="false"><clipPath id="rec-gb"><path d="M0 0h60v30H0z"/></clipPath><g clip-path="url(#rec-gb)"><path d="M0 0h60v30H0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg></a>
+    <a href="/guia-tarifa-por-palabra-traductor.html" hreflang="es" data-lang="es" title="Español" aria-label="Español"><svg class="bandera" viewBox="0 0 60 30" aria-hidden="true" focusable="false"><path d="M0 0h60v30H0z" fill="#C60B1E"/><path d="M0 7.5h60v15H0z" fill="#FFC400"/></svg></a>
+  </div>
+</header>
+<main>
+  <article class="guia">
+    <div>
+      <h1>How to work out your per-word rate as a freelance translator</h1>
+
+      <p>The calculator assumes your rate covers three things: what you want to earn, your business expenses and your self-employed social security contribution. It does the sum with the 2026 contribution table, and the sections below explain where each number comes from. It is for <strong>freelance translators with their tax residence in Spain</strong>, registered in the self-employed scheme (RETA) and taxed under direct assessment. <strong>It is not tax advice.</strong></p>
+
+      <h2>The calculator</h2>
+      <form id="calculadora" class="calculadora" onsubmit="return false" novalidate>
+        <p class="calc-aviso">Example values: replace them with yours.</p>
+        <div class="calc-campos">
+          <label>What you want to earn a year, before income tax (€)<input name="objetivo" type="text" inputmode="decimal" value="24,000"></label>
+          <label>Business expenses a year, excluding the self-employed contribution (€)<input name="gastos" type="text" inputmode="decimal" value="3,000"></label>
+          <label>Working weeks a year<input name="semanas" type="text" inputmode="decimal" value="46"></label>
+          <label>Hours you bill a week<input name="horas" type="text" inputmode="decimal" value="25"></label>
+          <label>Words you translate per hour<input name="palabras" type="text" inputmode="decimal" value="400"></label>
+          <label>Share of words you are paid for on average, after match discounts (%)<input name="pagado" type="text" inputmode="decimal" value="100"></label>
+        </div>
+        <div class="calc-salida" data-salida aria-live="polite"></div>
+      </form>
+      <p>The rate it gives is <strong>excluding VAT</strong> and rounded up. The calculator does not include income tax, takes what you want to earn as net income to find the bracket, assumes you contribute on the <strong>minimum base</strong> of your bracket and does not apply the reduced contribution for people starting out (section 2).</p>
+
+      <h2>1. What your rate has to cover</h2>
+      <ul>
+        <li><strong>What you want to earn</strong> a year, before income tax.</li>
+        <li><strong>Your business expenses</strong>: licences, equipment, accountant, training… The <a href="/deductible-expenses-translators-guide.html">deductible expenses guide</a> explains what can be deducted, and how.</li>
+        <li><strong>Your self-employed contribution</strong>, which depends on your income. The calculator looks it up in the 2026 table.</li>
+      </ul>
+      <p>What you need to invoice a year is the sum of the three. Divided by the hours you bill, it gives the rate per hour; divided by the words you translate in that time, the rate per word.</p>
+
+      <h2>2. The self-employed contribution in 2026</h2>
+      <p><strong>How the bracket is chosen.</strong> Self-employed people contribute according to the annual income obtained from their economic activities (General Social Security Act, art. 308.1). During the year, you choose your monthly contribution base according to your forecast of the monthly average of your annual net income (art. 308.1.a, rule 1). For the adjustment, when the business is under direct assessment, the computable income is net income increased by the owner's social security contributions; a 7% deduction for generic expenses is applied to it, and the resulting amount is spread proportionally over the period being adjusted (art. 308.1.c, rules 1 to 3).</p>
+      <p><strong>The 2026 table.</strong> Each bracket of monthly net income has a minimum and a maximum base (Order PJC/297/2026, art. 18.1), and you can opt for any base in the tables (General Social Security Act, art. 308.1.a, rule 3). The monthly contribution is obtained by applying the contribution rates to the base (art. 308.1.b). The last column is the result of applying 31.5% to the minimum base:</p>
+      <div class="tabla-guia compacta">
+        <table>
+          <thead>
+            <tr><th>Net income per month</th><th>Minimum base</th><th>Monthly contribution on the minimum base</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Up to €670</td><td>€653.59</td><td>€205.88</td></tr>
+            <tr><td>Over €670 and up to €900</td><td>€718.95</td><td>€226.47</td></tr>
+            <tr><td>Over €900 and under €1,166.70</td><td>€849.67</td><td>€267.65</td></tr>
+            <tr><td>€1,166.70 to €1,300</td><td>€950.98</td><td>€299.56</td></tr>
+            <tr><td>Over €1,300 and up to €1,500</td><td>€960.78</td><td>€302.65</td></tr>
+            <tr><td>Over €1,500 and up to €1,700</td><td>€960.78</td><td>€302.65</td></tr>
+            <tr><td>Over €1,700 and up to €1,850</td><td>€1,143.79</td><td>€360.29</td></tr>
+            <tr><td>Over €1,850 and up to €2,030</td><td>€1,209.15</td><td>€380.88</td></tr>
+            <tr><td>Over €2,030 and up to €2,330</td><td>€1,274.51</td><td>€401.47</td></tr>
+            <tr><td>Over €2,330 and up to €2,760</td><td>€1,356.21</td><td>€427.21</td></tr>
+            <tr><td>Over €2,760 and up to €3,190</td><td>€1,437.91</td><td>€452.94</td></tr>
+            <tr><td>Over €3,190 and up to €3,620</td><td>€1,519.61</td><td>€478.68</td></tr>
+            <tr><td>Over €3,620 and up to €4,050</td><td>€1,601.31</td><td>€504.41</td></tr>
+            <tr><td>Over €4,050 and up to €6,000</td><td>€1,732.03</td><td>€545.59</td></tr>
+            <tr><td>Over €6,000</td><td>€1,928.10</td><td>€607.35</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>The first three brackets make up the reduced table, and the rest the general one.</p>
+      <p><strong>Where the 31.5% comes from.</strong> It is the sum of the 2026 rates: 28.30% for common contingencies, 1.30% for occupational contingencies and 0.90% for the intergenerational equity mechanism (Order PJC/297/2026, art. 18.2), plus 0.90% for cessation of activity and 0.10% for vocational training (art. 37, sections 5 and 6). The contribution in the table is that percentage applied to the minimum base, rounded to the cent.</p>
+      <p><strong>The base is provisional.</strong> The bases chosen during the year are provisional until they are adjusted (General Social Security Act, art. 308.1.a, rule 6), which is done on the basis of the annual income reported by the tax authorities from the following year onwards (art. 308.1.c). If what you contributed is below the contribution on the minimum base of the bracket your income falls into, you pay the difference; if it is above the contribution on that bracket's maximum base, the General Treasury of Social Security refunds the difference (art. 308.1.c, rule 4).</p>
+      <p><strong>If you are starting out.</strong> Someone registering for the first time, or who has not been registered in the two years immediately before (three, if they had these reductions in their previous period of registration), pays a reduced contribution for common and occupational contingencies for the twelve full calendar months after registering, without contributing for cessation of activity or vocational training. After that, another reduced contribution may apply for twelve more full calendar months to someone whose annual net income is below the annual minimum wage. Both must be requested: the first when registering; the second before that period starts, with a statement that the expected income will be below the minimum wage (Self-Employment Statute, art. 38 ter, sections 1 to 4). The annual amount of the reduced contribution is set in the relevant State Budget Act; this guide does not give it and the calculator does not apply it.</p>
+
+      <h2>3. The hours and the words, yours</h2>
+      <ul>
+        <li><strong>Billable hours</strong> are the ones that end up on an invoice, and they are not all your working hours: finding clients, keeping your accounts or training also take time. It is worth entering only the billable ones.</li>
+        <li><strong>Working weeks</strong>: take off holidays, public holidays and a margin for sick leave or weeks without work.</li>
+        <li><strong>Words per hour</strong>: the closer the figure is to your real pace, the more reliable the rate. If you track the hours on each job, divide the words by the hours of a few similar jobs.</li>
+      </ul>
+
+      <h2>4. If your jobs come with a CAT analysis</h2>
+      <p>When an agency applies a match discount grid, it does not pay you for the words in the text, but for the weighted words. In the example in the <a href="/cat-analysis-rates-guide.html">CAT analysis rates guide</a>, 5,000 words come to 3,405 weighted words: 68.1% is paid. If you enter that percentage in the last field, the calculator tells you which per-word rate you would need to set to keep covering the same.</p>
+
+      <h2>What it does not calculate</h2>
+      <ul>
+        <li>Income tax: what you want to earn is before that tax.</li>
+        <li>VAT: the rate is excluding VAT.</li>
+        <li>The reduced contribution for people starting out.</li>
+        <li>A contribution base other than the minimum of the bracket.</li>
+        <li>Pluriactividad (contributing at the same time for employment with someone else), the self-employed person's relatives included in the scheme, and company partners or directors, which have their own rules (General Social Security Act, arts. 305.2, 308.1 and 313).</li>
+      </ul>
+
+      <h2>Sources and currency</h2>
+      <p>Every article was read in the BOE on 2026-11-12 and read again on 2026-11-13, in its text in force. The texts are in Spanish; the English wording above is a description, not an official translation.</p>
+      <div class="tabla-guia">
+        <table>
+          <thead>
+            <tr><th>Law</th><th>Articles cited and their last amendment</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296" rel="noopener">Order PJC/297/2026, 2026 contribution rules</a></td><td>18 and 37 (initial text, effective from 01-01-2026)</td></tr>
+            <tr><td><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724" rel="noopener">Royal Legislative Decree 8/2015, General Social Security Act</a></td><td>305 (01-04-2023), 308 and 313 (01-01-2023)</td></tr>
+            <tr><td><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2007-13409" rel="noopener">Act 20/2007, Self-Employment Statute</a></td><td>38 ter (01-01-2023)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="guia-cta">
+        <p>Written by Eduardo Furrazola Valladares, translator and author of Gestrics, desktop software for freelance translators. Gestrics tracks the hours on each job, prices it from a Trados, memoQ or Wordfast analysis with your discount grid and shows your average rate in Metrics. It stays on your computer.</p>
+        <p><a class="guia-boton" href="/">Try it free for 14 days, no card</a></p>
+      </div>
+    </div>
+
+  </article>
+</main>
+<footer>
+  <div class="pie-cols">
+    <div>
+      <span class="pie-tit">Gestrics</span>
+      <a href="/">Home</a>
+      <a href="/changelog.html">Changelog</a>
+    </div>
+    <div>
+      <span class="pie-tit">Guides</span>
+      <a href="/invoicing-guide-translators.html">Invoicing for translators</a>
+      <a href="/unpaid-translation-invoices-guide.html">Unpaid invoices</a>
+      <a href="/deductible-expenses-translators-guide.html">Deductible expenses</a>
+      <a href="/cat-analysis-rates-guide.html">Pricing from a CAT analysis</a>
+      <a href="/translator-per-word-rate-calculator.html">Per-word rate calculator</a>
+    </div>
+    <div>
+      <span class="pie-tit">Legal</span>
+      <a href="/terms.html">Terms of Use</a>
+      <a href="/privacy.html">Privacy Policy</a>
+    </div>
+    <div>
+      <span class="pie-tit">Contact</span>
+      <a href="mailto:contact@outreachstudio.app">contact@outreachstudio.app</a>
+    </div>
+  </div>
+  <div class="pie-firma">Gestrics — outreachstudio</div>
+  <a class="arriba" href="#arriba" title="Back to top" aria-label="Back to top"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 14l6-6 6 6"/></svg></a>
+</footer>
+<script src="/calculadora-tarifa.js"></script>
+<script src="/analitica.js"></script>
+</body>
+</html>

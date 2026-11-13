@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Calculadora de tarifa por palabra para traductores autónomos</title>
+<link rel="canonical" href="https://outreachstudio.app/guia-tarifa-por-palabra-traductor.html">
+<link rel="alternate" hreflang="en" href="https://outreachstudio.app/translator-per-word-rate-calculator.html">
+<link rel="alternate" hreflang="es" href="https://outreachstudio.app/guia-tarifa-por-palabra-traductor.html">
+<link rel="alternate" hreflang="x-default" href="https://outreachstudio.app/guia-tarifa-por-palabra-traductor.html">
+<script src="/idioma.js"></script>
+<meta name="description" content="Calcula tu tarifa mínima por palabra y por hora a partir de lo que quieres ganar, tus gastos y la cuota de autónomos de tu tramo en 2026.">
+<link rel="icon" href="/icon.png">
+
+<!-- La guía de la tarifa por palabra, con su calculadora. Español, x-default,
+     como las demás guías; la inglesa está en
+     translator-per-word-rate-calculator.html. La tabla de cuotas y la lógica de
+     calculadora-tarifa.js salen de la Orden PJC/297/2026 y del art. 308.1.c de
+     la LGSS, leídos el 2026-11-12: AL CAMBIAR DE AÑO hay que volver a leer la
+     orden de cotización nueva y actualizar las dos cosas a la vez. -->
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://outreachstudio.app/guia-tarifa-por-palabra-traductor.html">
+<meta property="og:site_name" content="Gestrics">
+<meta property="og:locale" content="es_ES">
+<meta property="og:locale:alternate" content="en_GB">
+<meta property="og:title" content="Calculadora de tarifa por palabra para traductores autónomos">
+<meta property="og:description" content="Tu tarifa mínima por palabra y por hora a partir de lo que quieres ganar, tus gastos y la cuota de autónomos de 2026.">
+<meta property="og:image" content="https://outreachstudio.app/shots/es/metricas.png">
+<meta property="og:image:width" content="2352">
+<meta property="og:image:height" content="1500">
+<meta property="og:image:alt" content="La pestaña de métricas con los gráficos de cobrado por mes y por cliente.">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header id="arriba">
+  <img src="/icon.png" alt="Gestrics">
+  <div class="title">Gestrics<span>Guía</span></div>
+  <nav>
+    <a href="/es/">Inicio</a>
+    <a href="/guia-tarifa-por-palabra-traductor.html" class="active">Calculadora</a>
+    <a href="/terms.html?lang=es">Términos de Uso</a>
+    <a href="/privacy.html?lang=es">Política de Privacidad</a>
+  </nav>
+  <div class="lang-toggle">
+    <a href="/translator-per-word-rate-calculator.html" hreflang="en" data-lang="en" title="English" aria-label="English"><svg class="bandera" viewBox="0 0 60 30" aria-hidden="true" focusable="false"><clipPath id="rec-gb"><path d="M0 0h60v30H0z"/></clipPath><g clip-path="url(#rec-gb)"><path d="M0 0h60v30H0z" fill="#012169"/><path d="M0 0l60 30m0-30L0 30" stroke="#fff" stroke-width="6"/><path d="M0 0l60 30m0-30L0 30" stroke="#C8102E" stroke-width="4"/><path d="M30 0v30M0 15h60" stroke="#fff" stroke-width="10"/><path d="M30 0v30M0 15h60" stroke="#C8102E" stroke-width="6"/></g></svg></a>
+    <a href="/guia-tarifa-por-palabra-traductor.html" hreflang="es" data-lang="es" class="active" aria-current="page" title="Español" aria-label="Español"><svg class="bandera" viewBox="0 0 60 30" aria-hidden="true" focusable="false"><path d="M0 0h60v30H0z" fill="#C60B1E"/><path d="M0 7.5h60v15H0z" fill="#FFC400"/></svg></a>
+  </div>
+</header>
+<main>
+  <article class="guia">
+    <div>
+      <h1>Cómo calcular tu tarifa por palabra como traductor autónomo</h1>
+
+      <p>La calculadora parte de que tu tarifa cubra tres cosas: lo que quieres ganar, los gastos de la actividad y la cuota de autónomos. Hace la cuenta con la tabla de cotización de 2026, y debajo se explica de dónde sale cada número. Es para <strong>traductores autónomos con domicilio fiscal en España</strong>, dados de alta en el régimen de autónomos y que tributan en estimación directa. <strong>No es asesoramiento fiscal.</strong></p>
+
+      <h2>La calculadora</h2>
+      <form id="calculadora" class="calculadora" onsubmit="return false" novalidate>
+        <p class="calc-aviso">Valores de ejemplo: cámbialos por los tuyos.</p>
+        <div class="calc-campos">
+          <label>Lo que quieres ganar al año, antes del IRPF (€)<input name="objetivo" type="text" inputmode="decimal" value="24.000"></label>
+          <label>Gastos de la actividad al año, sin la cuota de autónomos (€)<input name="gastos" type="text" inputmode="decimal" value="3.000"></label>
+          <label>Semanas de trabajo al año<input name="semanas" type="text" inputmode="decimal" value="46"></label>
+          <label>Horas que facturas a la semana<input name="horas" type="text" inputmode="decimal" value="25"></label>
+          <label>Palabras que traduces por hora<input name="palabras" type="text" inputmode="decimal" value="400"></label>
+          <label>Parte de las palabras que te pagan de media, tras los descuentos por coincidencias (%)<input name="pagado" type="text" inputmode="decimal" value="100"></label>
+        </div>
+        <div class="calc-salida" data-salida aria-live="polite"></div>
+      </form>
+      <p>La tarifa que sale es <strong>sin IVA</strong> y está redondeada al alza. La calculadora no incluye el IRPF, toma lo que quieres ganar como rendimiento neto para buscar el tramo, supone que cotizas por la <strong>base mínima</strong> de tu tramo y no aplica la cuota reducida de quien empieza (apartado 2).</p>
+
+      <h2>1. Qué tiene que cubrir tu tarifa</h2>
+      <ul>
+        <li><strong>Lo que quieres ganar</strong> al año, antes del IRPF.</li>
+        <li><strong>Los gastos de la actividad</strong>: licencias, equipo, gestoría, formación… Qué se puede deducir, y cómo, lo explica la <a href="/guia-gastos-deducibles-traductores.html">guía de gastos deducibles</a>.</li>
+        <li><strong>La cuota de autónomos</strong>, que depende de tus rendimientos. La calculadora la busca sola en la tabla de 2026.</li>
+      </ul>
+      <p>Lo que hay que facturar al año es la suma de las tres. Dividido entre las horas que facturas, da la tarifa por hora; dividido entre las palabras que traduces en ese tiempo, la tarifa por palabra.</p>
+
+      <h2>2. La cuota de autónomos en 2026</h2>
+      <p><strong>Cómo se elige el tramo.</strong> Los autónomos cotizan en función de los rendimientos anuales obtenidos en sus actividades económicas (Ley General de la Seguridad Social, art. 308.1). Durante el año, eliges la base de cotización mensual en función de tu previsión del promedio mensual de tus rendimientos netos anuales (art. 308.1.a, regla 1.ª). Para la regularización, cuando la actividad está en estimación directa, el rendimiento computable es el rendimiento neto, incrementado en el importe de las cuotas de la Seguridad Social del titular; a él se aplica una deducción por gastos genéricos del 7&nbsp;%, y el importe resultante se distribuye proporcionalmente en el periodo que se regulariza (art. 308.1.c, reglas 1.ª a 3.ª).</p>
+      <p><strong>La tabla de 2026.</strong> Cada tramo de rendimientos netos mensuales tiene una base mínima y una base máxima (Orden PJC/297/2026, art. 18.1), y puedes optar por cualquier base de las tablas (Ley General de la Seguridad Social, art. 308.1.a, regla 3.ª). La cuota mensual se obtiene aplicando los tipos de cotización a la base (art. 308.1.b). La última columna es lo que sale de aplicar el 31,5&nbsp;% a la base mínima:</p>
+      <div class="tabla-guia compacta">
+        <table>
+          <thead>
+            <tr><th>Rendimientos netos al mes</th><th>Base mínima</th><th>Cuota al mes con la base mínima</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Hasta 670&nbsp;€</td><td>653,59&nbsp;€</td><td>205,88&nbsp;€</td></tr>
+            <tr><td>Más de 670 y hasta 900&nbsp;€</td><td>718,95&nbsp;€</td><td>226,47&nbsp;€</td></tr>
+            <tr><td>Más de 900 y menos de 1.166,70&nbsp;€</td><td>849,67&nbsp;€</td><td>267,65&nbsp;€</td></tr>
+            <tr><td>De 1.166,70 a 1.300&nbsp;€</td><td>950,98&nbsp;€</td><td>299,56&nbsp;€</td></tr>
+            <tr><td>Más de 1.300 y hasta 1.500&nbsp;€</td><td>960,78&nbsp;€</td><td>302,65&nbsp;€</td></tr>
+            <tr><td>Más de 1.500 y hasta 1.700&nbsp;€</td><td>960,78&nbsp;€</td><td>302,65&nbsp;€</td></tr>
+            <tr><td>Más de 1.700 y hasta 1.850&nbsp;€</td><td>1.143,79&nbsp;€</td><td>360,29&nbsp;€</td></tr>
+            <tr><td>Más de 1.850 y hasta 2.030&nbsp;€</td><td>1.209,15&nbsp;€</td><td>380,88&nbsp;€</td></tr>
+            <tr><td>Más de 2.030 y hasta 2.330&nbsp;€</td><td>1.274,51&nbsp;€</td><td>401,47&nbsp;€</td></tr>
+            <tr><td>Más de 2.330 y hasta 2.760&nbsp;€</td><td>1.356,21&nbsp;€</td><td>427,21&nbsp;€</td></tr>
+            <tr><td>Más de 2.760 y hasta 3.190&nbsp;€</td><td>1.437,91&nbsp;€</td><td>452,94&nbsp;€</td></tr>
+            <tr><td>Más de 3.190 y hasta 3.620&nbsp;€</td><td>1.519,61&nbsp;€</td><td>478,68&nbsp;€</td></tr>
+            <tr><td>Más de 3.620 y hasta 4.050&nbsp;€</td><td>1.601,31&nbsp;€</td><td>504,41&nbsp;€</td></tr>
+            <tr><td>Más de 4.050 y hasta 6.000&nbsp;€</td><td>1.732,03&nbsp;€</td><td>545,59&nbsp;€</td></tr>
+            <tr><td>Más de 6.000&nbsp;€</td><td>1.928,10&nbsp;€</td><td>607,35&nbsp;€</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p>Los tres primeros tramos forman la tabla reducida, y el resto, la general.</p>
+      <p><strong>De dónde sale el 31,5&nbsp;%.</strong> Es la suma de los tipos de 2026: 28,30&nbsp;% por contingencias comunes, 1,30&nbsp;% por contingencias profesionales y 0,90&nbsp;% por el mecanismo de equidad intergeneracional (Orden PJC/297/2026, art. 18.2), más 0,90&nbsp;% por cese de actividad y 0,10&nbsp;% por formación profesional (art. 37, apartados 5 y 6). La cuota de la tabla es ese porcentaje aplicado a la base mínima, redondeado a céntimos.</p>
+      <p><strong>La base es provisional.</strong> Las bases elegidas durante el año tienen carácter provisional hasta su regularización (Ley General de la Seguridad Social, art. 308.1.a, regla 6.ª), que se hace en función de los rendimientos anuales comunicados por la Administración tributaria a partir del año siguiente (art. 308.1.c). Si lo que cotizaste es inferior a la cuota de la base mínima del tramo en que están tus rendimientos, ingresas la diferencia; si es superior a la cuota de la base máxima de ese tramo, la Tesorería General de la Seguridad Social te devuelve la diferencia (art. 308.1.c, regla 4.ª).</p>
+      <p><strong>Si empiezas.</strong> Quien cause alta inicial, o no haya estado de alta en los dos años inmediatamente anteriores (tres, si disfrutó de estas reducciones en su anterior periodo de alta), cotiza con una cuota reducida por contingencias comunes y profesionales durante los doce meses naturales completos siguientes al alta, sin cotizar por cese de actividad ni por formación profesional. Después puede aplicarse otra cuota reducida durante doce meses naturales completos más a quien tenga unos rendimientos económicos netos anuales inferiores al salario mínimo interprofesional anual. Las dos se solicitan: la primera, en el momento del alta; la segunda, antes de que empiece ese periodo y con una declaración de que los rendimientos que se prevén serán inferiores al salario mínimo (Estatuto del Trabajo Autónomo, art. 38 ter, apartados 1 a 4). La cuantía anual de la cuota reducida se establece en la respectiva Ley de Presupuestos Generales del Estado; esta guía no la da y la calculadora no la aplica.</p>
+
+      <h2>3. Las horas y las palabras, las tuyas</h2>
+      <ul>
+        <li><strong>Las horas facturables</strong> son las que acaban en una factura, y no son todas las horas de trabajo: buscar clientes, llevar las cuentas o formarte también lleva tiempo. Conviene poner en la calculadora solo las facturables.</li>
+        <li><strong>Semanas de trabajo</strong>: descuenta vacaciones, festivos y una reserva para bajas o semanas sin encargos.</li>
+        <li><strong>Palabras por hora</strong>: cuanto más se acerque la cifra a tu ritmo real, más fiable será la tarifa. Si llevas el control de horas de cada encargo, divide las palabras entre las horas de unos cuantos encargos parecidos.</li>
+      </ul>
+
+      <h2>4. Si tus encargos llegan con análisis TAO</h2>
+      <p>Cuando una agencia aplica una tabla de descuentos por coincidencias, no te paga las palabras del texto, sino las palabras ponderadas. En el ejemplo de la <a href="/guia-tarifas-analisis-cat.html">guía de tarifas con el análisis TAO</a>, 5.000 palabras quedan en 3.405 palabras ponderadas: se paga el 68,1&nbsp;%. Si pones ese porcentaje en el último campo, la calculadora te dice qué tarifa por palabra tendrías que fijar para seguir cubriendo lo mismo.</p>
+
+      <h2>Qué no calcula</h2>
+      <ul>
+        <li>El IRPF: lo que quieres ganar es antes de ese impuesto.</li>
+        <li>El IVA: la tarifa es sin IVA.</li>
+        <li>La cuota reducida de quien empieza.</li>
+        <li>Una base de cotización distinta de la mínima del tramo.</li>
+        <li>La pluriactividad (cotizar a la vez por un trabajo por cuenta ajena), los familiares del autónomo incluidos en el régimen y los socios o administradores de sociedades, que tienen reglas propias (Ley General de la Seguridad Social, arts. 305.2, 308.1 y 313).</li>
+      </ul>
+
+      <h2>Fuentes y vigencia</h2>
+      <p>Todos los artículos se leyeron en el BOE el 2026-11-12 y se volvieron a leer el 2026-11-13, en su texto vigente.</p>
+      <div class="tabla-guia">
+        <table>
+          <thead>
+            <tr><th>Norma</th><th>Artículos citados y su última modificación</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2026-7296" rel="noopener">Orden PJC/297/2026, normas de cotización de 2026</a></td><td>18 y 37 (texto inicial, con efectos desde el 01-01-2026)</td></tr>
+            <tr><td><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2015-11724" rel="noopener">Real Decreto Legislativo 8/2015, Ley General de la Seguridad Social</a></td><td>305 (01-04-2023), 308 y 313 (01-01-2023)</td></tr>
+            <tr><td><a href="https://www.boe.es/buscar/act.php?id=BOE-A-2007-13409" rel="noopener">Ley 20/2007, Estatuto del Trabajo Autónomo</a></td><td>38 ter (01-01-2023)</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="guia-cta">
+        <p>Elaborado por Eduardo Furrazola Valladares, traductor y autor de Gestrics, un programa de escritorio para traductores autónomos. Gestrics lleva el control de horas de cada encargo, calcula el precio a partir del análisis de Trados, memoQ o Wordfast con tu tabla de descuentos y te enseña tu tarifa media en Métricas. Se queda en tu ordenador.</p>
+        <p><a class="guia-boton" href="/es/">Pruébalo 14 días, sin tarjeta</a></p>
+      </div>
+    </div>
+
+  </article>
+</main>
+<footer>
+  <div class="pie-cols">
+    <div>
+      <span class="pie-tit">Gestrics</span>
+      <a href="/es/">Inicio</a>
+      <a href="/es/changelog.html">Historial de cambios</a>
+    </div>
+    <div>
+      <span class="pie-tit">Guías</span>
+      <a href="/guia-facturacion-traductores.html">Facturar como traductor</a>
+      <a href="/guia-impagos-traductores.html">Facturas impagadas</a>
+      <a href="/guia-gastos-deducibles-traductores.html">Gastos deducibles</a>
+      <a href="/guia-tarifas-analisis-cat.html">Análisis TAO y sus tarifas</a>
+      <a href="/guia-tarifa-por-palabra-traductor.html">Calculadora de tarifa</a>
+    </div>
+    <div>
+      <span class="pie-tit">Legal</span>
+      <a href="/terms.html?lang=es">Términos de uso</a>
+      <a href="/privacy.html?lang=es">Política de privacidad</a>
+    </div>
+    <div>
+      <span class="pie-tit">Contacto</span>
+      <a href="mailto:contact@outreachstudio.app">contact@outreachstudio.app</a>
+    </div>
+  </div>
+  <div class="pie-firma">Gestrics — outreachstudio</div>
+  <a class="arriba" href="#arriba" title="Volver arriba" aria-label="Volver arriba"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M6 14l6-6 6 6"/></svg></a>
+</footer>
+<script src="/calculadora-tarifa.js"></script>
+<script src="/analitica.js"></script>
+</body>
+</html>

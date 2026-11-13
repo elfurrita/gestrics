@@ -934,9 +934,11 @@ footer a:hover { text-decoration: underline; }
 /* ── Las guías: facturación (guia-facturacion-traductores.html e
    invoicing-guide-translators.html), tarifas (guia-tarifas-analisis-cat.html
    y cat-analysis-rates-guide.html), impagos (guia-impagos-traductores.html y
-   unpaid-translation-invoices-guide.html) y gastos deducibles
+   unpaid-translation-invoices-guide.html), gastos deducibles
    (guia-gastos-deducibles-traductores.html y
-   deductible-expenses-translators-guide.html) ──
+   deductible-expenses-translators-guide.html) y la calculadora de tarifa
+   (guia-tarifa-por-palabra-traductor.html y
+   translator-per-word-rate-calculator.html) ──
    Reutiliza la tarjeta de las páginas legales y le añade lo que aquellas no
    usan: subtítulos h2, una tabla, una lista numerada, una lista de control y
    un cierre con botón. Todo cuelga de article.guia para no tocar el resto. */
@@ -1031,6 +1033,63 @@ article.guia a.guia-boton {
   font-size: 14.5px;
 }
 article.guia a.guia-boton:hover { background: var(--mid); }
+
+/* La calculadora de la guía de tarifa por palabra (calculadora-tarifa.js).
+   Los campos son de texto y no type="number" a propósito: el number del
+   navegador sigue el idioma del sistema y no el de la página, y podía
+   rechazar "24.000" o "0,09". El script lee cada cifra según el idioma de
+   la página. */
+article.guia .calculadora {
+  margin: 12px 0 8px;
+  padding: 20px 24px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+article.guia .calc-aviso { margin: 0 0 14px; font-size: 13.5px; color: var(--mid); }
+article.guia .calc-campos {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 20px;
+}
+article.guia .calc-campos label {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 6px;
+  font-size: 13.5px;
+  color: var(--dark);
+}
+article.guia .calc-campos input {
+  font: inherit;
+  font-size: 15px;
+  padding: 8px 10px;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--dark);
+}
+article.guia .calc-campos input:focus-visible { outline: 2px solid var(--teal); outline-offset: 1px; }
+article.guia .calc-campos input[aria-invalid="true"] { border-color: #C0392B; }
+article.guia .calc-salida {
+  margin-top: 18px;
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+article.guia .calc-fila {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 2px 16px;
+  padding: 6px 0;
+}
+article.guia .calc-etiqueta { color: var(--mid); font-size: 14px; }
+article.guia .calc-valor { font-weight: 600; color: var(--dark); text-align: right; font-variant-numeric: tabular-nums; }
+article.guia .calc-nota { grid-column: 1 / -1; font-size: 12.5px; color: var(--light); }
+article.guia .calc-error { margin: 0; color: #C0392B; font-size: 14px; }
+@media (max-width: 560px) {
+  article.guia .calc-campos { grid-template-columns: 1fr; }
+  article.guia .calculadora { padding: 16px; }
+}
 
 @media (max-width: 680px) {
   article.guia { padding: 24px 18px; }

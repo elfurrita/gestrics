@@ -49,41 +49,41 @@
     <div>
       <h1>How to price a translation from a Trados, memoQ or Wordfast analysis</h1>
 
-      <p>When a job comes with a CAT tool analysis, the price no longer comes from multiplying every word by your rate. It comes from the <strong>weighted word count</strong>: each band of translation memory matches is paid at a different percentage. This guide explains what each band means, what each program calls it, how the sum works and what to check before accepting an agency's discount grid.</p>
+      <p>When a job comes with a CAT tool analysis and the client applies a discount grid, the price does not come from multiplying every word by your rate. It comes from the <strong>weighted word count</strong>: each band of translation memory matches is paid at its own percentage. This guide explains what each band means according to each program's documentation, what each program calls it, how the sum works and what to check before accepting an agency's discount grid.</p>
 
       <h2>1. What an analysis is</h2>
-      <p>The CAT tool splits the source text into segments and compares each one with the project's translation memory. Depending on what it finds, the segment falls into a band: no match, a fuzzy match in one of several percentage ranges, an exact match, a context match, or a repetition within the job itself. The analysis report adds up the <strong>source words</strong> in each band.</p>
+      <p>The CAT tool compares each source text segment with the segments in the translation memory and expresses as a percentage how far they match. The analysis counts the segments, words and characters in the files that fall into each band: no match, a fuzzy match in one of several percentage ranges, an exact match, a context match, or a repetition within the job itself.</p>
       <p>Two practical consequences:</p>
       <ul>
-        <li>The analysis depends on the memory it is run against. The same text gives a different breakdown with a different memory; if the agency runs the analysis, it runs it against its memory, not yours.</li>
-        <li>A fuzzy match percentage measures how similar the segment's text is to the one in memory, not how much work it takes.</li>
+        <li>The analysis depends on the memory it is run against: the same text gives a different breakdown with a different memory. If the agency runs the analysis, the breakdown depends on the memory it used.</li>
+        <li>The percentage measures how similar the segment is to the one in memory. memoQ's documentation warns that, in segments shorter than average, the match rate and the actual difference in the text may not correspond so clearly.</li>
       </ul>
 
       <h2>2. The bands and what each program calls them</h2>
-      <p>All three programs split the words into the same broad bands, under different names. The fuzzy match ranges they ship with are <strong>95–99%, 85–94%, 75–84% and 50–74%</strong>; they can be configured, so a report may come with others. In Trados and memoQ, below the lowest range the segment counts as no match.</p>
+      <p>Fuzzy match ranges can be configured, so each report may come with its own. memoQ's documentation distinguishes the nearly exact match, <strong>95–99%</strong> (the same text, with differences in numbers, tags, punctuation or spaces), and three classes of fuzzy match between 50% and 94%: high, medium (<strong>75–84%</strong>) and low (<strong>50–74%</strong>); memoQ scores matches between 50% and 102%. In Trados, anything below the threshold of the lowest band is treated as no match. The example in this guide uses the ranges 95–99%, 85–94%, 75–84% and 50–74%.</p>
       <div class="tabla-guia">
         <table>
           <thead>
             <tr><th>Band</th><th>Trados Studio</th><th>memoQ</th><th>Wordfast Pro</th></tr>
           </thead>
           <tbody>
-            <tr><td><strong>Context match</strong>: exact, and in the same context</td><td>Context Match</td><td>101%</td><td>Context</td></tr>
-            <tr><td><strong>Repetitions</strong>: segments repeated within the job; the first occurrence counts in its own band and the rest here</td><td>Repetitions; and Cross-file Repetitions, if that option is enabled</td><td>Repetitions</td><td>Repetitions</td></tr>
+            <tr><td><strong>Context match</strong>: an exact match that also has the same context (in Trados, the same preceding segment; in memoQ, the surrounding segments or an identifier)</td><td>Context Match</td><td>101%</td><td>Context</td></tr>
+            <tr><td><strong>Repetitions</strong>: segments repeated in the job. In Trados, only those with no match or a fuzzy match: the first time they count in their own band and later times here</td><td>Repetitions; and Cross-file Repetitions, if that option is enabled</td><td>Repetition</td><td>Repetitions</td></tr>
             <tr><td><strong>Exact match</strong></td><td>100%</td><td>100%</td><td>100%</td></tr>
-            <tr><td><strong>Fuzzy matches</strong></td><td>95% - 99%, 85% - 94%…</td><td>95%-99%, 85%-94%…</td><td>95%-99%, 85%-94%…</td></tr>
-            <tr><td><strong>No match</strong>: new words</td><td>New/AT</td><td>No match</td><td>No match</td></tr>
+            <tr><td><strong>Fuzzy matches</strong></td><td>the configured ranges, such as "95% - 99%"</td><td>the ranges, such as "95-99%"</td><td>the ranges, such as "95%-99%"</td></tr>
+            <tr><td><strong>No match</strong></td><td>New/AT</td><td>its name depends on the interface language</td><td>No match</td></tr>
           </tbody>
         </table>
       </div>
-      <p>The names are the ones in each program's English interface. If machine translation was used in Trados, the New/AT row counts the words translated automatically. Each program also has rows of its own that are worth knowing how to read:</p>
+      <p>The Trados and memoQ names are those in their English documentation; Wordfast's, those in the reports generated by Wordfast Pro 5.12.1. In Trados, when automatic translation is not used, the New/AT row counts all new words; when it is used, it counts the words translated automatically. Each program also has rows of its own that are worth knowing how to read:</p>
       <ul>
-        <li><strong>Trados — PerfectMatch</strong>: a form of context match that compares not against the memory but against the bilingual files of an earlier version of the same document. The discount grid should say at what percentage these matches are paid.</li>
-        <li><strong>Trados — Locked</strong>: locked segments, which only appear if the analysis was run asking for them separately; that row then also takes in PerfectMatches and locked 100% and context matches, which no longer appear in their own. Whether they are paid is the client's call.</li>
-        <li><strong>Trados — internal fuzzy matches</strong>: what would be leveraged by translating the job from start to finish, saving each segment to the memory on confirming it, because some segments resemble earlier ones in the same job. They only appear if that option is enabled in the analysis; check in the report whether they come separately or inside the new words.</li>
-        <li><strong>memoQ — X-translated</strong>: X-Translate is the memoQ feature that copies the translations from the previous version of a document to the new one; memoQ also calls the double context match (102%) XLT. The discount grid should say at what percentage these segments are paid.</li>
-        <li><strong>memoQ — Fragments</strong>: segments for which memoQ has fragment-assembled matches. There is no obvious way to pay for them: it is worth agreeing on this with the client.</li>
+        <li><strong>Trados — PerfectMatch</strong>: a form of context match that compares updated source files not with a memory but with a corresponding set of existing bilingual files. It is worth having the discount grid say at what percentage these are paid.</li>
+        <li><strong>Trados — Locked</strong>: only appears if the analysis was set to report locked segments as a separate category. It then groups all manually locked segments, PerfectMatches and locked 100% and context matches, which no longer appear in their own category. Ask whether they are paid.</li>
+        <li><strong>Trados — internal fuzzy matches</strong>: only appear if the option to report them is enabled. They calculate the maximum additional leverage that would be obtained by translating the file from start to end, segment by segment, with the memory being updated after each segment is confirmed. Check in the report whether they come separately or inside the new words.</li>
+        <li><strong>memoQ — X-translated</strong>: according to its documentation, source segments already translated. X-Translate is the memoQ feature that copies the translations from a previous version of a document to the newest one. memoQ also calls the double context match (102%) XLT. It is worth having the discount grid say at what percentage these are paid.</li>
+        <li><strong>memoQ — Fragments</strong>: segments for which there are fragment-assembled matches. It is worth agreeing with the client how they are paid.</li>
         <li><strong>Wordfast — Ignored</strong>: segments the report counts separately as ignored.</li>
-        <li><strong>Wordfast — Leveraged, Internal Fuzzies and Fuzzy Repetitions</strong>: these are not bands but <strong>subtotals</strong> of the others. <em>Leveraged</em> adds up the context, 100%, fuzzy matches and fuzzy repetitions, and the fuzzy repetitions are already inside <em>Repetitions</em>. Adding those rows to the rest counts the same words two or three times.</li>
+        <li><strong>Wordfast — Leveraged, Internal Fuzzies and Fuzzy Repetitions</strong>: in the reports generated by Wordfast Pro 5.12.1 these are not bands but <strong>subtotals</strong> of the others. <em>Leveraged</em> adds up the context, 100%, fuzzy matches and fuzzy repetitions, and the fuzzy repetitions are already inside <em>Repetitions</em>. Adding those rows to the rest counts the same words two or three times.</li>
       </ul>
 
       <h2>3. The weighted word count</h2>
@@ -134,12 +134,27 @@
       <h2>5. What to check before accepting an agency's grid</h2>
       <ul class="lista-control">
         <li><strong>Whether 100% matches and repetitions are paid.</strong> Even when the memory proposes the translation, if you have to read it in place and check that it fits, that is work: paying it at 0% means not being paid for it.</li>
-        <li><strong>What is expected of context matches.</strong> If they are paid at 0%, ask whether they have to be reviewed. If they do, that is working time and it needs a price.</li>
+        <li><strong>What is expected of context matches.</strong> If they are paid at 0%, ask whether they have to be reviewed. If they do, it is worth that time having a price.</li>
         <li><strong>The report, not just the figure.</strong> Ask for the analysis file: with it you can check the breakdown band by band and that the bands add up to the total. With Wordfast, check that nobody has added up the subtotals.</li>
         <li><strong>The memory the analysis was run against.</strong> If it is old or of uneven quality, a 100% match may need more correction than a fuzzy one. Worth knowing before you accept.</li>
         <li><strong>The rows that are not bands.</strong> Locked (Trados), Fragments (memoQ) or Ignored (Wordfast): agree whether they are paid and at what percentage.</li>
         <li><strong>A minimum fee per job.</strong> On a job of a few words, the weighted count can fall below what it costs to handle it. A minimum fee per job prevents that.</li>
       </ul>
+
+      <h2>Sources</h2>
+      <p>The documentation pages were read on 2026-11-13.</p>
+      <div class="tabla-guia">
+        <table>
+          <thead>
+            <tr><th>Program</th><th>Source</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Trados Studio</td><td>RWS documentation: <a href="https://docs.rws.com/en-US/trados-studio-2024-sr1-1187677/tm-matches-341353" rel="noopener">TM matches</a>, <a href="https://docs.rws.com/en-US/trados-studio-2024-sr1-1187677/repetitions-1107563" rel="noopener">Repetitions</a>, <a href="https://docs.rws.com/en-US/trados-studio-2024-1145319/report-descriptions-304454" rel="noopener">Report descriptions</a>, <a href="https://docs.rws.com/en-US/trados-studio-2024-1145319/managing-batch-processing-settings-557217" rel="noopener">Managing batch processing settings</a>, <a href="https://docs.rws.com/en-US/sdl-trados-studio-783545/analyze-files-report-651532" rel="noopener">Analyze Files report</a> and <a href="https://docs.rws.com/en-US/trados-studio-2022-980998/specifying-batch-settings-fuzzy-bands-548327" rel="noopener">Fuzzy Bands</a>.</td></tr>
+            <tr><td>memoQ</td><td>memoQ documentation: <a href="https://docs.memoq.com/current/en/Concepts/concepts-match-rates-from-translation-m.html" rel="noopener">Match rates from translation memories</a>, <a href="https://docs.memoq.com/current/en/Concepts/concepts-double-context-matches.html" rel="noopener">Double context matches</a>, <a href="https://docs.memoq.com/current/en/Workspace/x-translate.html" rel="noopener">X-Translate</a> and <a href="https://docs.memoq.com/current/en/Workspace/statistics.html" rel="noopener">Statistics</a>.</td></tr>
+            <tr><td>Wordfast Pro</td><td>Analysis reports generated with Wordfast Pro 5.12.1.</td></tr>
+          </tbody>
+        </table>
+      </div>
 
       <div class="guia-cta">
         <p>Written by Eduardo Furrazola Valladares, translator and author of Gestrics, desktop software for freelance translators. Gestrics imports the analysis report from Trados (as XML, Excel, HTML or MHT), memoQ (as CSV or HTML) and Wordfast (as CSV, HTML or XLS), applies your discount grid and gets the quote ready as a PDF. It stays on your computer.</p>
@@ -162,6 +177,7 @@
       <a href="/unpaid-translation-invoices-guide.html">Unpaid invoices</a>
       <a href="/deductible-expenses-translators-guide.html">Deductible expenses</a>
       <a href="/cat-analysis-rates-guide.html">Pricing from a CAT analysis</a>
+      <a href="/translator-per-word-rate-calculator.html">Per-word rate calculator</a>
     </div>
     <div>
       <span class="pie-tit">Legal</span>
