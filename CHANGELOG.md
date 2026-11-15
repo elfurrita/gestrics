@@ -11,10 +11,19 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [1.1.3] — 2026-11-10
+## [1.1.3] — 2026-11-15
 
 ### Añadido
 
+- **Restaurar una copia equivocada ya tiene vuelta atrás.** La confirmación
+  solo daba la fecha de la copia, y elegir el archivo que no era —una copia
+  vieja en vez de la de ayer— borraba sin remedio lo hecho desde entonces (las
+  facturas emitidas ya pedían un aviso aparte). Ahora compara lo que trae la
+  copia con lo que tienes («La copia trae 8 contactos, 1 proyectos y 0
+  facturas. Ahora tienes 11, 1 y 0.») y, antes de tocar nada, guarda una copia
+  de lo actual, «gestrics-antes-de-restaurar-…json», que se recupera con
+  «Restaurar copia». Si no llega a guardarse, vuelve a preguntar antes de
+  seguir.
 - **Un tarifario de coincidencias CAT por cliente, en vez de uno solo.** El
   porcentaje de la tarifa que se paga por cada categoría lo pone la agencia, no
   el traductor, y cada una tiene el suyo —y uno por herramienta: en el portal de
@@ -32,12 +41,43 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ### Cambiado
 
+- **Los Términos de Uso y la Política de Privacidad, corregidos; la aplicación
+  pide aceptarlos de nuevo.** Los términos decían que el registro de facturación
+  encadenado por hash existe «para el perfil España», y la aplicación lo lleva
+  con cualquier perfil fiscal. La política decía que el envío comercial se
+  ampara «habitualmente» en el interés legítimo; ahora cita lo que dice el art.
+  21 de la LSSI-CE: en España prohíbe el correo publicitario o promocional no
+  solicitado ni autorizado expresamente, salvo una relación contractual previa.
+- **El aviso de retención a un cliente de fuera de España ya no da por hecho
+  que no procede.** Decía que la retención «solo se aplica» a clientes
+  establecidos en España, y el art. 76.1 del Reglamento del IRPF también incluye
+  a no residentes. Ahora pide comprobarlo y cita ese artículo.
+- **Los avisos de lo que no tiene vuelta atrás lo dicen igual en todas
+  partes: «Esta acción no se puede deshacer».** Antes unos decían «La acción
+  es irreversible», otros «No se puede deshacer» y otros nada: eliminar un
+  término del glosario, una entrada de tiempo, un plan recurrente o una nota
+  del historial pedía confirmación sin decir que no tenía vuelta atrás. Lo que
+  sí puede deshacerse, como borrar un tarifario antes de guardar
+  Configuración, no lo dice.
 - **El botón de guardar la plantilla, ya guardada, es un disquete con su
   check.** Antes pasaba a ser un check suelto, que visto por primera vez no
   decía qué estaba hecho.
 
 ### Corregido
 
+- **Una copia de seguridad cancelada contaba como hecha.** Al descargarla se
+  abre el diálogo de «Guardar como», y si se cancelaba no se escribía ningún
+  archivo, pero la aplicación decía «Copia de seguridad descargada», marcaba
+  «Copia realizada hoy» y dejaba de recordar la copia durante una semana. Ahora
+  solo cuenta cuando el archivo se ha guardado; si no, lo dice.
+- **Restaurar una copia por segunda o tercera vez podía dejarla a medias.**
+  Volver a restaurar en pocos minutos —por ejemplo, tras elegir antes el
+  archivo equivocado— reponía contactos, proyectos y facturas, pero no los
+  adjuntos, que se quedaban los de antes. Pasaba a la tercera vez, o ya a la
+  segunda si la copia avisaba de facturas emitidas. El error salía un instante
+  junto a «Copia restaurada» y desaparecía al recargarse la aplicación. Ahora
+  cada restauración repone también sus adjuntos, y si alguna parte no se puede
+  recuperar, un aviso lo dice antes de recargar.
 - **El análisis de Trados no se importaba.** Desde la 1.1.1, al elegir el
   informe de «Analizar archivos» —en XML, Excel, HTML o MHT— la ventana de
   importación no se abría y salía un error de lectura del archivo. Los de memoQ

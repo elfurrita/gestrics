@@ -10,10 +10,18 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [1.1.3] — 2026-11-10
+## [1.1.3] — 2026-11-15
 
 ### Added
 
+- **Restoring the wrong backup can now be undone.** The confirmation only gave
+  the backup's date, and picking the wrong file — an old backup instead of
+  yesterday's — wiped out everything done since, with no way back (issued
+  invoices already asked separately). Now it compares what the backup has with
+  what you have ("The backup has 8 contacts, 1 projects and 0 invoices. You
+  now have 11, 1 and 0.") and, before touching anything, saves a backup of
+  what you have now, "gestrics-antes-de-restaurar-…json", which you bring back
+  with "Restore backup". If it isn't saved, it asks again before going on.
 - **One CAT rate grid per client, instead of a single one.** The percentage of
   your rate paid for each match category is set by the agency, not by you, and
   each one has its own — and one per tool: in Sunyu Transphere's vendor portal
@@ -31,12 +39,42 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ### Changed
 
+- **The Terms of Use and the Privacy Policy have been corrected; the app asks
+  you to accept them again.** The terms said the hash-chained invoicing record
+  exists "for the Spain profile", and the app keeps it with any fiscal profile.
+  The policy said commercial emailing "typically" relies on legitimate
+  interest; it now cites what article 21 of Spain's LSSI-CE says: in Spain it
+  prohibits advertising or promotional email that was not requested or
+  expressly authorised, except where there is a prior contractual relationship.
+- **The withholding warning for a client outside Spain no longer assumes it
+  does not apply.** It said withholding "is only for" clients established in
+  Spain, and article 76.1 of the IRPF Regulation also covers non-residents. It
+  now asks you to check, and cites that article.
+- **Warnings about what can't be reversed now say it the same way
+  everywhere: "This action cannot be undone."** Some used to say "This action
+  is irreversible", others "This cannot be undone", and others nothing:
+  deleting a glossary term, a time entry, a recurring plan or a history note
+  asked for confirmation without saying it couldn't be reversed. What can
+  still be undone, like deleting a rate grid before saving Settings, doesn't
+  say it.
 - **Once the template is saved, its save button is a floppy disk with a
   check.** It used to turn into a bare check mark, which on first sight
   didn't say what was done.
 
 ### Fixed
 
+- **A canceled backup counted as done.** Downloading it opens the "Save as"
+  dialog, and canceling it wrote no file, yet the app said "Backup downloaded",
+  showed "Backup made today" and stopped reminding you about backups for a
+  week. Now it only counts once the file is saved; otherwise it says so.
+- **Restoring a backup a second or third time could leave it half done.**
+  Restoring again within a few minutes — say, after first picking the wrong
+  file — brought back contacts, projects and invoices, but not the
+  attachments, which stayed as they were. It happened on the third restore, or
+  already on the second if the backup warned about issued invoices. The error
+  flashed next to "Backup restored" and vanished when the app reloaded. Now
+  every restore brings back its attachments too, and if any part can't be
+  recovered, a notice says so before reloading.
 - **Trados analyses couldn't be imported.** Since 1.1.1, picking the "Analyze
   Files" report — as XML, Excel, HTML or MHT — didn't open the import window
   and showed a file-reading error instead. memoQ and Wordfast reports were not
