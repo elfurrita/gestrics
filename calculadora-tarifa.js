@@ -71,13 +71,18 @@
   }
 
   // Cifras tecleadas como las escribe cada idioma: en español el punto separa
-  // miles y la coma decimales; en inglés, al revés. Lo que no es un número
-  // devuelve NaN y la calculadora lo dice en vez de calcular con basura.
+  // miles y la coma decimales; en inglés, al revés. El separador de miles solo
+  // vale agrupando de tres en tres: «37.5» en español no es 375 sino un error,
+  // porque quien lo teclea casi seguro quería 37,5 (y en inglés, «37,5»). Lo
+  // ambiguo no se adivina: devuelve NaN y la calculadora lo dice en vez de
+  // calcular con una cifra diez veces mayor.
   function leer(texto, lang) {
     var t = String(texto).replace(/[\s€%]/g, "");
     if (!t) return NaN;
+    var valido = lang === "es" ? /^-?(\d{1,3}(\.\d{3})+|\d+)(,\d+)?$/ : /^-?(\d{1,3}(,\d{3})+|\d+)(\.\d+)?$/;
+    if (!valido.test(t)) return NaN;
     t = lang === "es" ? t.replace(/\./g, "").replace(",", ".") : t.replace(/,/g, "");
-    return /^-?\d+(\.\d+)?$/.test(t) ? parseFloat(t) : NaN;
+    return parseFloat(t);
   }
 
   function iniciar() {
@@ -96,7 +101,7 @@
     var campos = ["objetivo", "gastos", "semanas", "horas", "palabras", "pagado"];
     var salida = raiz.querySelector("[data-salida]");
     var T = lang === "es" ? {
-      error: "Revisa los campos marcados: tienen que ser números mayores que cero (los gastos pueden ser cero, y el porcentaje no puede pasar de 100).",
+      error: "Revisa los campos marcados: tienen que ser números mayores que cero, con coma para los decimales (37,5). Los gastos pueden ser cero; las semanas no pasan de 52, las horas a la semana de 168 ni el porcentaje de 100.",
       cuota: "Cuota de autónomos estimada", cuotaDe: function (t) { return "al mes, base mínima de la " + t; },
       ingresos: "Lo que necesitas facturar al año (sin IVA)",
       horas: "Horas facturables al año", palabras: "Palabras al año",
@@ -104,7 +109,7 @@
       conDescuento: "Por palabra, si se aplican descuentos por coincidencias",
       conDescuentoNota: function (p) { return "la que tendrías que fijar si de media se paga el " + p + " % de las palabras"; },
     } : {
-      error: "Check the highlighted fields: they must be numbers above zero (expenses can be zero, and the percentage cannot exceed 100).",
+      error: "Check the highlighted fields: they must be numbers above zero, with a point for decimals (37.5). Expenses can be zero; weeks cannot exceed 52, hours a week 168, or the percentage 100.",
       cuota: "Estimated self-employed contribution", cuotaDe: function (t) { return "a month, minimum base of the " + t; },
       ingresos: "What you need to invoice a year (excluding VAT)",
       horas: "Billable hours a year", palabras: "Words a year",
@@ -123,7 +128,8 @@
       campos.forEach(function (c) {
         var el = raiz.querySelector('[name="' + c + '"]');
         var x = leer(el.value, lang);
-        var valido = c === "gastos" ? x >= 0 : c === "pagado" ? x > 0 && x <= 100 : x > 0;
+        var tope = { semanas: 52, horas: 168, pagado: 100 }[c];
+        var valido = c === "gastos" ? x >= 0 : x > 0 && (tope === undefined || x <= tope);
         el.setAttribute("aria-invalid", valido ? "false" : "true");
         if (!valido) malos.push(c);
         v[c] = x;
