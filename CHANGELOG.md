@@ -11,7 +11,7 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [1.1.3] — 2026-11-15
+## [1.1.3] — 2026-11-18
 
 ### Añadido
 
@@ -234,6 +234,16 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 - **Un remitente con comillas llegaba deformado.** Con «Traducciones "El
   Faro" SL» como nombre del remitente, el cliente veía «TraduccionesEl Faro
   SL». Ahora llega tal cual.
+
+### Seguridad
+
+- **La aplicación comprueba que las respuestas del servidor de licencias sean
+  auténticas.** Cada respuesta de Keygen —el servicio que valida tu licencia—
+  viene firmada, y ahora Gestrics verifica esa firma antes de creérsela. Sin
+  esto, redirigir esa consulta a un servidor falso que respondiera «válida»
+  bastaba para saltarse la licencia sin tocar el programa. Una respuesta que no
+  cuadre con la firma se trata como «sin conexión», nunca como válida, así que a
+  quien de verdad ha pagado no le afecta ni aunque Keygen falle.
 
 ## [1.1.2] — 2026-10-28
 

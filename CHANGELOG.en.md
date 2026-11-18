@@ -10,7 +10,7 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [1.1.3] — 2026-11-15
+## [1.1.3] — 2026-11-18
 
 ### Added
 
@@ -230,6 +230,16 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 - **A sender name with quotes arrived garbled.** With «Traducciones "El
   Faro" SL» as the sender name, the client saw «TraduccionesEl Faro SL». It
   now arrives as written.
+
+### Security
+
+- **The app now checks that the licence server's responses are authentic.**
+  Every response from Keygen —the service that validates your licence— is
+  signed, and Gestrics now verifies that signature before trusting it. Without
+  this, pointing that request at a fake server that answered "valid" was enough
+  to bypass licensing without touching the program. A response that doesn't
+  match the signature is treated as "offline", never as valid, so it never
+  affects someone who has actually paid, even if Keygen itself is down.
 
 ## [1.1.2] — 2026-10-28
 
