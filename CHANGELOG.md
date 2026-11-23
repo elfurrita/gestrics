@@ -11,10 +11,22 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ---
 
-## [1.1.3] — 2026-11-18
+## [1.1.3] — 2026-11-23
 
 ### Añadido
 
+- **La rectificativa corrige todo el documento, no solo importes e
+  impuestos.** Además de la cantidad, la tarifa y los tipos, ahora se
+  rectifican los datos del cliente (nombre, empresa, domicilio, país,
+  teléfono, email y NIF, con un botón que los trae de su ficha), la fecha de
+  la operación, el par de idiomas y la referencia de la línea, las palabras y
+  el peso de cada categoría de un análisis CAT, el peso de una revisión o
+  posedición, y tus datos de emisor, que se toman de «Perfil del traductor»
+  cuando difieren de los de la factura. Es la forma de poner en una factura
+  el NIF del cliente que faltaba al emitirla. El libro de facturas guarda el
+  cliente y la fecha de operación de cada documento, y en el CSV contable la
+  fila de la factura original sigue saliendo con los que llevaba. El número,
+  la fecha y la divisa de la factura no se rectifican.
 - **Restaurar una copia equivocada ya tiene vuelta atrás.** La confirmación
   solo daba la fecha de la copia, y elegir el archivo que no era —una copia
   vieja en vez de la de ayer— borraba sin remedio lo hecho desde entonces (las
@@ -29,7 +41,7 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
   el traductor, y cada una tiene el suyo —y uno por herramienta: en el portal de
   proveedores de Sunyu Transphere, el mismo 85-94 % vale el 50 % en Trados y en
   memoQ, el 60 % en XTM y el 40 % en Phrase—. Con un único tarifario,
-  presupuestar para una agencia obligaba a reescribir el tuyo antes de importar
+  presupuestar para una agencia obligaba a reescribir tu tarifario antes de importar
   el análisis y a devolverlo después. Ahora Configuración guarda los que hagan
   falta, cada uno con su nombre; cada cliente tiene el suyo y sus proyectos
   nacen con él, y en el proyecto se cambia antes de guardar —que es lo normal
@@ -41,6 +53,22 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ### Cambiado
 
+- **Tu tarifario se llama «Mi tarifario».** En los selectores aparecía como
+  «El mío», y los avisos de Configuración hablaban de «el tuyo»; ahora dicen
+  «tu tarifario».
+- **Los porcentajes de un tarifario pueden pasar del 100 %.** Sirve para un
+  recargo, como una revisión urgente al 120 % de la tarifa. Lo que no se puede
+  guardar sigue siendo un porcentaje vacío o negativo.
+- **La ficha del proyecto dice con qué tarifario se calculó.** El tarifario ya se
+  guardaba con el desglose, pero solo se veía al abrir el formulario de
+  edición. Si ese tarifario se borra después, sigue diciendo cuál era.
+- **La tarifa media de Métricas es lo que de verdad se cobra por palabra.** En
+  un proyecto con análisis CAT promediaba la tarifa base, así que dos agencias
+  a 0,10 €/palabra salían iguales aunque una pagara las coincidencias mucho más
+  bajas; ahora cuenta el importe entre las palabras (0,0729 en vez de 0,10 en
+  un encargo de 3.000 palabras por 218,80 €). La revisión y la post-edición ya
+  se contaban así. La ficha del proyecto sigue enseñando la tarifa base, junto
+  a su desglose.
 - **Los Términos de Uso y la Política de Privacidad, corregidos; la aplicación
   pide aceptarlos de nuevo.** Los términos decían que el registro de facturación
   encadenado por hash existe «para el perfil España», y la aplicación lo lleva
@@ -65,6 +93,85 @@ Versión en inglés: [CHANGELOG.en.md](CHANGELOG.en.md)
 
 ### Corregido
 
+- **Desconectar Stripe dejaba vivos los enlaces de pago ya creados.** El PDF
+  de la factura seguía imprimiendo «Pay online» y el correo de factura y los
+  recordatorios seguían ofreciendo el enlace; y al marcar la factura cobrada,
+  sin clave guardada ya no se podía desactivar, así que un cliente con el
+  enlace en un correo anterior podía pagar dos veces. Ahora desconectar
+  desactiva antes los enlaces de las facturas sin cobrar y deja de mostrarlos.
+  Si Stripe no lo confirma (por ejemplo, sin conexión), un aviso que se queda a
+  la vista en Configuración nombra las facturas cuyo enlace no se pudo
+  confirmar desactivado, para revisarlo en el panel de Stripe.
+  Y la ficha de una factura cuyo enlace ya no vale dice eso, que ya no vale:
+  antes decía que el importe había cambiado, cosa falsa también tras rectificar
+  sin cambiar el total o deshacer un cobro.
+- **«Desconectar» Stripe actuaba al primer clic, sin preguntar.** Está junto a
+  «Mostrar» y borra la clave guardada, y Stripe no siempre deja volver a ver una
+  clave secreta real: quien no la tenía apuntada podía tener que crear otra
+  para volver a conectar. Ahora pregunta antes, y recuerda copiarla.
+- **Restaurar una copia devolvía vigentes los enlaces de pago de Stripe.** Una
+  copia de antes de desconectar Stripe los volvía a imprimir en el PDF y a
+  ofrecer en el correo, sin clave con que desactivarlos. Ahora vuelven sin
+  validez: la ficha pide generar uno nuevo, y regenerarlo, cobrar la factura
+  o desconectar Stripe desactiva el viejo si Stripe está conectado.
+- **Desactivar la licencia avisa siempre de cómo ha quedado el equipo.** Si
+  no había conexión o el servidor de licencias fallaba, la clave se quitaba en
+  silencio y el equipo podía seguir contando como activado. Ahora dice si ya se
+  puede activar en otro o, si no, cómo liberarlo, y el aviso se queda a la
+  vista en Configuración o, si la prueba ya se acabó, en la pantalla de
+  activación.
+- **«Desactivar» la licencia actuaba al primer clic, sin preguntar.** Está
+  junto a «Mostrar» y borra la clave de este equipo: pasada la prueba, la
+  aplicación quedaba en la pantalla de activación, y quien no tenía la clave a
+  mano tenía que buscarla en el correo de compra. Ahora pregunta antes, y
+  recuerda copiarla.
+- **En el calendario de entregas, un encargo facturado salía en el naranja de
+  «Entrega próxima».** Tomaba el color de su estado, y Facturado y «Entrega
+  próxima» comparten naranja; el cobrado salía en un morado que la leyenda no
+  nombra. Ahora entregado, facturado y cobrado salen en el verde de
+  «Completado», cada uno con su icono. Y un título largo ya no ensancha su
+  columna: ocupa hasta dos líneas, y entero sigue saliendo al pasar el ratón.
+- **Una factura emitida cambiaba al completar después la ficha del cliente.**
+  Si al emitirla al cliente le faltaba el NIF, el país o el domicilio, el PDF
+  los rellenaba con la ficha de hoy: añadirlos más tarde hacía que la factura
+  ya enviada saliera con «Tax ID», domicilio y teléfono que no llevaba, y con
+  la mención de inversión del sujeto pasivo, que depende del país y del NIF.
+  Ahora el PDF imprime los datos del cliente tal como estaban al emitir,
+  incluidos los que faltaban. Las facturas anteriores a que se guardaran esos
+  datos siguen tomándolos de la ficha, como hasta ahora.
+- **La rectificativa y la factura anulada imprimían el enlace de pago de la
+  original.** Al rectificar, el enlace de Stripe se desactiva, pero el PDF
+  seguía mostrando «Pay online» con él: el cliente recibía un enlace que ya no
+  funcionaba o, sin Stripe conectado, que cobraba el importe de la original.
+  Ahora el PDF solo lo imprime si cobra el importe y la divisa de la factura y
+  esta no está cobrada, como ya hacían la ficha y el correo. Al regenerarlo
+  desde la ficha, vuelve a salir.
+- **Un análisis CAT con decimales multiplicaba las palabras.** Al importar una
+  hoja o un CSV cuyo recuento traía decimales —un recuento ponderado, o una
+  exportación con «1,234.00»—, el decimal se pegaba a la cifra: «1234.5»
+  sumaba 12.345 palabras y «1,234.00», 123.400. Ahora se distingue el decimal
+  del separador de miles como en los campos de importe, y el recuento se
+  redondea a la palabra. «1.234» y «1,234» siguen siendo 1.234.
+- **Dos tarifarios podían llamarse igual.** Se guardaban sin aviso, y en el
+  selector del proyecto y en la ficha del cliente salían dos opciones idénticas
+  sin forma de saber cuál era cuál. Ahora el perfil no guarda un nombre
+  repetido (sin distinguir mayúsculas) y dice cuál.
+- **Al editar un proyecto hecho con «Mi tarifario», el selector decía el
+  tarifario del cliente.** Pasaba con los clientes que tienen uno asignado, y
+  también con los proyectos anteriores a los tarifarios: el selector enseñaba
+  el del cliente mientras el importe seguía calculado con tus porcentajes. En
+  una revisión o posedición, guardar cualquier cambio (la PO que llega tarde,
+  la fecha de entrega) dejaba la ficha diciendo «Tarifario» con el del cliente
+  sobre tu porcentaje, y elegir el del cliente no hacía nada porque ya salía
+  elegido. Ahora el selector dice el tarifario con el que se calculó.
+- **Restaurar una copia antigua dejaba el perfil fiscal mezclado.** La copia
+  reponía los datos del perfil que traía y dejaba como estaban los que no: una
+  copia hecha antes de rellenar el NIF devolvía el país de entonces con el NIF,
+  el domicilio y el IBAN de ahora, y una factura emitida después imprimía ese
+  NIF bajo la etiqueta del otro país. Ahora lo que la copia no trae se vacía,
+  como promete el aviso de que se reemplazan todos los datos; el idioma de la
+  aplicación se conserva, y la copia que se guarda antes de restaurar permite
+  volver atrás.
 - **Una copia de seguridad cancelada contaba como hecha.** Al descargarla se
   abre el diálogo de «Guardar como», y si se cancelaba no se escribía ningún
   archivo, pero la aplicación decía «Copia de seguridad descargada», marcaba

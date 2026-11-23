@@ -10,10 +10,22 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ---
 
-## [1.1.3] — 2026-11-18
+## [1.1.3] — 2026-11-23
 
 ### Added
 
+- **A corrective invoice now corrects the whole document, not just amounts
+  and taxes.** Besides the quantity, the rate and the tax rates, you can now
+  correct the client's details (name, company, address, country, phone, email
+  and tax ID, with a button that brings them from the client's record), the
+  service date, the language pair and the line reference, the words and
+  weight of each category of a CAT analysis, the weight of a revision or
+  post-editing job, and your issuer details, taken from "Translator profile"
+  when they differ from the invoice's. It is the way to add to an invoice the
+  client's tax ID that was missing when it was issued. The invoice ledger
+  stores the client and service date of each document, and in the accounting
+  CSV the original invoice's row keeps showing the ones it carried. The
+  invoice number, date and currency cannot be corrected.
 - **Restoring the wrong backup can now be undone.** The confirmation only gave
   the backup's date, and picking the wrong file — an old backup instead of
   yesterday's — wiped out everything done since, with no way back (issued
@@ -26,8 +38,8 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
   your rate paid for each match category is set by the agency, not by you, and
   each one has its own — and one per tool: in Sunyu Transphere's vendor portal
   the same 85-94 % is worth 50 % in Trados and memoQ, 60 % in XTM and 40 % in
-  Phrase. With a single grid, quoting for an agency meant rewriting yours
-  before importing the analysis and putting it back afterwards. Settings now
+  Phrase. With a single grid, quoting for an agency meant rewriting your rate
+  grid before importing the analysis and putting it back afterwards. Settings now
   holds as many as you need, each with its name; every client has theirs and
   their projects start from it, and you can switch it on the project before
   saving — which is the normal case when the same agency sends jobs in
@@ -39,6 +51,21 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ### Changed
 
+- **Your own rate grid is called "My rate grid".** The selectors showed it as
+  "Mine", and the Settings messages spoke of "yours"; they now say "your rate
+  grid".
+- **Rate grid percentages can go above 100 %.** Useful for a surcharge, such
+  as an urgent revision at 120 % of the rate. An empty or negative percentage
+  still can't be saved.
+- **The project page shows which rate grid it was priced with.** The grid was
+  already saved with the breakdown but only showed when opening the edit form.
+  If that grid is deleted later, it still shows which one it was.
+- **The average rate in Metrics is what you actually earn per word.** For a
+  project with a CAT analysis it averaged the base rate, so two agencies at
+  €0.10/word looked the same even when one paid far less for matches; it now
+  counts the amount over the words (0.0729 instead of 0.10 for a 3,000-word job
+  billed at €218.80). Revision and post-editing were already counted this way.
+  The project page still shows the base rate, next to its breakdown.
 - **The Terms of Use and the Privacy Policy have been corrected; the app asks
   you to accept them again.** The terms said the hash-chained invoicing record
   exists "for the Spain profile", and the app keeps it with any fiscal profile.
@@ -63,6 +90,87 @@ Spanish version: [CHANGELOG.md](CHANGELOG.md)
 
 ### Fixed
 
+- **Disconnecting Stripe left existing payment links active.** The invoice PDF
+  still printed "Pay online", and the invoice email and payment reminders still
+  offered the link; and once the invoice was marked as paid, with no key stored
+  the link could no longer be deactivated, so a client with the link in an
+  earlier email could pay twice. Disconnecting now deactivates the links of
+  unpaid invoices first and stops showing them. If Stripe doesn't confirm it
+  (for example, with no connection), a notice that stays in view in Settings
+  names the invoices whose link could not be confirmed as deactivated, so you
+  can check it in your Stripe dashboard. And the
+  invoice details now say a link is no longer valid when that is the case: they
+  used to say the amount had changed, which was also untrue after a correction
+  that kept the total or after undoing a payment.
+- **"Disconnect" Stripe acted on the first click, without asking.** It sits
+  next to "Show" and deletes the stored key, and Stripe doesn't always let
+  you view a live secret key again: anyone who hadn't noted it down could have
+  to create a new one to reconnect. It now asks first, and reminds you to copy
+  it.
+- **Restoring a backup brought Stripe payment links back as valid.** A backup
+  from before Stripe was disconnected printed them again on the PDF and
+  offered them in emails, with no key to deactivate them. They now come back
+  as no longer valid: the invoice details ask you to generate a new one, and
+  regenerating it, marking the invoice as paid or disconnecting Stripe
+  deactivates the old one if Stripe is connected.
+- **Deactivating the license always tells you how the device was left.** With
+  no connection, or with the license server failing, the key was removed
+  silently and the device could still count as activated. It now says whether
+  you can activate it on another device or, if not, how to free this one, and
+  the notice stays in view in Settings or, once the trial is over, on the
+  activation screen.
+- **"Deactivate" license acted on the first click, without asking.** It sits
+  next to "Show" and removes the key from this device: once the trial was over,
+  the app went back to the activation screen, and anyone without the key at hand
+  had to dig it out of the purchase email. It now asks first, and reminds you
+  to copy it.
+- **In the delivery calendar, an invoiced job showed in the orange of "Delivery
+  approaching".** It took its status color, and Invoiced shares orange with
+  "Delivery approaching"; a paid job showed in a purple the legend doesn't
+  name. Delivered, invoiced and paid jobs now show in the green of "Done",
+  each with its own icon. And a long title no longer widens its column: it
+  takes up to two lines, and still shows in full on hover.
+- **An issued invoice changed when the client's record was completed later.**
+  If the client had no tax ID, country or address when the invoice was issued,
+  the PDF filled them in from today's record: adding them afterwards made the
+  invoice already sent show a "Tax ID", address and phone it didn't carry, plus
+  the reverse charge statement, which depends on the country and tax ID. The
+  PDF now prints the client's details exactly as they were at issue, including
+  the missing ones. Invoices from before those details were stored still take
+  them from the client's record, as before.
+- **Corrective and cancelled invoices printed the original's payment link.**
+  Rectifying deactivates the Stripe link, but the PDF still showed "Pay online"
+  with it: the client got a link that no longer worked or, without Stripe
+  connected, one that charged the original amount. The PDF now prints it only
+  if it charges the invoice's amount and currency and the invoice is unpaid,
+  as the project panel and the email already did. Regenerating it from the
+  project panel brings it back.
+- **A CAT analysis with decimals multiplied the word count.** When importing a
+  sheet or CSV whose counts had decimals —a weighted count, or an export with
+  "1,234.00"—, the decimal was glued to the number: "1234.5" added 12,345
+  words and "1,234.00", 123,400. The decimal and thousands separators are now
+  told apart as in the amount fields, and the count is rounded to the word.
+  "1.234" and "1,234" are still 1,234.
+- **Two rate grids could share a name.** They were saved without warning, and
+  the project and client selectors showed two identical options with no way to
+  tell them apart. The profile now refuses a repeated name (case-insensitive)
+  and says which one.
+- **Editing a project priced with "My rate grid" showed the client's rate
+  grid.** It happened with clients that have one assigned, and also with
+  projects from before rate grids existed: the selector showed the client's
+  grid while the amount was still calculated with your percentages. In a
+  revision or post-editing job, saving any change (a late PO, the delivery
+  date) left the project page showing the client's grid under "Rate grid" with
+  your percentage, and choosing the client's grid did nothing because it
+  already appeared selected. The selector now shows the grid the project was
+  priced with.
+- **Restoring an older backup left a mixed tax profile.** The backup put back
+  the profile details it carried and left the others as they were: a backup
+  made before entering the tax ID brought back that country with today's tax
+  ID, address and IBAN, and an invoice issued afterwards printed that ID under
+  the other country's label. Anything the backup doesn't carry is now cleared,
+  as the warning that all data will be replaced says; the app language is
+  kept, and the copy saved before restoring lets you go back.
 - **A canceled backup counted as done.** Downloading it opens the "Save as"
   dialog, and canceling it wrote no file, yet the app said "Backup downloaded",
   showed "Backup made today" and stopped reminding you about backups for a
