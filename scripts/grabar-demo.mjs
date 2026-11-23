@@ -78,6 +78,19 @@ const T = IDIOMA === "en"
       f3: "outreachstudio.app",
     };
 
+// Antes de abrir nada: el backend tiene que ser el de la demostración. La marca
+// la escribe sembrar-demo.mjs, que se niega a sembrar en la base de pruebas.
+try {
+  const ajustes = await (await fetch("http://localhost:3001/api/settings")).json();
+  if (ajustes.demo_capturas !== true) {
+    console.error("\nABORTADO: el backend del 3001 no tiene la demostración sembrada (falta la marca demo_capturas).\n");
+    process.exit(1);
+  }
+} catch {
+  console.error("\nABORTADO: no responde el backend en http://localhost:3001.\n");
+  process.exit(1);
+}
+
 // ── Edge ─────────────────────────────────────────────────────────────────
 const edge = spawn(EDGE, [
   "--headless=new",

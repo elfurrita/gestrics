@@ -10,10 +10,14 @@
 //
 // ── Antes de ejecutarlo ────────────────────────────────────────────────────
 //
-// 1. Sembrar los datos de demostración: node scripts/sembrar-demo.mjs <idioma>
+// 1. Backend contra la carpeta DESECHABLE (backend-aislado.cjs de la
+//    aplicación) y la demostración sembrada en ella con sembrar-demo.mjs
 //    (léete su cabecera: hay un paso que NO se puede saltar sin acabar
-//    publicando el CV real del traductor en una captura).
-// 2. Arrancar la aplicación en http://localhost:5173 — front y back.
+//    publicando el CV real del traductor en una captura). Nunca contra la base
+//    de pruebas de %APPDATA%\gestrics: sus datos llevan el correo real del
+//    traductor. Este script comprueba la marca que deja la siembra y aborta
+//    sin ella.
+// 2. El front en http://localhost:5173.
 //
 // Se pilota el Edge instalado por CDP en vez de usar puppeteer: Node 24 trae
 // WebSocket global, así que no hace falta añadir ninguna dependencia ni a este
@@ -55,7 +59,7 @@ const dormir = ms => new Promise(r => setTimeout(r, ms));
 const T = IDIOMA === "en"
   ? { prospeccion: "OUTREACH", proyectos: "PROJECTS", metricas: "METRICS",
       contacto: "Sofia Marchetti", proyectoCat: "pressure sensor",
-      proyectoPagado: "Interface localisation", grafico: "COLLECTED PER MONTH",
+      proyectoPagado: "Interface localisation", grafico: "COLLECTED BY MONTH",
       nombres: { prospeccion: "outreach", vista: "overview", proyecto: "project",
                  factura: "invoice", metricas: "metrics" } }
   : { prospeccion: "PROSPECCIÓN", proyectos: "PROYECTOS", metricas: "MÉTRICAS",
@@ -115,6 +119,20 @@ const PASOS = [
 ];
 
 // ── El piloto ──────────────────────────────────────────────────────────────
+
+// Antes de abrir nada: el backend tiene que ser el de la demostración. La marca
+// la escribe sembrar-demo.mjs, que se niega a sembrar en la base de pruebas.
+try {
+  const ajustes = await (await fetch("http://localhost:3001/api/settings")).json();
+  if (ajustes.demo_capturas !== true) {
+    console.error("\nABORTADO: el backend del 3001 no tiene la demostración sembrada (falta la marca demo_capturas).");
+    console.error("Arranca backend-aislado.cjs y siembra con sembrar-demo.mjs; ver su cabecera.\n");
+    process.exit(1);
+  }
+} catch {
+  console.error("\nABORTADO: no responde el backend en http://localhost:3001.\n");
+  process.exit(1);
+}
 
 mkdirSync(DESTINO, { recursive: true });
 
@@ -186,6 +204,28 @@ await evaluar("(function(){" + CLIC +
   "return clic(b);})()");
 await dormir(1500);
 
+// La carpeta desechable estrena el periodo de prueba, y su franja («Prueba
+// gratuita · quedan N días / Comprar licencia») no pinta nada en una captura de
+// la portada. Se oculta solo aquí, como en grabar-demo.mjs, y se vuelve a
+// ocultar si React la repinta.
+await evaluar(`(function () {
+  function ocultar() {
+    [].slice.call(document.querySelectorAll("*")).filter(function (x) {
+      return x.children.length === 0 && /Prueba gratuita|Free trial/i.test(x.textContent);
+    }).forEach(function (h) {
+      // Se sube solo mientras el contenedor siga siendo una barra baja: subir
+      // "hasta el ancho completo" se llevaba por delante la aplicación entera.
+      var b = h;
+      while (b.parentElement && b.parentElement !== document.body &&
+             b.parentElement.getBoundingClientRect().height < 100) b = b.parentElement;
+      if (b.getBoundingClientRect().height < 100) b.style.display = "none";
+    });
+  }
+  ocultar();
+  new MutationObserver(ocultar).observe(document.body, { childList: true, subtree: true });
+})()`);
+await dormir(400);
+
 // Red de seguridad: si la base tuvo contactos antes de marcarse el centinela,
 // la aplicación se toma por la instalación original y rellena las plantillas
 // con el nombre, la biografía y los perfiles reales del traductor. Eso
@@ -211,7 +251,7 @@ const fuga = await evaluar(`(function () {
 if (fuga) {
   console.error("\nABORTADO: hay lo que parecen datos reales en pantalla (" + fuga + ").");
   console.error("Todo lo sembrado usa el dominio .example, así que eso no sale de la siembra.");
-  console.error("Vuelve a empezar siguiendo el orden de sembrar-demo.mjs.\n");
+  console.error("Vuelve a empezar, en la carpeta desechable, siguiendo el orden de sembrar-demo.mjs.\n");
   ws.close(); edge.kill();
   process.exit(1);
 }

@@ -26,27 +26,38 @@ explica en detalle; el resumen es que la aplicación congela sus plantillas
 heredadas en cuanto detecta que hay contactos, y esas plantillas llevan el
 nombre y la biografía reales.
 
-1. Parar el backend.
-2. Borrar `%APPDATA%\gestrics\outreach-studio.db`.
-3. Arrancar el backend: crea la base vacía, con las plantillas genéricas.
-4. **Con la base todavía sin contactos**, marcar los centinelas:
+**Siempre contra una carpeta DESECHABLE, nunca contra `%APPDATA%\gestrics\`.**
+Esa es la base de pruebas del traductor que desarrolla la aplicación: no se
+borra, y sus datos de prueba llevan su correo real. `sembrar-demo.mjs` se niega
+a escribir en ella, y `capturar.mjs` y `grabar-demo.mjs` abortan si el backend
+del 3001 no tiene la marca `demo_capturas` que deja la siembra.
+
+1. Arrancar el backend aislado: `node ../outreach-studio/backend/scripts/backend-aislado.cjs`
+   (en el repositorio de la aplicación también es la configuración
+   `backend-aislado` de `.claude/launch.json`). Puerto 3001, datos en
+   `%TEMP%\gestrics-mirar`, que crea vacía, con las plantillas genéricas.
+2. **Con la base todavía sin contactos**, marcar los centinelas:
    ```
    node ../outreach-studio/scripts/dev-skip-first-run.mjs
    curl -X PUT -H "Content-Type: application/json" -d "{\"value\":true}"  http://localhost:3001/api/settings/migration_legacyTemplatesFrozen
    curl -X PUT -H "Content-Type: application/json" -d "{\"value\":\"ES\"}" http://localhost:3001/api/settings/translator_fiscalCountry
    ```
-5. Parar el backend.
-6. `node scripts/sembrar-demo.mjs es`
-7. Arrancar backend y front.
-8. `node scripts/capturar.mjs es`
-9. Repetir del 1 al 8 con `en`: la tanda inglesa necesita su propia siembra,
-   porque los títulos de los proyectos van en el idioma de la captura.
-10. **Borrar la base al terminar.** Son datos falsos y el contador de facturas
-    tiene que quedar en `-001`.
+3. Esperar unos segundos (el backend guarda en diferido) y pararlo.
+4. Sembrar, en PowerShell:
+   `$env:GESTRICS_DB = "$env:TEMP\gestrics-mirar\outreach-studio.db"` y
+   `node scripts/sembrar-demo.mjs es`. Dieciséis contactos, diecinueve
+   proyectos y catorce facturas, con fechas contadas hacia atrás desde hoy.
+5. Arrancar el backend aislado y el front.
+6. `node scripts/capturar.mjs es`
+7. Para `en`: parar el backend y repetir del 4 al 6 con `en` (los títulos van
+   en el idioma de la captura). La siembra vacía sus tablas antes de escribir,
+   y los centinelas ya están puestos.
+8. **Al terminar, borrar `%TEMP%\gestrics-mirar` y `%TEMP%\gestrics-capturas-edge`.**
 
-`capturar.mjs` comprueba antes de disparar que no haya datos personales en
-pantalla y aborta si los encuentra. Es una red de seguridad, no el método:
-el orden de arriba es el método.
+La franja del periodo de prueba (la carpeta desechable lo estrena) se oculta
+solo en la captura, igual que en el vídeo. `capturar.mjs` comprueba además que
+no haya datos personales en pantalla y aborta si los encuentra. Las dos son
+redes de seguridad, no el método: el orden de arriba es el método.
 
 ### Las versiones WebP, que son las que de verdad se sirven
 
