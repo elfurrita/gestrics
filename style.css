@@ -399,7 +399,7 @@ a.arriba:hover {
       --anim-giro: 6deg;    /* giro al entrar; con la perspectiva, da volumen */
       --anim-desde: 5%;     /* arranque, dentro de la fase "entry" */
       --anim-hasta: 62%;    /* final, dentro de la fase "cover" */
-      --anim-curva: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      --anim-curva: cubic-bezier(0.37, 0, 0.63, 1);
     }
 
     /* Recorte, y no es opcional: comprobado a 820px de ancho, con la maqueta
